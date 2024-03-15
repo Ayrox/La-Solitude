@@ -1,9 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const db = require("../../Models/infraction");
-const { errorEmbed, warningEmbed } = require("../../util/Embeds");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+const db from "../../Models/infraction");
+const { errorEmbed, warningEmbed } from "../../util/Embeds");
  
 
-module.exports = {
+export default {
     //TODO A REFAIRE
     //TODO A REFAIRE
     //TODO A REFAIRE

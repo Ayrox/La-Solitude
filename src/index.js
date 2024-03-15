@@ -1,12 +1,14 @@
-require("dotenv").config();
-const Distube = require("distube");
-const fs = require("fs");
-const path = require("node:path");
+import dotenv from "dotenv";
+dotenv.config()
 
-const { loadEvents } = require("./Handlers/Events")
-const { loadCommands } = require("./Handlers/Commands")
+import Distube from "distube";
+import fs from "fs";
+import path from "node:path";
 
-const { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder } = require("discord.js");
+import { loadEvents } from "./Handlers/Events.js";
+import { loadCommands } from "./Handlers/Commands.js";
+
+import { Client, GatewayIntentBits, Partials, Collection, EmbedBuilder } from "discord.js";
 
 const {Guilds, GuildMembers, GuildMessages, GuildVoiceStates} = GatewayIntentBits
 const {User, Message, GuildMember, ThreadMember} = Partials

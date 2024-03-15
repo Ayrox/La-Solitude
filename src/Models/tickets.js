@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-module.exports = model('Tickets', new Schema({
+export default model('Tickets', new Schema({
 
     GuildID: String,
     MemberID: String,

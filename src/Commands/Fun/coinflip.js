@@ -1,7 +1,7 @@
-const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
-const { SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, AttachmentBuilder } from "discord.js");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("coinflip")
         .setDescription("Joue à pile ou face"),

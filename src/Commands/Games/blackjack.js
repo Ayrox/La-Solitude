@@ -7,10 +7,10 @@ const {
     ButtonBuilder,
     Client,
     SlashCommandBuilder
-} = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
+} from "discord.js");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("blackjack")
         .setDescription("Lance une partie de Blackjack"),

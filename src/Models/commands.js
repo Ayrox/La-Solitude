@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-module.exports = model('Commands', new Schema({
+export default model('Commands', new Schema({
     GuildID: String,
     GuildName: String,
     CommandData: Array,

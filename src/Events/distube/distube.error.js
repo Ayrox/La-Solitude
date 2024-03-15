@@ -1,7 +1,7 @@
-const { DisTube } = require("distube")
-const { errorEmbed} = require("../../util/Embeds")
+import { DisTube } from "distube";
+import { errorEmbed} from "../../util/Embeds.js";
 
-module.exports = {
+export default {
     
     name: 'error',
     once: false,

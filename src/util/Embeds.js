@@ -1,7 +1,7 @@
-const { EmbedBuilder,} = require("discord.js");
-const OP = require('./OnePieceData.json')
+import { EmbedBuilder,} from "discord.js";
+import OP from './OnePieceData.json'
 
-module.exports = {
+export default {
     
 //!------------------------ ERROR -------------------------------    
     errorEmbed: () => {

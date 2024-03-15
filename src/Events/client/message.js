@@ -1,7 +1,7 @@
-const { Message, Client } = require("discord.js")
+import { Message, Client } from "discord.js"
 
 
-module.exports = {
+export default {
     
     name: 'messageCreate',
     once: false,

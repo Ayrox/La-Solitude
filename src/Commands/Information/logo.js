@@ -1,7 +1,7 @@
  
-const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("logo")
         .setDescription("Affiche le logo du serveur"),

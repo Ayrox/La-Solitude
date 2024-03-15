@@ -1,10 +1,10 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonInteraction } = require('discord.js');
-const { errorEmbed, successEmbed } = require("../../util/Embeds");
-const conf = require("../../config");
-const db = require("../../Models/tickets");
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonInteraction } from 'discord.js';
+import { errorEmbed, successEmbed } from "../../util/Embeds.js";
+import conf from "../../config.js";
+import db from "../../Models/tickets.js";
 
 
-module.exports = {
+export default {
 
     name: "interactionCreate",
 

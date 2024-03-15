@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 
 
@@ -40,7 +40,7 @@ for (folder of commandsFolder) {
         }
     );
     for (file of commandFiles) {
-        const command = require(`./Commands/${folder}/${file}`);
+        const command = import(`./Commands/${folder}/${file}`);
         //console.info(command);
         fs.appendFile(
             "./README.md",

@@ -1,8 +1,8 @@
-const { EmbedBuilder, AttachmentBuilder } = require('discord.js')
-const config = require('../../config')
+import { EmbedBuilder, AttachmentBuilder } from 'discord.js'
+import config from "../../config.js"
 
 
-module.exports = {
+export default {
     
     name: 'messageDelete',
     once: false,

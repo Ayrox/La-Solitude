@@ -1,10 +1,10 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
+const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
+const { errorEmbed } from "../../util/Embeds");
  
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("dog")
         .setDescription("Envoie une image de chien"),

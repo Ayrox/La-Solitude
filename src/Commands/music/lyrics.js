@@ -1,6 +1,6 @@
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const puppeteer = require("puppeteer");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const puppeteer from "puppeteer");
+const { SlashCommandBuilder } from "discord.js");
 
 function sleep(ms) {
     return new Promise((resolve) => {
@@ -8,7 +8,7 @@ function sleep(ms) {
     });
 }
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("lyrics")
         .setDescription("Affiche les paroles de la musique en cours"),

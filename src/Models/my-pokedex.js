@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-module.exports = model('MyPokedex', new Schema({
+export default model('MyPokedex', new Schema({
 
     UserID: String,
     UserTag: String,

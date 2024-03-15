@@ -1,9 +1,9 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder} = require("discord.js");
-const { errorEmbed, setChannelEmbed } = require("../../util/Embeds");
-const db = require("../../Models/channels");
+const { EmbedBuilder, CommandInteraction, SlashCommandBuilder} from "discord.js");
+const { errorEmbed, setChannelEmbed } from "../../util/Embeds");
+const db from "../../Models/channels");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("playlist")
         .setDescription("Affiche vos playlist"),

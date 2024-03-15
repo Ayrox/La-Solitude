@@ -5,11 +5,11 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     SlashCommandBuilder
-} = require("discord.js");
-const db = require("../../Models/suggest");
-const { successEmbed } = require("../../util/Embeds");
+} from "discord.js");
+const db from "../../Models/suggest");
+const { successEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("suggest")
         .setDescription("Suggérer une commande")

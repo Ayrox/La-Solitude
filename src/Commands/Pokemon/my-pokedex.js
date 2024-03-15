@@ -7,14 +7,14 @@ const {
     ButtonBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} = require("discord.js");
-const db = require("../../Models/my-pokedex");
-const { errorEmbed, successEmbed } = require("../../util/Embeds");
-const Pokedex = require("pokedex-promise-v2");
+} from "discord.js");
+const db from "../../Models/my-pokedex");
+const { errorEmbed, successEmbed } from "../../util/Embeds");
+const Pokedex from "pokedex-promise-v2");
 const P = new Pokedex();
-const { pokemonNames } = require("../../util/pokemonNames");
+const { pokemonNames } from "../../util/pokemonNames");
 
-module.exports = {
+export default {
     //TODO A REFAIRE
     //TODO A REFAIRE
     //TODO A REFAIRE

@@ -1,19 +1,19 @@
  
-const Discord = require("discord.js");
-// const https = require("https");
-// const axios = require("axios");
-const { pokemonNames } = require("../../util/pokemonNames.json");
+const Discord from "discord.js");
+// const https from "https");
+// const axios from "axios");
+const { pokemonNames } from "../../util/pokemonNames.json");
 const {
     errorEmbed,
     pokemonEmbed,
     pokemonEasterEggEmbed,
-} = require("../../util/Embeds");
-const fs = require("fs");
-const { fetchPokemonData } = require("../../util/functions");
-const Pokedex = require("pokedex-promise-v2");
+} from "../../util/Embeds");
+const fs from "fs");
+const { fetchPokemonData } from "../../util/functions");
+const Pokedex from "pokedex-promise-v2");
 const P = new Pokedex();
 
-module.exports = {
+export default {
     data: new Discord.SlashCommandBuilder()
         .setName("pokemon-info")
         .setDescription("Affiche les informations d'un Pokémon")

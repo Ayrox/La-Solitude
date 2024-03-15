@@ -1,7 +1,7 @@
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("filters")
         .setDescription("Applique des filtres à la musique")

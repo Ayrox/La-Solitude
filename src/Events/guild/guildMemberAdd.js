@@ -1,7 +1,7 @@
-const  Canvas  = require('canvas');
-const Discord = require('discord.js');
-const snekfetch = require('snekfetch');
-const config = require('../../config')
+import Canvas  from 'canvas';
+import Discord from 'discord.js';
+import snekfetch from 'snekfetch';
+import config from '../../config.js';
 
 
 const applyText = (canvas, text) => {
@@ -21,7 +21,7 @@ const applyText = (canvas, text) => {
 };
 
 
-module.exports = {
+export default {
     
     name: 'guildMemberAdd',
     once: false,

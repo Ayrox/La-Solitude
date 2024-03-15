@@ -5,11 +5,11 @@ const {
     CommandInteraction,
     Client,
     SlashCommandBuilder
-} = require("discord.js");
-const delay = require("delay");
-const { errorEmbed } = require("../../util/Embeds");
+} from "discord.js");
+const delay from "delay");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("emoji-steal")
         .setDescription("Vole un emoji venant d'un autre serveur")

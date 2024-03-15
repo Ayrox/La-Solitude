@@ -3,14 +3,14 @@ const {
     ActionRowBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} = require("discord.js");
-const { errorEmbed, successEmbed, musicEmbed } = require("../../util/Embeds");
-const db = require("../../Models/commands");
-const glob = require("glob");
-const { SortObjectArray } = require("../../util/functions");
+} from "discord.js");
+const { errorEmbed, successEmbed, musicEmbed } from "../../util/Embeds");
+const db from "../../Models/commands");
+const glob from "glob");
+const { SortObjectArray } from "../../util/functions");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("command")
         .setDescription("Activation ou rechargement des commandes")
@@ -62,7 +62,7 @@ module.exports = {
                 });
 
             files.forEach((file) => {
-                let cmd = require(file);
+                let cmd from file);
                 Commandfiles.push({
                     label: cmd.name,
                     description: cmd.description,
@@ -149,7 +149,7 @@ module.exports = {
                 Commandfiles.forEach((file) => {
                     delete require.cache[require.resolve(file.value)];
 
-                    const command = require(file.value);
+                    const command from file.value);
                     console.log(`Reloaded /${file.label}`);
 
                     if (command.name) {

@@ -1,9 +1,9 @@
-const { EmbedBuilder } = require('discord.js')
-const config = require('../../config')
+import { EmbedBuilder } from 'discord.js'
+import config from "../../config.js"
 
 
 
-module.exports = {
+export default {
     
     name: 'messageUpdate',
     once: false,

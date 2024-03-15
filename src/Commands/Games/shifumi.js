@@ -7,10 +7,10 @@ const {
     ButtonBuilder,
     EmbedBuilder,
     SlashCommandBuilder
-} = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
+} from "discord.js");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("shifumi")
         .setDescription("Lance une partie de Pierre-Feuille-Ciseaux")

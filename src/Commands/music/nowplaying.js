@@ -1,9 +1,9 @@
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } = require("../../util/buttonLayout");
-const { generateProgressBar } = require("../../util/functions");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
+const { generateProgressBar } from "../../util/functions");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("nowplaying")
         .setDescription("Affiche les informations de la musique en cours"),

@@ -1,7 +1,7 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("kick")
         .setDescription("Kick un membre du serveur")

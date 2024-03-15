@@ -1,10 +1,10 @@
-const ms = require("ms");
-const { CommandInteraction, SlashCommandBuilder } = require("discord.js");
-const db = require("../../Models/infraction");
-const { errorEmbed, muteEmbed } = require("../../util/Embeds");
+const ms from "ms");
+const { CommandInteraction, SlashCommandBuilder } from "discord.js");
+const db from "../../Models/infraction");
+const { errorEmbed, muteEmbed } from "../../util/Embeds");
  
 
-module.exports = {
+export default {
     //TODO A REFAIRE
     //TODO A REFAIRE
     //TODO A REFAIRE

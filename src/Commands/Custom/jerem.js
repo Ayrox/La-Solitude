@@ -1,8 +1,8 @@
-const { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } = require("discord.js");
-const Scrapper = require("images-scraper");
+const { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js");
+const Scrapper from "images-scraper");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("jerem")
         .setDescription("Fait spawn un jérémie sauvage"),

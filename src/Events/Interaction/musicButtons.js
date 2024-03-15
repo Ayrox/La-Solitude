@@ -1,10 +1,10 @@
-const { ButtonInteraction, Client } = require("discord.js");
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } = require("../../util/buttonLayout");
-const { generateProgressBar } = require("../../util/functions");
-const db = require("../../Models/playlist");
+import { ButtonInteraction, Client } from "discord.js";
+import { errorEmbed, musicEmbed } from "../../util/Embeds.js";
+import { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout.js";
+import { generateProgressBar } from "../../util/functions.js";
+import db from "../../Models/playlist.js";
 
-module.exports = {
+export default {
     name: "interactionCreate",
 
     async execute(interaction, client) {

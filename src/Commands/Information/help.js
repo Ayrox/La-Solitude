@@ -6,11 +6,11 @@ const {
     ActionRowBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} = require("discord.js");
-const { log } = require("util");
-const { errorEmbed } = require("../../util/Embeds");
+} from "discord.js");
+const { log } from "util");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("help")
         .setDescription("Affiche la liste des commandes"),

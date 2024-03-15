@@ -1,12 +1,12 @@
  
-const Discord = require("discord.js");
-// const https = require("https");
-// const axios = require("axios");
-var Pokedex = require("pokedex-promise-v2");
+const Discord from "discord.js");
+// const https from "https");
+// const axios from "axios");
+var Pokedex from "pokedex-promise-v2");
 var P = new Pokedex();
-const { errorEmbed } = require("../../util/Embeds");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new Discord.SlashCommandBuilder()
         .setName("pokemon-list")
         .setDescription("Affiche 1 à 10 Pokémon random")

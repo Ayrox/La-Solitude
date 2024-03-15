@@ -1,5 +1,5 @@
  
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
 const answers = [
     "C'est certain.",
     "C'est le cas.",
@@ -34,7 +34,7 @@ const answers = [
     "Faut pas rêver",
 ];
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("8ball")
         .setDescription("Je répond à vos questions")

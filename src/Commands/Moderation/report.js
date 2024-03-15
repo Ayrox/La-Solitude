@@ -1,9 +1,9 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } = require("discord.js");
-const conf = require("../../config");
-const { errorEmbed } = require("../../util/Embeds");
+const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
+const conf from "../../config.js");
+const { errorEmbed } from "../../util/Embeds");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("report")
         .setDescription("Signaler un membre du serveur")

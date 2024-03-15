@@ -1,10 +1,10 @@
-const { DisTube } = require("distube");
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } = require("../../util/buttonLayout");
-const config = require("../../config");
-const { generateProgressBar } = require("../../util/functions");
+import { DisTube } from "distube";
+import { errorEmbed, musicEmbed } from "../../util/Embeds.js";
+import { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout.js";
+import config from "../../config.js";
+import { generateProgressBar } from "../../util/functions.js";
 
-module.exports = {
+export default {
     name: "playSong",
     once: false,
 

@@ -5,12 +5,12 @@ const {
     ActionRowBuilder,
     ButtonBuilder, 
     SlashCommandBuilder
-} = require("discord.js");
-const { errorEmbed, successEmbed } = require("../../util/Embeds");
-const db = require("../../Models/channels");
+} from "discord.js");
+const { errorEmbed, successEmbed } from "../../util/Embeds");
+const db from "../../Models/channels");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("ticket-enable")
         .setDescription("Active le système de tickets."),

@@ -1,8 +1,8 @@
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } = require("../../util/buttonLayout");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Affiche la file d'attente"),

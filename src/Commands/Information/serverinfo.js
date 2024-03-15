@@ -1,7 +1,7 @@
  
-const Discord = require("discord.js");
+const Discord from "discord.js");
 
-module.exports = {
+export default {
     data: new Discord.SlashCommandBuilder()
         .setName("serverinfo")
         .setDescription("Affiche les informations du serveur"),

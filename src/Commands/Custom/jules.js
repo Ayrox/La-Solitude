@@ -1,10 +1,10 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
  
-// const https = require("https");
-// const axios = require("axios");
-// const config = require("../../config.json");
+// const https from "https");
+// const axios from "axios");
+// const config from "../../config.json");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("jules")
         .setDescription("Spawn un jules random"),

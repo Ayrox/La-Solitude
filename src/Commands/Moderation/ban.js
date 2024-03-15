@@ -1,10 +1,10 @@
  
-const { CommandInteraction, Client, EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const { errorEmbed, banEmbed } = require("../../util/Embeds");
+const { CommandInteraction, Client, EmbedBuilder, SlashCommandBuilder } from "discord.js");
+const { errorEmbed, banEmbed } from "../../util/Embeds");
 
-const db = require("../../Models/infraction");
+const db from "../../Models/infraction");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("ban")
         .setDescription("Bannir un membre du serveur")

@@ -1,5 +1,5 @@
-const { errorEmbed } = require("../../util/Embeds");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed } from "../../util/Embeds");
+const { SlashCommandBuilder } from "discord.js");
  
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
@@ -8,9 +8,9 @@ const {
     CommandInteraction,
     Client,
     AttachmentBuilder,
-} = require("discord.js");
+} from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("faketweet")
         .setDescription("Créer un faux tweet")

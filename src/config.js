@@ -1,9 +1,9 @@
-const db = require('./Models/channels')
+import db from './Models/channels.js'
 
 
 
 
-module.exports = async (guildID) => {
+export default async (guildID) => {
   
     //fetch channel from database and store in global variable
     let bienvenue, auRevoir, log, report, music, ticket

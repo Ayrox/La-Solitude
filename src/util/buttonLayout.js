@@ -1,6 +1,6 @@
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+import { ActionRowBuilder, ButtonBuilder } from "discord.js";
 
-module.exports = {
+export default {
     //------------------------ Music -------------------------------
     musicButtonRow: () => {
         return new ActionRowBuilder().addComponents(

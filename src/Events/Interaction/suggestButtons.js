@@ -1,7 +1,9 @@
-const { ButtonInteraction, Client } = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
-const db = require("../../Models/suggest")
-module.exports = {
+import { ButtonInteraction, Client } from "discord.js";
+import { errorEmbed } from "../../util/Embeds.js";
+import db from "../../Models/suggest.js";
+
+
+export default {
 
     name: "interactionCreate",
     

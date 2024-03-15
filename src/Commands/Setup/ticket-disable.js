@@ -1,10 +1,10 @@
-const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } = require("discord.js");
-const { errorEmbed, successEmbed } = require("../../util/Embeds");
-const db = require("../../Models/channels");
-const ticketDB = require("../../Models/tickets");
+const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js");
+const { errorEmbed, successEmbed } from "../../util/Embeds");
+const db from "../../Models/channels");
+const ticketDB from "../../Models/tickets");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("ticket-disable")
         .setDescription("Désactive le système de tickets."),

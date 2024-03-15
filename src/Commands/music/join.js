@@ -1,9 +1,9 @@
-const { joinVoiceChannel } = require("@discordjs/voice");
-const { successEmbed, errorEmbed } = require("../../util/Embeds");
+const { joinVoiceChannel } from "@discordjs/voice");
+const { successEmbed, errorEmbed } from "../../util/Embeds");
  
-const { CommandInteraction, SlashCommandBuilder } = require("discord.js")
+const { CommandInteraction, SlashCommandBuilder } from "discord.js")
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("join")
         .setDescription("Rejoins le salon vocal"),

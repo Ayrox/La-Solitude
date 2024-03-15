@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     Perms: [
         "CREATE_INSTANT_INVITE",
         "KICK_MEMBERS", 

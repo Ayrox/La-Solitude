@@ -1,9 +1,9 @@
  
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const weather = require("weather-js");
-const { errorEmbed } = require("../../util/Embeds");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+const weather from "weather-js");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("weather")
         .setDescription("Affiche la météo")

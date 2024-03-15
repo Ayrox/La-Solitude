@@ -1,7 +1,7 @@
-const { EmbedBuilder, CommandInteraction, Client } = require("discord.js");
-const { musicEmbed, errorEmbed } = require("../../util/Embeds"); //!provisoir, a retirer quand Handler pour Select menu sera présent
+import { EmbedBuilder, CommandInteraction, Client } from "discord.js";
+import { musicEmbed, errorEmbed } from "../../util/Embeds.js"; //!provisoir, a retirer quand Handler pour Select menu sera présent
 
-module.exports = {
+export default {
     name: "interactionCreate",
 
     /**

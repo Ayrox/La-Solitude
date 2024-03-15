@@ -1,7 +1,7 @@
-const { DisTube } = require("distube")
+import { DisTube } from "distube";
 
 
-module.exports = {
+export default {
     
     name: 'finishSong',
     once: false,

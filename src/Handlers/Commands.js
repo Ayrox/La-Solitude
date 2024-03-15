@@ -1,16 +1,16 @@
-const { Client } = require("discord.js")
+import { Client } from "discord.js"
+import ascii from 'ascii-table';
+import fs from "fs";
+import { REST } from '@discordjs/rest';
+import { Routes } from "discord-api-types/v10";
 
 /**
  * 
  * @param {Client} client 
  * @returns 
  */
-function loadCommands(client){
-    const ascii = require('ascii-table');
-    const fs = require("fs");
+export function loadCommands(client){
     const table = new ascii().setHeading("Events", "Status");
-    const { REST } = require('@discordjs/rest');
-    const { Routes } = require("discord-api-types/v10");
 
     let commandsArray = [];
     let developerArray= [];
@@ -23,7 +23,7 @@ function loadCommands(client){
             .filter((file) => file.endsWith(".js"))
 
         for (const file of commandFiles) {
-            const commandFile = require(`${process.cwd()}/src/Commands/${folder}/${file}`)
+            const commandFile = import(`file://${process.cwd()}/src/Commands/${folder}/${file}`)
 
             client.commands.set(commandFile.data.name, commandFile);
 
@@ -62,5 +62,3 @@ function loadCommands(client){
 
     return console.log(table.toString(), "\nLoaded Commands")
 }
-
-module.exports = { loadCommands }

@@ -1,5 +1,5 @@
-const { CommandInteraction, SlashCommandBuilder } = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
+const { CommandInteraction, SlashCommandBuilder } from "discord.js");
+const { errorEmbed } from "../../util/Embeds");
  
 
 const clean = (text) => {
@@ -10,7 +10,7 @@ const clean = (text) => {
     else return text;
 };
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("eval")
         .setDescription("eval")
@@ -38,7 +38,7 @@ module.exports = {
             let evaled = eval(code);
 
             if (typeof evaled !== "string")
-                evaled = require("util").inspect(evaled);
+                evaled from "util").inspect(evaled);
 
             message.channel.send(clean(evaled), { code: "xl" });
         } catch (err) {

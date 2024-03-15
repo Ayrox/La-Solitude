@@ -1,6 +1,6 @@
-const { EmbedBuilder, CommandInteraction, GuildMember, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const Pokedex = require("pokedex-promise-v2");
-const { errorEmbed } = require("./Embeds");
+import { EmbedBuilder, CommandInteraction, GuildMember, ActionRowBuilder, ButtonBuilder } from "discord.js";
+import Pokedex from "pokedex-promise-v2";
+import { errorEmbed } from "./Embeds.js";
 const P = new Pokedex();
 
 /**
@@ -188,7 +188,7 @@ function SortObjectArray (array, key) {
 }
 
 
-module.exports = {
+export default {
 
     toCapitalize,
     generateProgressBar,

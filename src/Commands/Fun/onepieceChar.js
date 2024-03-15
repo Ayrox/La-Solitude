@@ -1,11 +1,11 @@
-const delay = require("delay");
-const { EmbedBuilder, SlashCommandBuilder, CommandInteraction } = require("discord.js");
-const { OnePieceEmbed } = require("../../util/Embeds");
-const { toCapitalize } = require("../../util/functions");
+import delay from "delay";
+import { EmbedBuilder, SlashCommandBuilder, CommandInteraction } from "discord.js";
+import { OnePieceEmbed } from "../../util/Embeds.js";
+import { toCapitalize } from "../../util/functions.js";
 
-const OP = require('../../util/OnePieceData.json')
+import OP from '../../util/OnePieceData.json' assert { type: "json" }
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("onepiece-char")
         .setDescription("Créer un personnage de One Piece avec des caractéristiques aléatoires"),

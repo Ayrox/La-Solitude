@@ -1,9 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
-const phewist = require("../../util/phewistLists");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+const phewist from "../../util/phewistLists");
  
-//const config = require("../../config.json");
+//const config from "../../config.json");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("phewist")
         .setDescription("Générer une phrase que pourrait dire Phewist"),

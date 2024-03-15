@@ -1,8 +1,8 @@
-const { getVoiceConnection } = require("@discordjs/voice");
-const { successEmbed, errorEmbed } = require("../../util/Embeds");
-const { SlashCommandBuilder } = require("discord.js");
+const { getVoiceConnection } from "@discordjs/voice");
+const { successEmbed, errorEmbed } from "../../util/Embeds");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("leave")
         .setDescription("Quitte le salon vocal"),

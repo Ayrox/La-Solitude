@@ -1,9 +1,9 @@
-const { ActionRowBuilder, MessageSelectMenu, SlashCommandBuilder } = require("discord.js");
-const { options } = require("snekfetch");
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
+const { ActionRowBuilder, MessageSelectMenu, SlashCommandBuilder } from "discord.js");
+const { options } from "snekfetch");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("remove")
         .setDescription("Supprime une musique de la file d'attente"),

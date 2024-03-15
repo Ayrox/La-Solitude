@@ -1,6 +1,6 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Retourne le ping du bot"),

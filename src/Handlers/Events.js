@@ -1,15 +1,23 @@
-function loadEvents(client){
-    const ascii = require('ascii-table');
-    const fs = require("fs");
-    const table = new ascii().setHeading("Events", "Status");
+import { Client } from "discord.js"
+import ascii from 'ascii-table';
+import fs from "fs";
 
+/**
+ * 
+ * @param {Client} client 
+ * @returns 
+ */
+export function loadEvents(client){
+    const table = new ascii().setHeading("Events", "Status");
+    console.log(process.cwd())
     const folders = fs.readdirSync(`${process.cwd()}/src/Events`)
     for (const folder of folders){
         const files = fs
             .readdirSync(`${process.cwd()}/src/Events/${folder}`)
             .filter((file) => file.endsWith('.js'));
+            
         for (const file of files){
-            const event = require(`${process.cwd()}/src/Events/${folder}/${file}`);
+            const event = import(`file://${process.cwd()}/src/Events/${folder}/${file}`);
 
             if(event.rest){
                 if(event.once)
@@ -37,4 +45,3 @@ function loadEvents(client){
     }
     return console.log(table.toString(), "\nLoaded Events")
 }
-module.exports = { loadEvents }

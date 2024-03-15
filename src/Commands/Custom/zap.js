@@ -1,7 +1,7 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder().setName("zap").setDescription("Euuuuh...."),
 
     async execute(message) {

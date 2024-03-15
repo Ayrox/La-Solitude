@@ -1,7 +1,7 @@
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { SlashCommandBuilder } = require("discord.js");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     //! la commande fonctionne pour des petits nombre mais pas pour les grand (genre 300secondes)
     data: new SlashCommandBuilder()
         .setName("fastforward")

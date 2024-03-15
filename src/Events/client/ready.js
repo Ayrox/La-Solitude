@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
+import db from "../../Models/infraction.js"
 const database = process.env.DATABASE
-const db = require("../../Models/infraction")
 
-module.exports = {
+export default {
     
     name: 'ready',
     once: true,

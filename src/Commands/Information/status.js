@@ -1,8 +1,8 @@
  
-const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } = require("discord.js");
-const { connection } = require("mongoose");
+const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js");
+const { connection } from "mongoose");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("status")
         .setDescription("Affiche le statut du Bot et de la base de données"),

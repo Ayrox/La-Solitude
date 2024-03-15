@@ -1,7 +1,7 @@
-const { EmbedBuilder } = require("discord.js");
-const { SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder } from "discord.js");
+const { SlashCommandBuilder } from "discord.js");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("roll")
         .setDescription("Lancer un dé")

@@ -1,8 +1,8 @@
  
-const { MessageEmbed, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require("discord.js");
-const { errorEmbed } = require("../../util/Embeds");
+const { MessageEmbed, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js");
+const { errorEmbed } from "../../util/Embeds");
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("hot")
         .setDescription("Hot Combien ... tu suce ton père ?")

@@ -1,11 +1,11 @@
-const { EmbedBuilder, ButtonInteraction } = require("discord.js");
-const { errorEmbed, successEmbed } = require("../../util/Embeds");
-const { generateFromMessages } = require("discord-html-transcripts");
-const db = require("../../Models/tickets");
-const conf = require("../../config");
-const channels = require("../../Models/channels");
+import { EmbedBuilder, ButtonInteraction } from "discord.js";
+import { errorEmbed, successEmbed } from "../../util/Embeds.js";
+//import { generateFromMessages } from "discord-html-transcripts.js";
+import db from "../../Models/tickets.js";
+import conf from "../../config.js";
+import channels from "../../Models/channels.js";
 
-module.exports = {
+export default {
     
     name: "interactionCreate",
 

@@ -1,10 +1,10 @@
-const { Message, SlashCommandBuilder } = require("discord.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
-const { errorEmbed, musicEmbed } = require("../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } = require("../../util/buttonLayout");
+const { Message, SlashCommandBuilder } from "discord.js");
+const { joinVoiceChannel } from "@discordjs/voice");
+const { errorEmbed, musicEmbed } from "../../util/Embeds");
+const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
  
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName("play")
         .setDescription(
