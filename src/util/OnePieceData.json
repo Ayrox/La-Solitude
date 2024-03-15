@@ -544,15 +544,76 @@
             "nameJP":"Toki Toki no Mi",
             "type":"Paramecia",
             "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
-            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Zushi_Zushi_no_Mi"
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Toki_Toki_no_Mi"
         },
         {
             "nameFR": "Fruit de la Maturation",
             "nameJP":"Juku Juku no Mi",
             "type":"Paramecia",
             "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
-            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Zushi_Zushi_no_Mi"
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Juku_Juku_no_Mi"
         },
+        {
+            "nameFR": "Fruit de la Maladie",
+            "nameJP":"Shiku Shiku no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Shiku_Shiku_no_Mi"
+        },
+        {
+            "nameFR": "Fruit de la Téléportation",
+            "nameJP":"Wapu Wapu no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Wapu_Wapu_no_Mi"
+        },
+        {
+            "nameFR": "Fruit de la Force",
+            "nameJP":"Riki Riki no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Riki_Riki_no_Mi"
+        },
+        {
+            "nameFR": "Fruit du Ciboulot",
+            "nameJP":"Nomi Nomi no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Nomi_Nomi_no_Mi"
+        },
+        {
+            "nameFR": "Fruit de l'Île",
+            "nameJP":"Shima Shima no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Shima_Shima_no_Mi"
+        },
+        {
+            "nameFR": "Fruit du Glouglou",
+            "nameJP":"Gabu Gabu no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Gabu_Gabu_no_Mi"
+        },
+        {
+            "nameFR": "Fruit du Fouet",
+            "nameJP":"Muchi Muchi no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Muchi_Muchi_no_Mi"
+        },
+        {
+            "nameFR": "Fruit de la Conduite",
+            "nameJP":"Nori Nori no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Nori_Nori_no_Mi"
+        },
+
+
+
+
+
         {
             "nameFR": "Fruit de la Vocalise",
             "nameJP":"Goe Goe no Mi",
@@ -820,6 +881,30 @@
             "wikiURL": "https://onepiece.fandom.com/fr/wiki/Uta_Uta_no_Mi"
         },
         {
+            "nameFR": "Fruit des Gantelets",
+            "nameJP":"Kote Kote no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Kote_Kote_no_Mi"
+        },
+        {
+            "nameFR": "Fruit de la Marionnette",
+            "nameJP":"Mari Mari no Mi",
+            "type":"Paramecia",
+            "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Mari_Mari_no_Mi"
+        },
+
+
+
+
+
+
+
+
+
+
+        {
             "nameFR": "Fruit du Bovin, modèle Bison",
             "nameJP":"Ushi Ushi no Mi",
             "type":"Zoan",
@@ -966,6 +1051,11 @@
             "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
             "wikiURL": "https://onepiece.fandom.com/fr/wiki/Tori_Tori_no_Mi,_mod%C3%A8le_Aigle"
         },
+
+
+
+
+
         {
             "nameFR": "Fruit du Dinosaure, modèle Allosaurus",
             "nameJP":"Ryu Ryu no Mi",
@@ -1029,6 +1119,11 @@
             "imgURL": "https://media.discordapp.net/attachments/1011248131612082226/1011253742684881046/latest_cb20190403191529path-prefixfr.png",
             "wikiURL": "https://onepiece.fandom.com/fr/wiki/Neko_Neko_no_Mi,_mod%C3%A8le_Tigre_%C3%A0_dents_de_sabre"
         },
+
+
+
+
+
         {
             "nameFR": "Fruit du Volatile, modèle Phoenix",
             "nameJP":"Tori Tori no Mi",
@@ -1078,6 +1173,14 @@
             "imgURL": "https://static.wikia.nocookie.net/onepiece/images/3/32/Inu_Inu_no_Mi%2C_mod%C3%A8le_Okuchi_no_Makami_Fruit.png/revision/latest/scale-to-width-down/150?cb=20211204204353&path-prefix=fr",
             "wikiURL": "https://onepiece.fandom.com/fr/wiki/Inu_Inu_no_Mi,_mod%C3%A8le_Okuchi_no_Makami"
         },
+        {
+            "nameFR": "Fruit du Cheval, version Pégase",
+            "nameJP":"Uma Uma no Mi",
+            "type":"Zoan Mythique",
+            "imgURL": "https://static.wikia.nocookie.net/onepiece/images/3/32/Inu_Inu_no_Mi%2C_mod%C3%A8le_Okuchi_no_Makami_Fruit.png/revision/latest/scale-to-width-down/150?cb=20211204204353&path-prefix=fr",
+            "wikiURL": "https://onepiece.fandom.com/fr/wiki/Uma_Uma_no_Mi,_mod%C3%A8le_P%C3%A9gase"
+        },
+    
         {
             "nameFR": "Fruit du Canidé, modèle Raton Laveur",
             "nameJP":"Inu Inu no Mi",
@@ -1249,7 +1352,11 @@
 
     "smartLevel": [
         {
-            "name": "600 de QI",
+            "name": "Similaire à Végapunk",
+            "point": 60 
+        },
+        {
+            "name": "Un QI de 143",
             "point": 50 
         },
         {
@@ -1287,6 +1394,10 @@
     ],
 
     "speedLevel":[
+        {
+            "name": "Téléportation",
+            "point": 60
+        },
         {
             "name": "Vitesse de la lumière",
             "point": 60
@@ -1326,6 +1437,10 @@
     ],
 
     "strenghLevel": [
+        {
+            "name": "Celle d'un dieu",
+            "point": 110
+        },
         {
             "name": "Comme Kaido",
             "point": 100
@@ -1375,6 +1490,10 @@
             "url": "https://onepiece.fandom.com/fr/wiki/Bilcans"
         },
         {
+            "name":"Buccanneers",
+            "url": "https://onepiece.fandom.com/fr/wiki/Buccaneers"
+        },
+        {
             "name":"Centaure",
             "url": "https://onepiece.fandom.com/fr/wiki/Centaures"
         },
@@ -1391,12 +1510,24 @@
             "url": "https://onepiece.fandom.com/fr/wiki/Harpies"
         },
         {
-            "name":"Homme poisson",
+            "name":"Homme-Poisson",
             "url": "https://onepiece.fandom.com/fr/wiki/Hommes-Poissons"
+        },
+        {
+            "name":"Homies",
+            "url": "https://onepiece.fandom.com/fr/wiki/Homies"
         },
         {
             "name":"Humain",
             "url": "https://onepiece.fandom.com/fr/wiki/Humains"
+        },
+        {
+            "name":"Jouets",
+            "url": "https://onepiece.fandom.com/fr/wiki/Jouets"
+        },
+        {
+            "name":"Klabautermann",
+            "url": "https://onepiece.fandom.com/fr/wiki/Klabautermann"
         },
         {
             "name":"Kuja",
@@ -1469,10 +1600,14 @@
         {
             "name":"Wotan",
             "url": "https://onepiece.fandom.com/fr/wiki/Wotans"
+        },
+        {
+            "name":"Zombie",
+            "url": "https://onepiece.fandom.com/fr/wiki/Zombies"
         }
     ],
 
-    "side": ["pirate","marine", "Révolutionnaire"],
+    "side": ["Pirate","Marine", "Révolutionnaire"],
 
     "level": {
         "pirate": [
@@ -1503,6 +1638,10 @@
             {
                 "name": "Brigand",
                 "point": 5
+            },
+            {
+                "name": "Stagiaire",
+                "point": 1
             },
             {
                 "name": "Inconnu",
@@ -1565,6 +1704,10 @@
             },
             {
                 "name": "3e Classe",
+                "point": 2
+            },
+            {
+                "name": "Stagiaire",
                 "point": 1
             }
             
@@ -1599,8 +1742,15 @@
             {
                 "name": "Officier",
                 "point": 15
+            },
+            {
+                "name": "Membre",
+                "point": 10
+            },
+            {
+                "name": "Stagiaire",
+                "point": 1
             }
-            
             
             
             
