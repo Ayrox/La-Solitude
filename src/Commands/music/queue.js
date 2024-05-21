@@ -1,6 +1,6 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import * as ButtonRow from "../../util/buttonLayout";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ export default {
             if (!queue)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -35,7 +35,7 @@ export default {
 
             const nextSongs = `**${previousNumberSongs}** musique(s) sur **${numberSongs}** de la playlist a(ont) été jouée(s)`;
 
-            let playingEmbed = musicEmbed()
+            let playingEmbed = Embed.musicEmbed()
                 .setDescription(
                     `${previousTracks
                         .slice(-6)
@@ -52,7 +52,7 @@ export default {
             message.reply({ embeds: [playingEmbed], ephemeral: true });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

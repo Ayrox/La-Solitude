@@ -1,5 +1,5 @@
  
-const {
+import {
     CommandInteraction,
     Client,
     EmbedBuilder,
@@ -7,12 +7,12 @@ const {
     ButtonBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} from "discord.js");
-const db from "../../Models/my-pokedex");
-const { errorEmbed, successEmbed } from "../../util/Embeds");
-const Pokedex from "pokedex-promise-v2");
+} from "discord.js";
+import db from "../../Models/my-pokedex";
+import * as Embed from "../../util/Embeds";
+import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
-const { pokemonNames } from "../../util/pokemonNames");
+import { pokemonNames } from "../../util/pokemonNames";
 
 export default {
     //TODO A REFAIRE
@@ -174,7 +174,7 @@ export default {
         //! INITIALISATION DE LA BDD POKEDEX DU USER
 
         if (Sub === "init") {
-            //if (message.member.permissions.has("ADMINISTRATOR")) { return message.editReply({ embed: [errorEmbed().setDescription("You need to be an administrator to use this command.")], ephemeral: true }) }
+            //if (message.member.permissions.has("ADMINISTRATOR")) { return message.editReply({ embed: [Embed.errorEmbed().setDescription("You need to be an administrator to use this command.")], ephemeral: true }) }
 
             let initEmbed = new EmbedBuilder()
                 .setTitle("Initialisation de votre Pokédex...")
@@ -189,7 +189,7 @@ export default {
                     if (err) {
                         return await message.editReply({
                             embed: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     "Une erreur a été rencontrée lors de la recherche de votre Pokédex"
                                 ),
                             ],
@@ -200,7 +200,7 @@ export default {
                         isInDB = true;
                         return await message.editReply({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     `Tu as déjà un Pokédex`
                                 ),
                             ],
@@ -250,7 +250,7 @@ export default {
                 if (menu.user.id !== member.id) {
                     return menu.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Ce n'est pas ton Pokédex"
                             ),
                         ],
@@ -353,7 +353,7 @@ export default {
                         .catch((err) => {
                             console.log(err);
                             return message.editReply({
-                                embeds: [errorEmbed().setDescription(`${err}`)],
+                                embeds: [Embed.errorEmbed().setDescription(`${err}`)],
                                 components: [],
                                 ephemeral: true,
                             });
@@ -387,7 +387,7 @@ export default {
                         if (menu.user.id !== member.id) {
                             return menu.reply({
                                 embeds: [
-                                    errorEmbed().setDescription(
+                                    Embed.errorEmbed().setDescription(
                                         "Ce n'est pas ton Pokédex"
                                     ),
                                 ],
@@ -456,7 +456,7 @@ export default {
                                 if (menu.user.id !== member.id) {
                                     return menu.reply({
                                         embeds: [
-                                            errorEmbed().setDescription(
+                                            Embed.errorEmbed().setDescription(
                                                 "Ce n'est pas ton Pokédex"
                                             ),
                                         ],
@@ -708,7 +708,7 @@ export default {
                                     if (reason === "time") {
                                         return m.edit({
                                             embeds: [
-                                                errorEmbed().setDescription(
+                                                Embed.errorEmbed().setDescription(
                                                     "Vous n'avez pas comfirmé dans le temps imparti"
                                                 ),
                                             ],
@@ -725,7 +725,7 @@ export default {
                         if (reason === "time") {
                             return m.edit({
                                 embeds: [
-                                    errorEmbed().setDescription(
+                                    Embed.errorEmbed().setDescription(
                                         "Vous n'avez pas choisis de Pokédex dans le temps imparti"
                                     ),
                                 ],
@@ -740,7 +740,7 @@ export default {
                 if (reason === "time") {
                     return m.edit({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous n'avez pas choisis de version dans le temps imparti"
                             ),
                         ],
@@ -766,7 +766,7 @@ export default {
                     if (err) {
                         return await message.editReply({
                             embed: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     "Une erreur a été rencontrée lors de la recherche de votre Pokédex"
                                 ),
                             ],
@@ -776,7 +776,7 @@ export default {
                     if (!data) {
                         return await message.editReply({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     `Vous n'avez pas de Pokédex.\nPour créer un Pokédex, utilisez la commande : \`/${this.name} init\`.`
                                 ),
                             ],
@@ -861,7 +861,7 @@ export default {
                             if (menu.user.id !== member.id) {
                                 return menu.reply({
                                     embeds: [
-                                        errorEmbed().setDescription(
+                                        Embed.errorEmbed().setDescription(
                                             "Ce n'est pas ton pokédex"
                                         ),
                                     ],
@@ -911,7 +911,7 @@ export default {
                                 if (reason === "time") {
                                     return m.edit({
                                         embeds: [
-                                            errorEmbed().setDescription(
+                                            Embed.errorEmbed().setDescription(
                                                 "Vous n'avez pas confirmé dans le temps imparti"
                                             ),
                                         ],
@@ -935,7 +935,7 @@ export default {
                     if (err) {
                         return await message.editReply({
                             embed: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     "Une erreur a été rencontrée lors de la recherche de votre Pokédex"
                                 ),
                             ],
@@ -945,7 +945,7 @@ export default {
                     if (!data) {
                         return await message.editReply({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     `Vous n'avez pas de Pokédex.\nPour créer un Pokédex, utilisez la commande : \`/${this.name} init\`.`
                                 ),
                             ],

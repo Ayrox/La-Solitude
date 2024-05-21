@@ -1,13 +1,14 @@
  
-const {
+import {
     EmbedBuilder,
     parseEmoji,
     CommandInteraction,
     Client,
     SlashCommandBuilder
-} from "discord.js");
-const delay from "delay");
-const { errorEmbed } from "../../util/Embeds");
+} from "discord.js";
+
+import delay from "delay";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -29,7 +30,7 @@ export default {
         if (!message.member.permissions.has("ADMINISTRATOR"))
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous n'avez pas la permission d'utiliser cette commande"
                     ),
                 ],
@@ -98,7 +99,7 @@ export default {
             await message.editReply({ embeds: [embedCreate] });
         } catch (e) {
             message.editReply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
             });
             console.log(e)
         }

@@ -1,14 +1,14 @@
  
-const {
+import {
     CommandInteraction,
     EmbedBuilder,
     Client,
     ActionRowBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} from "discord.js");
-const { log } from "util");
-const { errorEmbed } from "../../util/Embeds");
+} from "discord.js";
+import { log } from "util";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -148,7 +148,7 @@ export default {
         });*/
         message.reply({
             embeds: [
-                errorEmbed().setDescription(`Cette commande n'est plus disponible.`),
+                Embed.errorEmbed().setDescription(`Cette commande n'est plus disponible.`),
             ],
             ephemeral: true,
         });

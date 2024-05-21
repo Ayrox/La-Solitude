@@ -1,13 +1,13 @@
-const {
+import {
     CommandInteraction,
     EmbedBuilder,
     Client,
     ActionRowBuilder,
     ButtonBuilder, 
     SlashCommandBuilder
-} from "discord.js");
-const { errorEmbed, successEmbed } from "../../util/Embeds");
-const db from "../../Models/channels");
+} from "discord.js";
+import * as Embed from "../../util/Embeds";
+import db from "../../Models/channels";
  
 
 export default {
@@ -31,7 +31,7 @@ export default {
         if (!message.guild.members.me.permissions.has("MANAGE_GUILD"))
             return message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Je n'ai pas la permission `MANAGE_GUILD` pour utiliser cette commande."
                     ),
                 ],
@@ -41,7 +41,7 @@ export default {
         if (message.user.id !== Owner.id)
             return message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Seul le propriétaire du serveur peut utiliser cette commande."
                     ),
                 ],
@@ -52,7 +52,7 @@ export default {
             if (err)
                 return message.editReply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Une erreur est survenue: \`${err}\``
                         ),
                     ],
@@ -63,7 +63,7 @@ export default {
                 if (res.TicketSystem)
                     return message.editReply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Le système de tickets est déjà activé."
                             ),
                         ],
@@ -174,7 +174,7 @@ export default {
 
             message.editReply({
                 embeds: [
-                    successEmbed().setDescription(
+                    Embed.successEmbed().setDescription(
                         "Le système de tickets a été activé."
                     ),
                 ],
@@ -184,7 +184,7 @@ export default {
             res.save().catch((err) => {
                 message.editReply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Une erreur est survenue: \`${err}\``
                         ),
                     ],

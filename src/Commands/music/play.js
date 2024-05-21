@@ -1,7 +1,7 @@
-const { Message, SlashCommandBuilder } from "discord.js");
-const { joinVoiceChannel } from "@discordjs/voice");
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
+import { Message, SlashCommandBuilder } from "discord.js";
+import { joinVoiceChannel } from "@discordjs/voice";
+import * as Embed from "../../util/Embeds";
+import * as ButtonRow from "../../util/buttonLayout";
  
 
 export default {
@@ -22,7 +22,7 @@ export default {
         if (!channel)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous devez rejoindre un salon vocal !`
                     ),
                 ],
@@ -51,7 +51,7 @@ export default {
             } catch (e) {
                 console.log(e);
                 message.editReply({
-                    embeds: [errorEmbed().setDescription(`${e}`)],
+                    embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                     ephemeral: true,
                 });
             }
@@ -67,7 +67,7 @@ export default {
             } catch (e) {
                 console.log(e);
                 message.editReply({
-                    embeds: [errorEmbed().setDescription(`${e}`)],
+                    embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                     ephemeral: true,
                 });
             }
@@ -76,7 +76,7 @@ export default {
         try {
             message.editReply({
                 embeds: [
-                    musicEmbed()
+                    Embed.musicEmbed()
                         .setTitle(
                             `▶️ | Une musique a été ajouté à la file d'attente : `
                         )
@@ -100,13 +100,13 @@ export default {
                             }
                         ),
                 ],
-                components: [musicButtonRow(), musicButtonRow2()],
+                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                 ephemeral: true,
             });
         } catch (e) {
             console.log(e);
             message.editReply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

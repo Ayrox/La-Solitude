@@ -1,6 +1,6 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
-const { errorEmbed, setChannelEmbed } from "../../util/Embeds");
-const db from "../../Models/channels");
+import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
+import db from "../../Models/channels";
  
 
 export default {
@@ -41,7 +41,7 @@ export default {
         if (!message.member.permissions.has("ADMINISTRATOR")) {
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez être un Administrateur pour utiliser cette commande"
                     ),
                 ],
@@ -153,7 +153,7 @@ export default {
 
         message.reply({
             embeds: [
-                setChannelEmbed().setDescription(
+                Embed.setChannelEmbed().setDescription(
                     `le salon \`${message.options.getString(
                         "channel"
                     )}\` est maintenant défini dans le salon : ${

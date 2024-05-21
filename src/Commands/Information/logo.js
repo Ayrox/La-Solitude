@@ -1,5 +1,5 @@
  
-const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } from "discord.js");
+import { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()

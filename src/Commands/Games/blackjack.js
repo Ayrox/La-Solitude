@@ -1,14 +1,12 @@
- 
-
-const {
+import {
     CommandInteraction,
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
     Client,
     SlashCommandBuilder
-} from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+} from "discord.js";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -76,7 +74,7 @@ export default {
             if (btn.user.id !== message.member.id) {
                 return await btn.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Vous ne pouvez pas intéragir car ce n'est pas votre partie"
                         ),
                     ],
@@ -130,7 +128,7 @@ export default {
                 if (btn.user.id !== message.member.id) {
                     return await btn.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous ne pouvez pas intéragir car ce n'est pas votre partie"
                             ),
                         ],
@@ -243,7 +241,7 @@ export default {
                     case "time":
                         await blackjack.edit({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     "Vous n'avez pas répondu dans le temps imparti"
                                 ),
                             ],
@@ -258,7 +256,7 @@ export default {
             if (reason === "time") {
                 await blackjack.edit({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Vous n'avez pas répondu dans le temps imparti"
                         ),
                     ],

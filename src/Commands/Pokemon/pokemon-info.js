@@ -1,16 +1,12 @@
  
-const Discord from "discord.js");
-// const https from "https");
-// const axios from "axios");
-const { pokemonNames } from "../../util/pokemonNames.json");
-const {
-    errorEmbed,
-    pokemonEmbed,
-    pokemonEasterEggEmbed,
-} from "../../util/Embeds");
-const fs from "fs");
-const { fetchPokemonData } from "../../util/functions");
-const Pokedex from "pokedex-promise-v2");
+import Discord from "discord.js";
+// import https from "https";
+// import axios from "axios";
+import { pokemonNames } from "../../util/pokemonNames.json";
+import * as Embed from "../../util/Embeds";
+import fs from "fs";
+import { fetchPokemonData } from "../../util/functions";
+import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
 
 export default {
@@ -43,7 +39,7 @@ export default {
 
                 return message.reply({
                     embeds: [
-                        pokemonEasterEggEmbed()
+                        Embed.pokemonEasterEggEmbed()
                             .setTitle(
                                 "<:pokeball:898941316451422248> \\_\\_\\_\\_\\_ François Le Trepuec \\_\\_\\_\\_\\_ <:pokeball:898941316451422248>"
                             )
@@ -59,7 +55,7 @@ export default {
                 //ewen
                 return message.reply({
                     embeds: [
-                        pokemonEasterEggEmbed()
+                        Embed.pokemonEasterEggEmbed()
                             .setTitle(
                                 "<:pokeball:898941316451422248> \\_\\_\\_\\_\\_ Ewen Guégan \\_\\_\\_\\_\\_ <:pokeball:898941316451422248>"
                             )
@@ -72,7 +68,7 @@ export default {
                 //does not exist
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription("Ce Pokémon n'existe pas."),
+                        Embed.errorEmbed().setDescription("Ce Pokémon n'existe pas."),
                     ],
                 });
             }
@@ -84,7 +80,7 @@ export default {
                 //not in range
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Il n'existe que 898 Pokémon à ce jour, choisissez un Pokémon existant !"
                         ),
                     ],
@@ -94,7 +90,7 @@ export default {
 
         message.reply({
             embeds: [
-                pokemonEmbed()
+                Embed.pokemonEmbed()
                     .setDescription("⏳ Loading data ...")
                     .setColor("#ff6800"),
             ],
@@ -127,7 +123,7 @@ export default {
         try {
             message.editReply({
                 embeds: [
-                    pokemonEmbed()
+                    Embed.pokemonEmbed()
                         .setTitle(
                             `<:pokeball:898941316451422248> \\_\\_\\_\\_\\___| #${pokemonData.indexPokedex} ${pokemonData.nom} |__\\_\\_\\_\\_\\_ <:pokeball:898941316451422248>`
                         )
@@ -216,7 +212,7 @@ export default {
         } catch (e) {
             console.log(e)
             message.editReply({
-                embeds: [errorEmbed().setDescription(`\`${e}\``)],
+                embeds: [Embed.errorEmbed().setDescription(`\`${e}\``)],
             });
         }
     },

@@ -1,6 +1,6 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder} from "discord.js");
-const { errorEmbed, setChannelEmbed } from "../../util/Embeds");
-const db from "../../Models/channels");
+import { EmbedBuilder, CommandInteraction, SlashCommandBuilder} from "discord.js";
+import * as Embed from "../../util/Embeds";
+import db from "../../Models/channels";
  
 
 export default {

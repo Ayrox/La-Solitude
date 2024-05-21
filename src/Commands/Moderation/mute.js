@@ -1,7 +1,7 @@
-const ms from "ms");
-const { CommandInteraction, SlashCommandBuilder } from "discord.js");
-const db from "../../Models/infraction");
-const { errorEmbed, muteEmbed } from "../../util/Embeds");
+import ms from "ms";
+import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import db from "../../Models/infraction";
+import * as Embed from "../../util/Embeds";
  
 
 export default {
@@ -111,14 +111,14 @@ export default {
         if (Target.id === message.member.id)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous ne pouvez vous mute !"),
+                    Embed.errorEmbed().setDescription("Vous ne pouvez vous mute !"),
                 ],
                 ephemeral: true,
             });
         if (Target.roles.cache.has(muteRole.id))
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Cette personne est déjà mute !"
                     ),
                 ],
@@ -127,14 +127,14 @@ export default {
         if (Target.id === message.client.user.id)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous ne pouvez pas me mute !"),
+                    Embed.errorEmbed().setDescription("Vous ne pouvez pas me mute !"),
                 ],
                 ephemeral: true,
             });
         if (Target.id === message.guild.ownerID)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas mute le propriétaire du serveur !"
                     ),
                 ],
@@ -146,7 +146,7 @@ export default {
         )
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas mute une personne ayant plus de droit que vous !"
                     ),
                 ],
@@ -191,7 +191,7 @@ export default {
 
                 Target.send({
                     embeds: [
-                        muteEmbed()
+                        Embed.muteEmbed()
                             .setDescription(
                                 `Vous avez été mute par ${message.member} sur le serveur **${message.guild.name}**`
                             )
@@ -225,7 +225,7 @@ export default {
 
                 message.reply({
                     embeds: [
-                        muteEmbed()
+                        Embed.muteEmbed()
                             .addFields(
                                 {
                                     name: "Membre :",

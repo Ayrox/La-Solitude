@@ -1,6 +1,6 @@
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
-const db from "../../Models/infraction");
-const { errorEmbed, warningEmbed } from "../../util/Embeds");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import db from "../../Models/infraction";
+import * as Embed from "../../util/Embeds";
  
 
 export default {
@@ -116,7 +116,7 @@ export default {
                 if (!Target)
                     return interaction.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifiés le membre à qui vous voulez assigner un avertissement !"
                             ),
                         ],
@@ -124,7 +124,7 @@ export default {
                 if (!Reason)
                     return interaction.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifiés la raison de l'avertissement ! "
                             ),
                         ],
@@ -170,7 +170,7 @@ export default {
                 );
                 interaction.reply({
                     embeds: [
-                        warningEmbed()
+                        Embed.warningEmbed()
                             .setDescription(
                                 `Avertissement ajouté à : ${Target.tag}  |  ||${Target.id}||`
                             )
@@ -194,7 +194,7 @@ export default {
                 if (!Target)
                     return message.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifier un membre !"
                             ),
                         ],
@@ -211,7 +211,7 @@ export default {
                         if (!data || data.Content.length === 0)
                             return interaction.reply({
                                 embeds: [
-                                    warningEmbed().setDescription(
+                                    Embed.warningEmbed().setDescription(
                                         "Ce membre n'a aucun avertissement à son actif !"
                                     ),
                                 ],
@@ -228,7 +228,7 @@ export default {
                         }
                         interaction.reply({
                             embeds: [
-                                warningEmbed()
+                                Embed.warningEmbed()
                                     .setDescription(
                                         `Les avertissement de ${Target}`
                                     )
@@ -250,7 +250,7 @@ export default {
                 if (!Target)
                     return message.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifier un membre !"
                             ),
                         ],
@@ -258,7 +258,7 @@ export default {
                 if (!WarnID)
                     return message.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifier l'id d'un avertissement !\n\nUtiliser `/warnings check` pour afficher les avertissements "
                             ),
                         ],
@@ -275,7 +275,7 @@ export default {
                         if (!data)
                             return interaction.reply({
                                 embeds: [
-                                    warningEmbed().setDescription(
+                                    Embed.warningEmbed().setDescription(
                                         "Ce membre n'a aucun avertissement à son acitf !"
                                     ),
                                 ],
@@ -283,7 +283,7 @@ export default {
                         if (WarnID > data.Content.length)
                             return interaction.reply({
                                 embeds: [
-                                    warningEmbed().setDescription(
+                                    Embed.warningEmbed().setDescription(
                                         "L'ID ne correspond à aucun avertissment !"
                                     ),
                                 ],
@@ -293,7 +293,7 @@ export default {
 
                         interaction.reply({
                             embeds: [
-                                warningEmbed().setDescription(
+                                Embed.warningEmbed().setDescription(
                                     `L'avertissement n°${
                                         WarnID + 1
                                     } de ${Target} a été supprimé`
@@ -311,7 +311,7 @@ export default {
                 if (!Target)
                     return interaction.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous devez spécifier un membre"
                             ),
                         ],
@@ -328,7 +328,7 @@ export default {
                         if (!data)
                             return interaction.reply({
                                 embeds: [
-                                    warningEmbed().setDescription(
+                                    Embed.warningEmbed().setDescription(
                                         "Ce membre n'a aucun avertissement à son actif"
                                     ),
                                 ],
@@ -341,7 +341,7 @@ export default {
                             });
                             interaction.reply({
                                 embeds: [
-                                    warningEmbed().setDescription(
+                                    Embed.warningEmbed().setDescription(
                                         `Tous les avertissement de ${Target.user.tag} ont été supprimés`
                                     ),
                                 ],

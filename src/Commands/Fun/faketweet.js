@@ -1,14 +1,9 @@
-const { errorEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { EmbedBuilder, CommandInteraction, Client, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
  
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
-const {
-    EmbedBuilder,
-    CommandInteraction,
-    Client,
-    AttachmentBuilder,
-} from "discord.js");
+
 
 export default {
     data: new SlashCommandBuilder()
@@ -128,7 +123,7 @@ export default {
             console.log(err);
             return message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(`Une erreur est survenue`),
+                    Embed.errorEmbed().setDescription(`Une erreur est survenue`),
                 ],
                 ephemeral: true,
             });

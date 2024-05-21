@@ -1,6 +1,6 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const puppeteer from "puppeteer");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import puppeteer from "puppeteer";
+import { SlashCommandBuilder } from "discord.js";
 
 function sleep(ms) {
     return new Promise((resolve) => {
@@ -17,7 +17,7 @@ export default {
         try {
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `La file d'attente est actuellement vide !`
                     ),
                 ],
@@ -67,13 +67,13 @@ export default {
 
                 for (let i = 0; i < lyricsArray.length; i++) {
                     message.followUp({
-                        embeds: [musicEmbed().setDescription(lyricsArray[i])],
+                        embeds: [Embed.musicEmbed().setDescription(lyricsArray[i])],
                     });
                     await sleep(1000);
                 }
             } else {
                 message.followUp({
-                    embeds: [musicEmbed().setDescription(lyrics)],
+                    embeds: [Embed.musicEmbed().setDescription(lyrics)],
                 });
             }
 
@@ -81,7 +81,7 @@ export default {
         } catch (e) {
             message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Aucune parole n'a été trouvée !`
                     ),
                 ],

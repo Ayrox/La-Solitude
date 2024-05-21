@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ export default {
             if (!queue)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -24,7 +24,7 @@ export default {
                 queue.resume();
                 return message.reply({
                     embeds: [
-                        musicEmbed().setDescription(
+                        Embed.musicEmbed().setDescription(
                             `${message.user} a repris la lecture de la musique en cours...`
                         ),
                     ],
@@ -34,14 +34,14 @@ export default {
 
             message.reply({
                 embeds: [
-                    musicEmbed().setDescription(
+                    Embed.musicEmbed().setDescription(
                         `${message.user} a mis en pause la musique en cours...`
                     ),
                 ],
             });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

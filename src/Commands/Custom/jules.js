@@ -1,8 +1,8 @@
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
  
-// const https from "https");
-// const axios from "axios");
-// const config from "../../config.json");
+// import https from "https";
+// import axios from "axios";
+// import config from "../../config.json";
 
 export default {
     data: new SlashCommandBuilder()

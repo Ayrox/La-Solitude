@@ -1,5 +1,5 @@
-const { CommandInteraction, SlashCommandBuilder } from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
  
 
 const clean = (text) => {
@@ -26,7 +26,7 @@ export default {
         if (message.member.id !== "206905331366756353")
             return message.reply({
                 embed: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez être le propriétaire du Bot pour utiliser cette commande !"
                     ),
                 ],
@@ -38,7 +38,7 @@ export default {
             let evaled = eval(code);
 
             if (typeof evaled !== "string")
-                evaled from "util").inspect(evaled);
+                evaled = require("util").inspect(evaled);
 
             message.channel.send(clean(evaled), { code: "xl" });
         } catch (err) {

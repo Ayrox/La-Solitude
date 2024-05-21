@@ -1,6 +1,6 @@
-const { ActionRowBuilder, MessageSelectMenu, SlashCommandBuilder } from "discord.js");
-const { options } from "snekfetch");
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
+import { ActionRowBuilder, MessageSelectMenu, SlashCommandBuilder } from "discord.js";
+import { options } from "snekfetch";
+import * as Embed from "../../util/Embeds";
  
 
 export default {
@@ -14,7 +14,7 @@ export default {
             if (!queue)
                 return message.editReply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -26,7 +26,7 @@ export default {
             //! [EWEN] Si jamais je l'ai deja fait dans le fichier /Commands/Developper/commands.js ligne 84 --> ligne 98
 
             await message.reply({
-                embeds: [musicEmbed().setDescription("⏳ Chargement ...")],
+                embeds: [Embed.musicEmbed().setDescription("⏳ Chargement ...")],
             });
 
             const optionMenu = await queue.songs.map((song, i) => {
@@ -46,7 +46,7 @@ export default {
 
             message.editReply({
                 embeds: [
-                    musicEmbed().setDescription(
+                    Embed.musicEmbed().setDescription(
                         `Sélectionner une ou plusieurs musiques à supprimer ci-dessous ⤵️`
                     ),
                 ],
@@ -58,7 +58,7 @@ export default {
         } catch (e) {
             console.log(e);
             message.editReply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

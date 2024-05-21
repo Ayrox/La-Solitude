@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -35,7 +35,7 @@ export default {
             if (nextSong === undefined && queue.autoplay === false)
                 return interaction.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -44,7 +44,7 @@ export default {
             if (queue.songs[skipNumber] === undefined)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -53,7 +53,7 @@ export default {
 
             message.reply({
                 embeds: [
-                    musicEmbed()
+                    Embed.musicEmbed()
                         .setThumbnail(`${queue.songs[skipNumber].thumbnail}`)
                         .setDescription(
                             `La musique a été passée par ${message.user}! Musique actuelle :\n [${queue.songs[skipNumber].name}](${queue.songs[skipNumber].url})`
@@ -64,7 +64,7 @@ export default {
             queue.jump(skipNumber);
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

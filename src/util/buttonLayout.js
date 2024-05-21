@@ -1,8 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder } from "discord.js";
 
-export default {
     //------------------------ Music -------------------------------
-    musicButtonRow: () => {
+export const musicButtonRow = () => {
         return new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setLabel("⏮️")
@@ -17,9 +16,9 @@ export default {
                 .setCustomId(`skip`)
                 .setStyle("Secondary")
         );
-    },
+    }
 
-    musicButtonRow2: () => {
+export const musicButtonRow2 = () => {
         return new ActionRowBuilder().addComponents(
             new ButtonBuilder()
                 .setLabel("🔀")
@@ -34,5 +33,4 @@ export default {
                 .setCustomId(`like`)
                 .setStyle("Secondary")
         );
-    },
-};
+}

@@ -1,6 +1,6 @@
  
-const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js");
-const { connection } from "mongoose");
+import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
+import { connection } from "mongoose";
 
 export default {
     data: new SlashCommandBuilder()

@@ -1,7 +1,7 @@
  
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
-const weather from "weather-js");
-const { errorEmbed } from "../../util/Embeds");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import weather from "weather-js";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -20,14 +20,14 @@ export default {
             (error, result) => {
                 if (error)
                     return message.reply({
-                        embeds: [errorEmbed().setDescription(`${error}`)],
+                        embeds: [Embed.errorEmbed().setDescription(`${error}`)],
                         ephemeral: true,
                     });
 
                 if (result === undefined || result.length === 0)
                     return message.reply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 `Localisation invalide`
                             ),
                         ],

@@ -1,6 +1,6 @@
  
-const { MessageEmbed, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+import { MessageEmbed, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -34,7 +34,7 @@ export default {
         if (target.bot)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas défier un Bot."
                     ),
                 ],
@@ -42,7 +42,7 @@ export default {
         if (executor.id === target.id)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas vous auto-défier."
                     ),
                 ],
@@ -110,7 +110,7 @@ export default {
                 message.deleteReply();
                 return executor.dmChannel.send({
                     embeds: [
-                        errorEmbed.setDescription(
+                        Embed.errorEmbed.setDescription(
                             "Aucune réponse n'a été envoyé"
                         ),
                     ],
@@ -127,7 +127,7 @@ export default {
                 message.deleteReply();
                 return target.dmChannel.send({
                     embeds: [
-                        errorEmbed.setDescription(
+                        Embed.errorEmbed.setDescription(
                             "Aucune réponse n'a été envoyé"
                         ),
                     ],

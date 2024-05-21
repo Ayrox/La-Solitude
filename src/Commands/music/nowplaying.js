@@ -1,7 +1,7 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout");
-const { generateProgressBar } from "../../util/functions");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import * as ButtonRow from "../../util/buttonLayout";
+import { generateProgressBar } from "../../util/functions";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ export default {
         if (!queue)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `La file d'attente est actuellement vide !`
                     ),
                 ],
@@ -23,7 +23,7 @@ export default {
         if (!channel)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous devez rejoindre le Bot en vocal !`
                     ),
                 ],
@@ -45,7 +45,7 @@ export default {
                 //console.log(`${queue.formattedCurrentTime} **${generateProgressBar(queue.currentTime, playingSong.duration )}** ${playingSong.formattedDuration}`)
                 message.editReply({
                     embeds: [
-                        musicEmbed()
+                        Embed.musicEmbed()
                             .setTitle(`Musique jouée : ${playingSong.name}`)
                             .setURL(`${playingSong.url}`)
                             .setThumbnail(`${playingSong.thumbnail}`)
@@ -76,13 +76,13 @@ export default {
                                 }
                             ),
                     ],
-                    components: [musicButtonRow(), musicButtonRow2()],
+                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                     ephemeral: false,
                 });
             }, 1000);
         } catch (e) {
             message.editReply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

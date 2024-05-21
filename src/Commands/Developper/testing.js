@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } from "discord.js");
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -9,7 +9,7 @@ export default {
         if (message.member.id !== "206905331366756353")
             return message.reply({
                 embed: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez être le propriétaire du Bot pour utiliser cette commande !"
                     ),
                 ],

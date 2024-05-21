@@ -1,5 +1,5 @@
 import { EmbedBuilder, ButtonInteraction } from "discord.js";
-import { errorEmbed, successEmbed } from "../../util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 //import { generateFromMessages } from "discord-html-transcripts.js";
 import db from "../../Models/tickets.js";
 import conf from "../../config.js";
@@ -27,13 +27,13 @@ export default {
 
 
         if (!member.permissions.has("ADMINISTRATOR")) 
-            return interaction.reply({ embeds: [errorEmbed().setDescription("Vous devez être un Administrateur pour utiliser cette commande.")], ephemeral: true });
+            return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Vous devez être un Administrateur pour utiliser cette commande.")], ephemeral: true });
         
         const Embed = new EmbedBuilder().setColor("#0099ff");
 
         db.findOne({ ChannelID: channel.id }, async (err, data) => { 
-            if (err) return interaction.reply({ embeds: [errorEmbed().setDescription(`Une erreur est survenue: \`${err}\``)], ephemeral: true });
-            if (!data) return interaction.reply({ embeds: [errorEmbed().setDescription("Aucune donnée trouvé, Veuillez supprimé manuellement.")], ephemeral: true });
+            if (err) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription(`Une erreur est survenue: \`${err}\``)], ephemeral: true });
+            if (!data) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Aucune donnée trouvé, Veuillez supprimé manuellement.")], ephemeral: true });
 
             switch (customId) {
                 case "ticket-lock":
@@ -43,7 +43,7 @@ export default {
                     interaction.message.edit({components : [interaction.message.components[0]]})
                     
 
-                    if (data.Locked) return interaction.reply({ embeds: [errorEmbed().setDescription("Ce ticket est déjà verrouillé.")], ephemeral: true });
+                    if (data.Locked) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Ce ticket est déjà verrouillé.")], ephemeral: true });
                     
 
                     await db.updateOne({ ChannelID: channel.id }, { Locked: true });
@@ -61,7 +61,7 @@ export default {
                     interaction.message.components[0].components[2].data.disabled = true
                     interaction.message.edit({components : [interaction.message.components[0]]})
 
-                    if (!data.Locked) return interaction.reply({ embeds: [errorEmbed().setDescription("Ce ticket est déjà déverrouillé.")], ephemeral: true });
+                    if (!data.Locked) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Ce ticket est déjà déverrouillé.")], ephemeral: true });
                     
 
                     await db.updateOne({ ChannelID: channel.id }, { Locked: false });
@@ -82,7 +82,7 @@ export default {
                     interaction.message.edit({components : [interaction.message.components[0]]})
 
                     
-                    if (data.Closed) return interaction.reply({ embeds: [errorEmbed().setDescription("Ce ticket est déjà fermé.")], ephemeral: true });
+                    if (data.Closed) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Ce ticket est déjà fermé.")], ephemeral: true });
                     
 
                     // const transcript = await generateFromMessages({messages: channel.messages.cache.mapValues(), channel: channel, options:{

@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ export default {
             if (!queue)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -23,7 +23,7 @@ export default {
             const autoplay = queue.toggleAutoplay();
             message.reply({
                 embeds: [
-                    musicEmbed().setDescription(
+                    Embed.musicEmbed().setDescription(
                         `♻️ | ${message.user} a défini l'autoplay sur \`${
                             autoplay ? "On" : "Off"
                         }\``
@@ -32,7 +32,7 @@ export default {
             });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

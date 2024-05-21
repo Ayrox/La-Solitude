@@ -1,6 +1,6 @@
 import delay from "delay";
 import { EmbedBuilder, SlashCommandBuilder, CommandInteraction } from "discord.js";
-import { OnePieceEmbed } from "../../util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 import { toCapitalize } from "../../util/functions.js";
 
 import OP from '../../util/OnePieceData.json' assert { type: "json" }
@@ -18,7 +18,7 @@ export default {
         
         const TIMER = 1000;
 
-        await interaction.reply({embeds:[OnePieceEmbed(interaction.member.user.username)]});
+        await interaction.reply({embeds:[Embed.OnePieceEmbed(interaction.member.user.username)]});
 
         const side = OP.side[Math.floor(Math.random() * OP.side.length)];
         const grade = OP.level[side][Math.floor(Math.random() * OP.level[side].length)];
@@ -27,7 +27,7 @@ export default {
         const Force = OP.strenghLevel[Math.floor(Math.random() * OP.strenghLevel.length)];
         const Vitesse = OP.speedLevel[Math.floor(Math.random() * OP.speedLevel.length)]; 
         const Region = OP.originRegion[Math.floor(Math.random() * OP.originRegion.length)]
-        let OPEmbed = OnePieceEmbed(interaction.member.user.username)
+        let OPEmbed = Embed.OnePieceEmbed(interaction.member.user.username)
         let prime = Intelligence.point + Force.point + Vitesse.point + grade.point
         
         let color, fruit;

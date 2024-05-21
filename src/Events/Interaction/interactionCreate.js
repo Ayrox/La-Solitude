@@ -1,5 +1,5 @@
 import { EmbedBuilder, CommandInteraction, Client } from "discord.js";
-import { musicEmbed, errorEmbed } from "../../util/Embeds.js"; //!provisoir, a retirer quand Handler pour Select menu sera présent
+import * as Embed from "../../util/Embeds.js"; 
 
 export default {
     name: "interactionCreate",
@@ -39,7 +39,7 @@ export default {
 
                 await interaction.followUp({
                     embeds: [
-                        musicEmbed().setDescription(
+                        Embed.musicEmbed().setDescription(
                             `${interaction.user} a supprimé la musique [${queue.songs[songId].name}](${queue.songs[songId].url}) de la file d'attente`
                         ),
                     ],
@@ -50,7 +50,7 @@ export default {
             } catch (e) {
                 console.error(e);
                 interaction.editReply({
-                    embeds: [errorEmbed().setDescription(`ALED : \n${e}`)],
+                    embeds: [Embed.errorEmbed().setDescription(`ALED : \n${e}`)],
                     ephemeral: true,
                 });
             }

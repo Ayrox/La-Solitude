@@ -1,5 +1,4 @@
-const { EmbedBuilder, AttachmentBuilder } from "discord.js");
-const { SlashCommandBuilder } from "discord.js");
+import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -32,7 +31,7 @@ export default {
         } catch (error) {
             console.log(error);
             message.reply({
-                embeds: [errorEmbed().setDescription(`${error}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${error}`)],
                 ephemeral: true,
             });
         }

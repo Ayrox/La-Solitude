@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonInteraction } from 'discord.js';
-import { errorEmbed, successEmbed } from "../../util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 import conf from "../../config.js";
 import db from "../../Models/tickets.js";
 
@@ -95,10 +95,10 @@ export default {
                         }, 5000);
                     });
             });
-            interaction.editReply({ embeds: [successEmbed().setDescription("Le salon de ticket a été créé avec succès")], ephemeral: true });
+            interaction.editReply({ embeds: [Embed.successEmbed().setDescription("Le salon de ticket a été créé avec succès")], ephemeral: true });
         } catch (e) {
             console.log(e);
-            interaction.editReply({ embeds: [errorEmbed().setDescription(`Une erreur est survenue lors de la création du salon de ticket.\n\n${e.message}`)], ephemeral: true });
+            interaction.editReply({ embeds: [Embed.errorEmbed().setDescription(`Une erreur est survenue lors de la création du salon de ticket.\n\n${e.message}`)], ephemeral: true });
         }
 
 

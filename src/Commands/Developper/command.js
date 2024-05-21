@@ -1,13 +1,13 @@
-const {
+import {
     CommandInteraction,
     ActionRowBuilder,
     MessageSelectMenu,
     SlashCommandBuilder
-} from "discord.js");
-const { errorEmbed, successEmbed, musicEmbed } from "../../util/Embeds");
-const db from "../../Models/commands");
-const glob from "glob");
-const { SortObjectArray } from "../../util/functions");
+} from "discord.js";
+import * as Embed from "../../util/Embeds";
+import db from "../../Models/commands";
+import glob from "glob";
+import { SortObjectArray } from "../../util/functions";
  
 
 export default {
@@ -45,7 +45,7 @@ export default {
         if (!message.member.permissions.has("ADMINISTRATOR"))
             return await message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez être Administrateur pour utiliser cette commande"
                     ),
                 ],
@@ -57,12 +57,12 @@ export default {
         glob(`${__dirname}/../**/*.js`, (err, files) => {
             if (err)
                 return message.editReply({
-                    embed: [errorEmbed().setDescription(err)],
+                    embed: [Embed.errorEmbed().setDescription(err)],
                     ephemeral: true,
                 });
 
             files.forEach((file) => {
-                let cmd from file);
+                let cmd = require(file);
                 Commandfiles.push({
                     label: cmd.name,
                     description: cmd.description,
@@ -74,7 +74,7 @@ export default {
         SortObjectArray(Commandfiles, "label");
 
         await message.editReply({
-            embeds: [musicEmbed().setDescription("⏳ Chargement ...")],
+            embeds: [Embed.musicEmbed().setDescription("⏳ Chargement ...")],
             ephemeral: true,
         });
 
@@ -107,7 +107,7 @@ export default {
 
                 await message.editReply({
                     embeds: [
-                        musicEmbed().setDescription(
+                        Embed.musicEmbed().setDescription(
                             `Sélectionner une ou plusieurs commandes à désactiver ⤵️`
                         ),
                     ],
@@ -116,7 +116,7 @@ export default {
                 });
 
                 /*db.findOne({ GuildID: guild.id }, (err, data) => {
-                    if(err) return interaction.editReply(errorEmbed().setDescription("An error occured."))
+                    if(err) return interaction.editReply(Embed.errorEmbed().setDescription("An error occured."))
                     if (data) {
                         if (data.CommandData.includes()) {
                             
@@ -124,12 +124,12 @@ export default {
 
 
                     } else {
-                        return interaction.editReply({embeds : [errorEmbed().setDescription("This guild doesn't have any commands.")]})
+                        return interaction.editReply({embeds : [Embed.errorEmbed().setDescription("This guild doesn't have any commands.")]})
                     }
                    
 
                     data.save().catch(err => {
-                        return interaction.editReply({embeds :[errorEmbed().setDescription("An error occured.")]})
+                        return interaction.editReply({embeds :[Embed.errorEmbed().setDescription("An error occured.")]})
                     })
                 })*/
 
@@ -139,7 +139,7 @@ export default {
                 if (message.member.id !== "206905331366756353")
                     return await message.editReply({
                         embed: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Vous n'avez pas la permission d'utiliser cette commande : **`BOT OWNER ONLY`**"
                             ),
                         ],
@@ -149,7 +149,7 @@ export default {
                 Commandfiles.forEach((file) => {
                     delete require.cache[require.resolve(file.value)];
 
-                    const command from file.value);
+                    let command = require(file.value);
                     console.log(`Reloaded /${file.label}`);
 
                     if (command.name) {
@@ -159,7 +159,7 @@ export default {
 
                 message.editReply({
                     embeds: [
-                        successEmbed().setDescription(
+                        Embed.successEmbed().setDescription(
                             "Toutes les commandes ont été rechargées"
                         ),
                     ],
@@ -168,5 +168,5 @@ export default {
 
                 break;
         }
-    },
-};
+    }
+}

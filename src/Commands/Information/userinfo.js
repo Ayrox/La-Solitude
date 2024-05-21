@@ -1,5 +1,5 @@
  
-const { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } from "discord.js");
+import { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export default {
     data: new ContextMenuCommandBuilder()

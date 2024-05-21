@@ -1,5 +1,5 @@
 import { ButtonInteraction, Client } from "discord.js";
-import { errorEmbed } from "../../util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 import db from "../../Models/suggest.js";
 
 
@@ -19,12 +19,12 @@ export default {
         if (!buttonsID.includes(customId)) return;
         
         
-        if (!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ embeds: [errorEmbeds().setDescription("Vous n'avez pas la permission d'utiliser ce bouton")], ephemeral: true });
+        if (!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ embeds: [Embed.errorEmbeds().setDescription("Vous n'avez pas la permission d'utiliser ce bouton")], ephemeral: true });
         
         await db.findOne({ MessageID: message.id }, async (err, data) => {
             
             if (err) throw err;
-            if (!data) return interaction.reply({ embeds: [errorEmbed().setDescription("Aucune donnée n'a été trouvé")], ephemeral: true });
+            if (!data) return interaction.reply({ embeds: [Embed.errorEmbed().setDescription("Aucune donnée n'a été trouvé")], ephemeral: true });
 
             const Embed = message.embeds[0];
             if (!Embed) return;

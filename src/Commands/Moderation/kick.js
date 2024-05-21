@@ -1,4 +1,4 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
+import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
  
 
 export default {
@@ -32,7 +32,7 @@ export default {
         if (!Target)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez mentionner un membre"
                     ),
                 ],
@@ -41,7 +41,7 @@ export default {
         if (!Reason)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous devez mettre une raison"),
+                    Embed.errorEmbed().setDescription("Vous devez mettre une raison"),
                 ],
                 ephemeral: true,
             });
@@ -49,7 +49,7 @@ export default {
         if (Target.id === member.id)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous ne pouvez pas vous kick"),
+                    Embed.errorEmbed().setDescription("Vous ne pouvez pas vous kick"),
                 ],
                 ephemeral: true,
             });
@@ -57,14 +57,14 @@ export default {
         if (Target.id === client.user.id)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous ne pouvez pas me kick"),
+                    Embed.errorEmbed().setDescription("Vous ne pouvez pas me kick"),
                 ],
                 ephemeral: true,
             });
         if (Target.id === guild.ownerID)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas kick le propriétaire du serveur"
                     ),
                 ],
@@ -74,7 +74,7 @@ export default {
         if (Target.roles.highest.position > member.roles.highest.position)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas kick une personne ayant plus de droit que vous"
                     ),
                 ],
@@ -83,7 +83,7 @@ export default {
         if (Target.permissions.has("ADMINISTRATOR"))
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas kick quelqu'un qui a la permission ADMINISTRATOR"
                     ),
                 ],
@@ -92,7 +92,7 @@ export default {
 
         Target.send({
             embeds: [
-                kickEmbed().setDescription(
+                Embed.kickEmbed().setDescription(
                     "Vous avez été kick du serveur **" +
                         guild.name +
                         "** pour la raison suivante : \n**" +
@@ -107,7 +107,7 @@ export default {
             );
         });
 
-        //interaction.reply({embeds : [banEmbed().setDescription(Target + " has been banned by "+ member.user +" from **" + guild.name + "** for **" + Reason + "**")]})
+        //interaction.reply({embeds : [Embed.banEmbed().setDescription(Target + " has been banned by "+ member.user +" from **" + guild.name + "** for **" + Reason + "**")]})
 
         db.findOne(
             {
@@ -149,7 +149,7 @@ export default {
 
         interaction.reply({
             embeds: [
-                kickEmbed().setDescription(
+                Embed.kickEmbed().setDescription(
                     Target +
                         " a été kick pour la raison suivante : \n" +
                         Reason +

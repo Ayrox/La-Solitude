@@ -1,9 +1,9 @@
-const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
-const cheerio from "cheerio");
-const https from "https");
+import cheerio from "cheerio";
+import https from "https";
  
 export default {
     data: new SlashCommandBuilder()

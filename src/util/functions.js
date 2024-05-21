@@ -1,6 +1,6 @@
 import { EmbedBuilder, CommandInteraction, GuildMember, ActionRowBuilder, ButtonBuilder } from "discord.js";
 import Pokedex from "pokedex-promise-v2";
-import { errorEmbed } from "./Embeds.js";
+import * as Embed from "./Embeds.js";
 const P = new Pokedex();
 
 /**
@@ -8,7 +8,7 @@ const P = new Pokedex();
 * @param {String} str
 * @returns {String}
 */
-function toCapitalize (str) {
+export function toCapitalize (str) {
     let strTable = str.replaceAll("_", " ").replaceAll(".", " ").split(" ");
     for (var i = 0; i < strTable.length; i++) {
         strTable[i] = strTable[i].charAt(0).toUpperCase() + strTable[i].slice(1);
@@ -21,7 +21,7 @@ function toCapitalize (str) {
  * @param {Number, String} pokemon 
  * @returns 
  */
-async function fetchPokemonData(pokemon) {
+export async function fetchPokemonData(pokemon) {
     
     let data = {}
 
@@ -148,7 +148,7 @@ async function fetchPokemonData(pokemon) {
  * @param {Boolean} isPaused 
  * @returns 
  */
-function generateProgressBar (currentTime, duration, isPaused = false) {
+export function generateProgressBar (currentTime, duration, isPaused = false) {
     
 //make a ASCII progress bar |------🔴--------|
     let progressBar = "|"
@@ -178,25 +178,11 @@ function generateProgressBar (currentTime, duration, isPaused = false) {
  * @returns 
  */
 
-function SortObjectArray (array, key) {
+export function SortObjectArray (array, key) {
     
     array.sort(function(a, b) {
         var x = a[key]; var y = b[key];
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
     return array;
-}
-
-
-export default {
-
-    toCapitalize,
-    generateProgressBar,
-    fetchPokemonData,
-    SortObjectArray,
-
-    
-
-
-
 }

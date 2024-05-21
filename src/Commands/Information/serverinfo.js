@@ -1,5 +1,5 @@
  
-const Discord from "discord.js");
+import * as Discord from "discord.js";
 
 export default {
     data: new Discord.SlashCommandBuilder()

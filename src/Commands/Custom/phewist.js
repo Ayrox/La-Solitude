@@ -1,7 +1,7 @@
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
-const phewist from "../../util/phewistLists");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import phewist from "../../util/phewistLists";
  
-//const config from "../../config.json");
+//import config from "../../config.json";
 
 export default {
     data: new SlashCommandBuilder()

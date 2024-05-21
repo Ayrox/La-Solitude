@@ -1,6 +1,6 @@
 import { ButtonInteraction, Client } from "discord.js";
-import { errorEmbed, musicEmbed } from "../../util/Embeds.js";
-import { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout.js";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
 import { generateProgressBar } from "../../util/functions.js";
 import db from "../../Models/playlist.js";
 
@@ -9,7 +9,7 @@ export default {
 
     async execute(interaction, client) {
         if (!interaction.isButton()) return;
-        //if (!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ embeds: [errorEmbeds().setDescription("You don't have permission to use this button!")], ephemeral: true });
+        //if (!interaction.member.permissions.has("ADMINISTRATOR")) return interaction.reply({ embeds: [Embed.errorEmbeds().setDescription("You don't have permission to use this button!")], ephemeral: true });
 
         const { guildId, customId, message } = interaction;
 
@@ -20,7 +20,7 @@ export default {
         if (!queue)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `La file d'attente est actuellement vide !`
                     ),
                 ],
@@ -39,7 +39,7 @@ export default {
                             queue.resume();
                             await interaction.message.edit({
                                 embeds: [
-                                    musicEmbed()
+                                    Embed.musicEmbed()
                                         .setTitle(
                                             `Musique actuelle : ${playingSong.name}`
                                         )
@@ -66,8 +66,8 @@ export default {
                                         ),
                                 ],
                                 components: [
-                                    musicButtonRow(),
-                                    musicButtonRow2(),
+                                    ButtonRow.musicButtonRow(),
+                                    ButtonRow.musicButtonRow2(),
                                 ],
                                 ephemeral: true,
                             });
@@ -77,7 +77,7 @@ export default {
                         queue.pause();
                         await interaction.message.edit({
                             embeds: [
-                                musicEmbed()
+                                Embed.musicEmbed()
                                     .setTitle(
                                         `${interaction.user.username} a mis en pause la musique ${playingSong.name}`
                                     )
@@ -110,13 +110,13 @@ export default {
                                         }
                                     ),
                             ],
-                            components: [musicButtonRow(), musicButtonRow2()],
+                            components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                             ephemeral: true,
                         });
                         interaction.deferUpdate();
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }
@@ -137,7 +137,7 @@ export default {
                     if (previousSong === undefined)
                         return interaction.reply({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     `Rien n'a été joué précédement !`
                                 ),
                             ],
@@ -148,19 +148,19 @@ export default {
 
                         interaction.message.edit({
                             embeds: [
-                                musicEmbed()
+                                Embed.musicEmbed()
                                     .setThumbnail(`${previousSong.thumbnail}`)
                                     .setDescription(
                                         `Le son a été passé par ${interaction.user}! Musique actuelle :\n [${previousSong.name}](${previousSong.url})`
                                     ),
                             ],
 
-                            components: [musicButtonRow(), musicButtonRow2()],
+                            components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
                         interaction.deferUpdate();
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }
@@ -174,7 +174,7 @@ export default {
                         if (!queue)
                             return interaction.reply({
                                 embeds: [
-                                    errorEmbed().setDescription(
+                                    Embed.errorEmbed().setDescription(
                                         `There is nothing to play :( !`
                                     ),
                                 ],
@@ -189,7 +189,7 @@ export default {
 
                         interaction.message.edit({
                             embeds: [
-                                musicEmbed().setDescription(
+                                Embed.musicEmbed().setDescription(
                                     `🔁 | ${interaction.user} a défini le mode de répétition sur ${mode}`
                                 ),
                             ],
@@ -197,7 +197,7 @@ export default {
                         interaction.deferUpdate();
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }
@@ -212,16 +212,16 @@ export default {
 
                         interaction.message.edit({
                             embeds: [
-                                musicEmbed().setDescription(
+                                Embed.musicEmbed().setDescription(
                                     `🔀 | ${interaction.user} a mélangé les musiques de la file d'attente...`
                                 ),
                             ],
-                            components: [musicButtonRow(), musicButtonRow2()],
+                            components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
                         interaction.deferUpdate();
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }
@@ -251,7 +251,7 @@ export default {
                         );
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }
@@ -267,7 +267,7 @@ export default {
                         if (nextSong === undefined && queue.autoplay === false)
                             return interaction.reply({
                                 embeds: [
-                                    errorEmbed().setDescription(
+                                    Embed.errorEmbed().setDescription(
                                         `La file d'attente est actuellement vide !`
                                     ),
                                 ],
@@ -276,19 +276,19 @@ export default {
 
                         interaction.message.edit({
                             embeds: [
-                                musicEmbed()
+                                Embed.musicEmbed()
                                     .setThumbnail(`${nextSong.thumbnail}`)
                                     .setDescription(
                                         ` La musique a été passée par ${interaction.user}! Musique actuelle :\n [${nextSong.name}](${nextSong.url})`
                                     ),
                             ],
-                            components: [musicButtonRow(), musicButtonRow2()],
+                            components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
                         interaction.deferUpdate();
                         queue.skip();
                     } catch (e) {
                         interaction.reply({
-                            embeds: [errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                             ephemeral: true,
                         });
                     }

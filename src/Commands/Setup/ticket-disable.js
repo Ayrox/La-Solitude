@@ -1,7 +1,7 @@
-const { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js");
-const { errorEmbed, successEmbed } from "../../util/Embeds");
-const db from "../../Models/channels");
-const ticketDB from "../../Models/tickets");
+import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
+import db from "../../Models/channels";
+import ticketDB from "../../Models/tickets";
  
 
 export default {
@@ -24,7 +24,7 @@ export default {
         if (!message.guild.members.me.permissions.has("MANAGE_GUILD"))
             return message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Je n'ai pas la permission `MANAGE_GUILD` pour utiliser cette commande."
                     ),
                 ],
@@ -33,7 +33,7 @@ export default {
         if (message.member.id !== Owner.id)
             return message.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Seul le propriétaire du serveur peut utiliser cette commande."
                     ),
                 ],
@@ -44,7 +44,7 @@ export default {
             if (err)
                 return message.editReply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Une erreur est survenue: \`${err}\``
                         ),
                     ],
@@ -55,7 +55,7 @@ export default {
                 if (!res.TicketSystem)
                     return message.editReply({
                         embeds: [
-                            errorEmbed().setDescription(
+                            Embed.errorEmbed().setDescription(
                                 "Le système de tickets est déjà désactivé."
                             ),
                         ],
@@ -73,7 +73,7 @@ export default {
                             if (err)
                                 return message.editReply({
                                     embeds: [
-                                        errorEmbed().setDescription(
+                                        Embed.errorEmbed().setDescription(
                                             `Une erreur est survenue: \`${err}\``
                                         ),
                                     ],
@@ -91,7 +91,7 @@ export default {
                         if (message.channelId === channel)
                             return message.editReply({
                                 embeds: [
-                                    errorEmbed().setDescription(
+                                    Embed.errorEmbed().setDescription(
                                         "Vous ne pouvez pas désactiver le système de ticket sous peine de crash.\nVeuillez réutilisez la commande dans un autre salon textuel."
                                     ),
                                 ],
@@ -120,7 +120,7 @@ export default {
                     res.save().catch((err) => {
                         message.editReply({
                             embeds: [
-                                errorEmbed().setDescription(
+                                Embed.errorEmbed().setDescription(
                                     `Une erreur est survenue: \`${err}\``
                                 ),
                             ],
@@ -129,7 +129,7 @@ export default {
                     });
                     message.editReply({
                         embeds: [
-                            successEmbed().setDescription(
+                            Embed.successEmbed().setDescription(
                                 "Le système de tickets a été désactivé."
                             ),
                         ],
@@ -139,7 +139,7 @@ export default {
             } else {
                 message.editReply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Le système de tickets est déjà désactivé."
                         ),
                     ],

@@ -1,6 +1,6 @@
-const { getVoiceConnection } from "@discordjs/voice");
-const { successEmbed, errorEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import { getVoiceConnection } from "@discordjs/voice";
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -11,7 +11,7 @@ export default {
         if (!message.member.voice.channel)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous devez d'abord rejoindre le salon vocal où le BOT se trouve de préférence.`
                     ),
                 ],
@@ -21,7 +21,7 @@ export default {
         if (!message.guild.members.me.voice.channel)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Le Bot n'est pas connecter dans un salon vocal`
                     ),
                 ],
@@ -35,7 +35,7 @@ export default {
             return message.reply({
                 ephemeral: true,
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous n'êtes pas dans le même salon que le bot.`
                     ),
                 ],

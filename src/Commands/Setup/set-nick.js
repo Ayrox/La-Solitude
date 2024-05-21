@@ -1,5 +1,5 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
  
@@ -42,7 +42,7 @@ export default {
         if (!message.member.permissions.has("CHANGE_NICKNAME"))
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous n'avez pas la permission de changer de pseudo`
                     ),
                 ],
@@ -51,7 +51,7 @@ export default {
         if (!message.guild.members.me.permissions.has("MANAGE_NICKNAMES"))
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Je n'ai pas la permission de changer de pseudo`
                     ),
                 ],
@@ -64,7 +64,7 @@ export default {
         )
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous ne pouvez pas changer le pseudo d'un membre de rang supérieur à vous`
                     ),
                 ],
@@ -76,7 +76,7 @@ export default {
         if (newNickname.length > 32)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Le pseudo que vous avez entré est trop long || \`Max : 32 caractères\``
                     ),
                 ],
@@ -85,7 +85,7 @@ export default {
         if (newNickname.length < 2)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Le pseudo que vous avez entré est trop court|| \`Min : 2 caractères\``
                     ),
                 ],
@@ -110,7 +110,7 @@ export default {
             .catch((err) => {
                 message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Je ne peux pas changer le surnom de ${Target} dù à une erreur survenue lors de l'exécution`
                         ),
                     ],

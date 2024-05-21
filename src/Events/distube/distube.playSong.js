@@ -1,6 +1,6 @@
 import { DisTube } from "distube";
-import { errorEmbed, musicEmbed } from "../../util/Embeds.js";
-import { musicButtonRow, musicButtonRow2 } from "../../util/buttonLayout.js";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
 import config from "../../config.js";
 import { generateProgressBar } from "../../util/functions.js";
 
@@ -19,7 +19,7 @@ export default {
             `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
         );
 
-        const embed = musicEmbed()
+        const embed = Embed.musicEmbed()
             .setTitle(`Musique actuelle : ${song.name}`)
             .setURL(`${song.url}`)
             .setThumbnail(`${song.thumbnail}`)
@@ -57,7 +57,7 @@ export default {
                 )
                 .send({
                     embeds: [embed],
-                    components: [musicButtonRow(), musicButtonRow2()],
+                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                     ephemeral: false,
                 });
         } catch (err) {
@@ -84,7 +84,7 @@ export default {
                 }
                 musicChannel.edit({
                     embeds: [
-                        musicEmbed()
+                        Embed.musicEmbed()
                             .setTitle(`Musique actuelle : ${playingSong.name}`)
                             .setURL(`${playingSong.url}`)
                             .setThumbnail(`${playingSong.thumbnail}`)
@@ -114,7 +114,7 @@ export default {
                                 }
                             ),
                     ],
-                    components: [musicButtonRow(), musicButtonRow2()],
+                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                     ephemeral: false,
                 });
             }, 3000);

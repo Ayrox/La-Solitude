@@ -1,9 +1,9 @@
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
  
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const delay from "delay");
-const { errorEmbed } from "../../util/Embeds");
+import delay from "delay";
 
 const MAX_MEME = 5;
 
@@ -29,7 +29,7 @@ export default {
         if (memeNumber > MAX_MEME || memeNumber <= 0)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Choisissez un nombre entre 1 et ${MAX_MEME}`
                     ),
                 ],

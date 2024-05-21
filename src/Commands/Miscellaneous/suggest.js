@@ -1,13 +1,13 @@
  
-const {
+import {
     CommandInteraction,
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
     SlashCommandBuilder
-} from "discord.js");
-const db from "../../Models/suggest");
-const { successEmbed } from "../../util/Embeds");
+} from "discord.js";
+import db from "../../Models/suggest";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -91,7 +91,7 @@ export default {
 
             message.reply({
                 embeds: [
-                    successEmbed().setDescription(
+                    Embed.successEmbed().setDescription(
                         "Votre suggestion a bien été envoyé"
                     ),
                 ],

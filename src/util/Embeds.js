@@ -1,30 +1,29 @@
-import { EmbedBuilder,} from "discord.js";
-import OP from './OnePieceData.json'
+import { EmbedBuilder } from "discord.js";
+import OP from './OnePieceData.json' assert { type:"json" }
 
-export default {
-    
+
 //!------------------------ ERROR -------------------------------    
-    errorEmbed: () => {
+    export const errorEmbed = () => {
         
         return new EmbedBuilder()
             .setColor("#FF0000")
             .setTitle("⛔ **Erreur**: ⛔")
             .setTimestamp()
         
-    },
+    }
 
 //!------------------------ SUCCESS -------------------------------
-    successEmbed: () => {
+export const successEmbed = () => {
             
             return new EmbedBuilder()
                 .setColor("#00FF00")
                 .setTitle("✅ **Success**: ✅")
                 .setTimestamp()
 
-    },
+    }
 
 //!------------------------ Music -------------------------------    
-    musicEmbed: () => {
+export const musicEmbed = () => {
         return new EmbedBuilder()
             .setColor("#7F00FF")
             .setAuthor({
@@ -32,9 +31,9 @@ export default {
                 iconURL: "https://www.iconsdb.com/icons/preview/violet/spotify-xxl.png"
             })
             .setTimestamp()
-    },
+    }
 //!---------------------- POKEMON -------------------------------
-    pokemonEmbed: () => {
+export const pokemonEmbed = () => {
         return new EmbedBuilder()
             .setAuthor({
                 name: "POKÉDEX NATIONAL",
@@ -46,9 +45,9 @@ export default {
             })
             .setTimestamp()
         
-    },
+    }
 
-    pokemonEasterEggEmbed: () => {
+export const pokemonEasterEggEmbed = () => {
         return new EmbedBuilder()
             .setColor("#FF0000")
             .setAuthor({
@@ -61,50 +60,50 @@ export default {
             })
             .setTimestamp()
 
-    },
+    }
 //!---------------------- Warning -------------------------------
-    warningEmbed: () => {
+export const warningEmbed = () => {
         return new EmbedBuilder()
             .setColor("Yellow")
             .setTitle("⚠️ --- **AVERTISSEMENT** --- ⚠️")
             .setTimestamp()
-    },
+    }
 
 //!---------------------- Ban -------------------------------
 
-    banEmbed : () => {
+export const banEmbed = () => {
         return new EmbedBuilder()
             .setColor("#FF0000")
             .setTitle("⛔ --- **BANNISSEMENT**: --- ⛔")
             .setTimestamp()
-    },
+    }
     
 //!---------------------- Kick -------------------------------
-    kickEmbed : () => {
+export const kickEmbed = () => {
         return new EmbedBuilder()
             .setColor("#FF0000")
             .setTitle("🦶 --- **KICK**: --- 🦶")
             .setTimestamp()
-    },
+    }
 //!---------------------- Mute -------------------------------
-    muteEmbed: () => {
+export const muteEmbed = () => {
         return new EmbedBuilder()
             .setColor("#FF0000")
             .setTitle("🔇 --- **MUTE**: --- 🔇")
             .setTimestamp()
-    },
+    }
     
 //!---------------------- Set-channel -------------------------------
     
-    setChannelEmbed: () => {
+export const setChannelEmbed = () => {
         return new EmbedBuilder()
             .setColor("#71CF93")
             .setTitle("NOUVEAU SALON DÉFINI")
             .setTimestamp()
-    },
+    }
 //!---------------------- One Piece -------------------------------
     
-    OnePieceEmbed: (member) => {
+export const OnePieceEmbed = (member) => {
         return new EmbedBuilder()
             .setColor("White")
             .setAuthor({name: `☠️ ---- PERSONNAGE ONE PIECE DE ${member.toUpperCase()} ---- ☠️`})
@@ -127,4 +126,3 @@ export default {
 }
 //------------------------------------------------------------------   
     
-}

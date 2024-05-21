@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -56,7 +56,7 @@ export default {
             if (!queue)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Aucune musique n'est joué actuellement 😕 !`
                         ),
                     ],
@@ -66,7 +66,7 @@ export default {
 
             message.reply({
                 embeds: [
-                    musicEmbed().setDescription(
+                    Embed.musicEmbed().setDescription(
                         `🔊 | ${message.user} a appliqué le filtre \`${
                             filterList[filterNumber] || "Désactiver"
                         }\` à la musique !`
@@ -75,7 +75,7 @@ export default {
             });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

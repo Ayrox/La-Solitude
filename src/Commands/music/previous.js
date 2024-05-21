@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ export default {
         if (!queue)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `La file d'attente est actuellement vide !`
                     ),
                 ],
@@ -22,7 +22,7 @@ export default {
         if (previousSong === undefined)
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Rien n'a été joué précédement !`
                     ),
                 ],
@@ -33,7 +33,7 @@ export default {
 
             message.reply({
                 embeds: [
-                    musicEmbed()
+                    Embed.musicEmbed()
                         .setThumbnail(`${previousSong.thumbnail}`)
                         .setDescription(
                             `Le son a été passé par ${message.user}! Musique actuelle :\n [${previousSong.name}](${previousSong.url})`
@@ -42,7 +42,7 @@ export default {
             });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

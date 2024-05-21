@@ -1,10 +1,10 @@
  
-const Discord from "discord.js");
-// const https from "https");
-// const axios from "axios");
-var Pokedex from "pokedex-promise-v2");
+import Discord from "discord.js";
+// import https from "https");
+// import axios from "axios");
+import Pokedex from "pokedex-promise-v2";
 var P = new Pokedex();
-const { errorEmbed } from "../../util/Embeds");
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new Discord.SlashCommandBuilder()
@@ -60,7 +60,7 @@ export default {
                                 console.log("ERROR: ", error);
                                 message.reply({
                                     embeds: [
-                                        errorEmbed().setDescription(error),
+                                        Embed.errorEmbed().setDescription(error),
                                     ],
                                 });
                             });
@@ -70,7 +70,7 @@ export default {
                     //catch error
                     console.log("ERROR: ", error);
                     message.reply({
-                        embeds: [errorEmbed().setDescription(error)],
+                        embeds: [Embed.errorEmbed().setDescription(error)],
                     });
                 });
         };
@@ -83,12 +83,12 @@ export default {
             //check si la limit n'est pas un nombre
 
             message.reply({
-                embeds: [errorEmbed().setDescription("Choisissez un nombre !")],
+                embeds: [Embed.errorEmbed().setDescription("Choisissez un nombre !")],
             });
         } else {
             message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Choisissez un nombre entre 1 et 10 !"
                     ),
                 ],

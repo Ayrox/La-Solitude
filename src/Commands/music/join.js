@@ -1,7 +1,7 @@
-const { joinVoiceChannel } from "@discordjs/voice");
-const { successEmbed, errorEmbed } from "../../util/Embeds");
+import { joinVoiceChannel } from "@discordjs/voice";
+import * as Embed from "../../util/Embeds";
  
-const { CommandInteraction, SlashCommandBuilder } from "discord.js")
+import { CommandInteraction, SlashCommandBuilder } from "discord.js"
 
 export default {
     data: new SlashCommandBuilder()
@@ -19,7 +19,7 @@ export default {
             if(message.guild.members.me.voice.channel){
                 if(message.guild.members.me.voice.channel.id === channel.id) return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `Je suis déjà là !`
                         ),
                     ],
@@ -35,7 +35,7 @@ export default {
             if (joinVoiceChannel) {
                 message.reply({
                     embeds: [
-                        successEmbed().setDescription(
+                        Embed.successEmbed().setDescription(
                             `Coucou ! 🖐️\nJ'ai rejoins le channel **🔈${channel.name}**`
                         ),
                     ],
@@ -45,7 +45,7 @@ export default {
         } else {
             message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `Vous devez d'abord rejoindre un salon vocal !`
                     ),
                 ],

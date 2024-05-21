@@ -1,6 +1,6 @@
-const { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js");
-const conf from "../../config.js");
-const { errorEmbed } from "../../util/Embeds");
+import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import conf from "../../config.js";
+import * as Embed from "../../util/Embeds";
  
 
 export default {
@@ -82,7 +82,7 @@ export default {
         if (!reportschannel) {
             return message.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         `le salon de "report" n'est pas initialisé. \n\n _Pour l'initialiser vous pouvez utiliser la commande_ \`/set-channel report\`\n_**ADMIN ONLY**_`
                     ),
                 ],

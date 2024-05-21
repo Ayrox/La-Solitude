@@ -1,5 +1,5 @@
-const { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js");
-const Scrapper from "images-scraper");
+import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
+import Scrapper from "images-scraper";
  
 
 export default {

@@ -1,8 +1,8 @@
  
-const { CommandInteraction, Client, EmbedBuilder, SlashCommandBuilder } from "discord.js");
-const { errorEmbed, banEmbed } from "../../util/Embeds");
+import { CommandInteraction, Client, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds";
 
-const db from "../../Models/infraction");
+import db from "../../Models/infraction";
 
 export default {
     data: new SlashCommandBuilder()
@@ -41,7 +41,7 @@ export default {
         if (!Target)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez mentionner un membre"
                     ),
                 ],
@@ -49,13 +49,13 @@ export default {
         if (!Reason)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous devez mettre une raison"),
+                    Embed.errorEmbed().setDescription("Vous devez mettre une raison"),
                 ],
             });
         if (!Amount)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez mettre un nombre de jours"
                     ),
                 ],
@@ -64,7 +64,7 @@ export default {
         if (Amount > 7 || Amount < 0)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous devez un nombre de jours entre 0 et 7"
                     ),
                 ],
@@ -74,7 +74,7 @@ export default {
         if (Target.id === member.id)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas vous bannir"
                     ),
                 ],
@@ -84,14 +84,14 @@ export default {
         if (Target.id === client.user.id)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription("Vous ne pouvez pas me bannir"),
+                    Embed.errorEmbed().setDescription("Vous ne pouvez pas me bannir"),
                 ],
                 ephemeral: true,
             });
         if (Target.id === guild.ownerID)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas bannir le propriétaire du serveur"
                     ),
                 ],
@@ -101,7 +101,7 @@ export default {
         if (Target.roles.highest.position > member.roles.highest.position)
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas bannir une personne ayant plus de droit que vous"
                     ),
                 ],
@@ -110,7 +110,7 @@ export default {
         if (Target.permissions.has(this.perms))
             return interaction.reply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas bannir quelqu'un qui a la permission " +
                             this.permission
                     ),
@@ -120,7 +120,7 @@ export default {
 
         Target.send({
             embeds: [
-                banEmbed().setDescription(
+                Embed.banEmbed().setDescription(
                     "Vous avez été banni du serveur **" +
                         guild.name +
                         "** pour la raison suivante : \n **" +
@@ -134,7 +134,7 @@ export default {
             );
         });
 
-        //interaction.reply({embeds : [banEmbed().setDescription(Target + " has been banned by "+ member.user +" from **" + guild.name + "** for **" + Reason + "**")]})
+        //interaction.reply({embeds : [Embed.banEmbed().setDescription(Target + " has been banned by "+ member.user +" from **" + guild.name + "** for **" + Reason + "**")]})
 
         db.findOne(
             {
@@ -178,7 +178,7 @@ export default {
 
         interaction.reply({
             embeds: [
-                banEmbed().setDescription(
+                Embed.banEmbed().setDescription(
                     Target +
                         " a été bannie pour la raison suivante :\n" +
                         Reason +

@@ -1,5 +1,5 @@
 import { DisTube } from "distube";
-import { errorEmbed} from "../../util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 
 export default {
     
@@ -20,7 +20,7 @@ export default {
         }
 
         try{
-            channel.guild.channels.cache.get((await config(newChannel.guild.id)).channel.logID).send({ embeds : [errorEmbed().setDescription(`${e}`)] });
+            channel.guild.channels.cache.get((await config(newChannel.guild.id)).channel.logID).send({ embeds : [Embed.errorEmbed().setDescription(`${e}`)] });
         } catch (e) {
             console.log(e);
         }

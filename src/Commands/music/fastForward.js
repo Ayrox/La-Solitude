@@ -1,5 +1,5 @@
-const { errorEmbed, musicEmbed } from "../../util/Embeds");
-const { SlashCommandBuilder } from "discord.js");
+import * as Embed from "../../util/Embeds";
+import { SlashCommandBuilder } from "discord.js";
 
 export default {
     //! la commande fonctionne pour des petits nombre mais pas pour les grand (genre 300secondes)
@@ -20,7 +20,7 @@ export default {
             if (!queue)
                 return message.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             `La file d'attente est actuellement vide !`
                         ),
                     ],
@@ -30,14 +30,14 @@ export default {
 
             message.reply({
                 embeds: [
-                    musicEmbed().setDescription(
+                    Embed.musicEmbed().setDescription(
                         `La musique a été avancée de ${timeToSkip} secondes par ${message.member}!`
                     ),
                 ],
             });
         } catch (e) {
             message.reply({
-                embeds: [errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }

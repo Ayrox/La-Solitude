@@ -1,5 +1,5 @@
- 
-const { EmbedBuilder, SlashCommandBuilder } from "discord.js");
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+
 const answers = [
     "C'est certain.",
     "C'est le cas.",

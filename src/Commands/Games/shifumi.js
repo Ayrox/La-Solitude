@@ -1,14 +1,14 @@
  
 
-const {
+import {
     CommandInteraction,
     Client,
     ActionRowBuilder,
     ButtonBuilder,
     EmbedBuilder,
     SlashCommandBuilder
-} from "discord.js");
-const { errorEmbed } from "../../util/Embeds");
+} from "discord.js";
+import * as Embed from "../../util/Embeds";
 
 export default {
     data: new SlashCommandBuilder()
@@ -37,7 +37,7 @@ export default {
         if (Executor.id === Target.id)
             return interaction.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas jouer contre toi-même"
                     ),
                 ],
@@ -47,7 +47,7 @@ export default {
         if (Target.id === client.user.id)
             return interaction.editReply({
                 embeds: [
-                    errorEmbed().setDescription(
+                    Embed.errorEmbed().setDescription(
                         "Vous ne pouvez pas jouer contre le Bot"
                     ),
                 ],
@@ -140,7 +140,7 @@ export default {
             if (button.user.id === Executor.id) {
                 return button.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Vous ne pouvez pas accepter votre propre invitation"
                         ),
                     ],
@@ -151,7 +151,7 @@ export default {
             if (button.user.id !== Target.id) {
                 return await button.reply({
                     embeds: [
-                        errorEmbed().setDescription(
+                        Embed.errorEmbed().setDescription(
                             "Ce n'est pas une invitation pour vous"
                         ),
                     ],
