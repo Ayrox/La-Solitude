@@ -1,10 +1,10 @@
 import { Message, SlashCommandBuilder } from "discord.js";
 import { joinVoiceChannel } from "@discordjs/voice";
-import * as Embed from "../../util/Embeds";
-import * as ButtonRow from "../../util/buttonLayout";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("play")
         .setDescription(

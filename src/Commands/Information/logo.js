@@ -1,7 +1,7 @@
  
 import { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("logo")
         .setDescription("Affiche le logo du serveur"),

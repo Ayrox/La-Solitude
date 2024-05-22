@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
  
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args));
@@ -7,7 +7,7 @@ import delay from "delay";
 
 const MAX_MEME = 5;
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("meme")
         .setDescription("Renvoie un meme")

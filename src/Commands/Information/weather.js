@@ -1,9 +1,9 @@
  
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import weather from "weather-js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("weather")
         .setDescription("Affiche la météo")

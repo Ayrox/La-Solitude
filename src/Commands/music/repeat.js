@@ -1,7 +1,7 @@
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 import { SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("repeat")
         .setDescription("Répète la musique en cours")

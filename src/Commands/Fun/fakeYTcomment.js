@@ -1,11 +1,11 @@
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 import { EmbedBuilder, CommandInteraction, Client, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
 
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
 
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("fakecomment")
         .setDescription("Créer un faux commentaire Youtube")

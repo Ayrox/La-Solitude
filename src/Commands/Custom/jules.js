@@ -4,7 +4,7 @@ import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 // import axios from "axios";
 // import config from "../../config.json";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("jules")
         .setDescription("Spawn un jules random"),

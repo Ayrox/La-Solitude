@@ -1,8 +1,5 @@
 export default {
 
-    
-
-
     sujet : [
         "mon cousin",
         "mon oncle",

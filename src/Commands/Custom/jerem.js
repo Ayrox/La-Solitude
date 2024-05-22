@@ -2,7 +2,7 @@ import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js
 import Scrapper from "images-scraper";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("jerem")
         .setDescription("Fait spawn un jérémie sauvage"),

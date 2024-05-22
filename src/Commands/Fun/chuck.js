@@ -1,11 +1,11 @@
 import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
 import cheerio from "cheerio";
 import https from "https";
  
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("chuck")
         .setDescription("Chuck Norris facts")

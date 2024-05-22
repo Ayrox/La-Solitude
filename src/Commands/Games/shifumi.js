@@ -8,9 +8,9 @@ import {
     EmbedBuilder,
     SlashCommandBuilder
 } from "discord.js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("shifumi")
         .setDescription("Lance une partie de Pierre-Feuille-Ciseaux")

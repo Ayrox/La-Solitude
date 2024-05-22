@@ -1,9 +1,9 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
 import conf from "../../config.js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("report")
         .setDescription("Signaler un membre du serveur")

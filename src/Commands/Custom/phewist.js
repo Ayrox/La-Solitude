@@ -1,9 +1,9 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import phewist from "../../util/phewistLists";
+import phewist from "../../util/phewistLists.js";
  
 //import config from "../../config.json";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("phewist")
         .setDescription("Générer une phrase que pourrait dire Phewist"),

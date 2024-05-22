@@ -1,9 +1,9 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder} from "discord.js";
-import * as Embed from "../../util/Embeds";
-import db from "../../Models/channels";
+import * as Embed from "../../util/Embeds.js";
+import db from "../../Models/channels.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("playlist")
         .setDescription("Affiche vos playlist"),

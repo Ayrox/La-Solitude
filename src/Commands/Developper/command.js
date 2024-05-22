@@ -1,16 +1,16 @@
 import {
     CommandInteraction,
     ActionRowBuilder,
-    MessageSelectMenu,
+    BaseSelectMenuBuilder,
     SlashCommandBuilder
 } from "discord.js";
-import * as Embed from "../../util/Embeds";
-import db from "../../Models/commands";
+import * as Embed from "../../util/Embeds.js";
+import db from "../../Models/commands.js";
 import glob from "glob";
-import { SortObjectArray } from "../../util/functions";
+import { SortObjectArray } from "../../util/functions.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("command")
         .setDescription("Activation ou rechargement des commandes")
@@ -88,7 +88,7 @@ export default {
                     j = 1;
                 do {
                     let row = new ActionRowBuilder().addComponents(
-                        new MessageSelectMenu()
+                        new BaseSelectMenuBuilder()
                             .setCustomId(`disable-${j}`)
                             .setPlaceholder("Rien n'est sélectionné")
                             .addOptions(

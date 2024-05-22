@@ -1,7 +1,7 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("kick")
         .setDescription("Kick un membre du serveur")

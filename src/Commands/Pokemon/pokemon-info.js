@@ -2,14 +2,16 @@
 import Discord from "discord.js";
 // import https from "https";
 // import axios from "axios";
-import { pokemonNames } from "../../util/pokemonNames.json";
-import * as Embed from "../../util/Embeds";
+import pokemon from "../../util/pokemonNames.json" assert {type: "json"};
+const { pokemonNames } = pokemon;
+import * as Embed from "../../util/Embeds.js";
 import fs from "fs";
-import { fetchPokemonData } from "../../util/functions";
+import { fetchPokemonData } from "../../util/functions.js";
 import Pokedex from "pokedex-promise-v2";
+import { type } from "os";
 const P = new Pokedex();
 
-export default {
+export const command = {
     data: new Discord.SlashCommandBuilder()
         .setName("pokemon-info")
         .setDescription("Affiche les informations d'un Pokémon")

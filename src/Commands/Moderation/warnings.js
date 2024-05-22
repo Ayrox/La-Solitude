@@ -1,9 +1,9 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import db from "../../Models/infraction";
-import * as Embed from "../../util/Embeds";
+import db from "../../Models/infraction.js";
+import * as Embed from "../../util/Embeds.js";
  
 
-export default {
+export const command =  {
     //TODO A REFAIRE
     //TODO A REFAIRE
     //TODO A REFAIRE

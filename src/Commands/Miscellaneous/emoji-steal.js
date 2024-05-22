@@ -8,9 +8,9 @@ import {
 } from "discord.js";
 
 import delay from "delay";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("emoji-steal")
         .setDescription("Vole un emoji venant d'un autre serveur")

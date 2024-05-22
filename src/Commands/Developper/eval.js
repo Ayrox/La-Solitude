@@ -1,6 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
- 
+import * as Embed from "../../util/Embeds.js";
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 const clean = (text) => {
     if (typeof text === "string")
@@ -10,7 +11,7 @@ const clean = (text) => {
     else return text;
 };
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("eval")
         .setDescription("eval")

@@ -1,8 +1,8 @@
-import * as Embed from "../../util/Embeds";
-import * as ButtonRow from "../../util/buttonLayout";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
 import { SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Affiche la file d'attente"),

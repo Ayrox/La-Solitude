@@ -5,7 +5,7 @@ import { toCapitalize } from "../../util/functions.js";
 
 import OP from '../../util/OnePieceData.json' assert { type: "json" }
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("onepiece-char")
         .setDescription("Créer un personnage de One Piece avec des caractéristiques aléatoires"),

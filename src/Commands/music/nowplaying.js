@@ -1,9 +1,9 @@
-import * as Embed from "../../util/Embeds";
-import * as ButtonRow from "../../util/buttonLayout";
-import { generateProgressBar } from "../../util/functions";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
+import { generateProgressBar } from "../../util/functions.js";
 import { SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("nowplaying")
         .setDescription("Affiche les informations de la musique en cours"),

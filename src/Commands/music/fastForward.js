@@ -1,7 +1,7 @@
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 import { SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     //! la commande fonctionne pour des petits nombre mais pas pour les grand (genre 300secondes)
     data: new SlashCommandBuilder()
         .setName("fastforward")

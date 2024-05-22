@@ -1,8 +1,9 @@
  
 import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
-import { connection } from "mongoose";
+import pkg from "mongoose";
+const { connection } = pkg
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("status")
         .setDescription("Affiche le statut du Bot et de la base de données"),

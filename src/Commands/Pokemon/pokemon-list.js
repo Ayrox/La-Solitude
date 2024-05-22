@@ -4,9 +4,9 @@ import Discord from "discord.js";
 // import axios from "axios");
 import Pokedex from "pokedex-promise-v2";
 var P = new Pokedex();
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new Discord.SlashCommandBuilder()
         .setName("pokemon-list")
         .setDescription("Affiche 1 à 10 Pokémon random")

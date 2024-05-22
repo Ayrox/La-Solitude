@@ -1,7 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder().setName("zap").setDescription("Euuuuh...."),
 
     async execute(message) {

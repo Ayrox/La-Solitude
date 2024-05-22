@@ -1,4 +1,4 @@
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 import puppeteer from "puppeteer";
 import { SlashCommandBuilder } from "discord.js";
 
@@ -8,7 +8,7 @@ function sleep(ms) {
     });
 }
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("lyrics")
         .setDescription("Affiche les paroles de la musique en cours"),

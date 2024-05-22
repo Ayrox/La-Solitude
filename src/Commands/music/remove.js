@@ -1,9 +1,10 @@
-import { ActionRowBuilder, MessageSelectMenu, SlashCommandBuilder } from "discord.js";
-import { options } from "snekfetch";
-import * as Embed from "../../util/Embeds";
+import { ActionRowBuilder, BaseSelectMenuBuilder, SlashCommandBuilder } from "discord.js";
+import snekfetch from "snekfetch";
+const { option } = snekfetch
+import * as Embed from "../../util/Embeds.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("remove")
         .setDescription("Supprime une musique de la file d'attente"),
@@ -37,7 +38,7 @@ export default {
             });
 
             const row = new ActionRowBuilder().addComponents(
-                new MessageSelectMenu()
+                new BaseSelectMenuBuilder()
                     .setCustomId("remove")
                     .setMaxValues(1)
                     .setPlaceholder("Sélectionnez une musique à supprimer")

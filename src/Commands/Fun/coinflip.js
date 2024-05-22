@@ -1,6 +1,6 @@
 import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("coinflip")
         .setDescription("Joue à pile ou face"),

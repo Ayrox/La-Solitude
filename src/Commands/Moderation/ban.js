@@ -1,10 +1,10 @@
  
 import { CommandInteraction, Client, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-import db from "../../Models/infraction";
+import db from "../../Models/infraction.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("ban")
         .setDescription("Bannir un membre du serveur")

@@ -1,7 +1,7 @@
 import Discord from "discord.js";
  
 
-export default {
+export const command = {
     data: new Discord.SlashCommandBuilder()
         .setName("trepuecinfo")
         .setDescription(

@@ -3,28 +3,32 @@ import ascii from 'ascii-table';
 import fs from "fs";
 import { REST } from '@discordjs/rest';
 import { Routes } from "discord-api-types/v10";
+import path from "path";
+
 
 /**
  * 
  * @param {Client} client 
  * @returns 
  */
-export function loadCommands(client){
+export async function loadCommands(client){
     const table = new ascii().setHeading("Events", "Status");
 
     let commandsArray = [];
     let developerArray= [];
 
-    const commandsFolders = fs.readdirSync(`${process.cwd()}/src/Commands`)
+    const commandsFolders = fs.readdirSync(path.resolve(`${process.cwd()}/src/Commands`))
 
     for (const folder of commandsFolders) {
         const commandFiles = fs
-            .readdirSync(`${process.cwd()}/src/Commands/${folder}`)
+            .readdirSync(path.resolve(`${process.cwd()}/src/Commands/${folder}`))
             .filter((file) => file.endsWith(".js"))
 
         for (const file of commandFiles) {
-            const commandFile = import(`file://${process.cwd()}/src/Commands/${folder}/${file}`)
-
+            const { command } = await import(`file://${process.cwd()}/src/Commands/${folder}/${file}`);
+            const commandFile = command;
+            console.log(file)
+            console.log(commandFile)
             client.commands.set(commandFile.data.name, commandFile);
 
             if(commandFile.developer) 

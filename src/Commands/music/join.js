@@ -1,9 +1,9 @@
 import { joinVoiceChannel } from "@discordjs/voice";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
  
 import { CommandInteraction, SlashCommandBuilder } from "discord.js"
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("join")
         .setDescription("Rejoins le salon vocal"),

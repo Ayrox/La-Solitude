@@ -1,7 +1,7 @@
  
 import * as Discord from "discord.js";
 
-export default {
+export const command = {
     data: new Discord.SlashCommandBuilder()
         .setName("serverinfo")
         .setDescription("Affiche les informations du serveur"),

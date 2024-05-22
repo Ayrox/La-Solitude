@@ -34,7 +34,7 @@ const answers = [
     "Faut pas rêver",
 ];
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("8ball")
         .setDescription("Je répond à vos questions")

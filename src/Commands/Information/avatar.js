@@ -1,6 +1,6 @@
 import { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new ContextMenuCommandBuilder()
         .setName("avatar")
         .setType(ApplicationCommandType.User),

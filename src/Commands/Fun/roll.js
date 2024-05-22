@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("roll")
         .setDescription("Lancer un dé")

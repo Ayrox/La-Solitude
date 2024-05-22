@@ -5,16 +5,16 @@ import {
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
-    MessageSelectMenu,
+    BaseSelectMenuBuilder,
     SlashCommandBuilder
 } from "discord.js";
-import db from "../../Models/my-pokedex";
-import * as Embed from "../../util/Embeds";
+import db from "../../Models/my-pokedex.js";
+import * as Embed from "../../util/Embeds.js";
 import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
-import { pokemonNames } from "../../util/pokemonNames";
-
-export default {
+import pokemon from "../../util/pokemonNames.json" assert { type: "json" }
+const { pokemonNames } = pokemon;
+export const command = {
     //TODO A REFAIRE
     //TODO A REFAIRE
     //TODO A REFAIRE
@@ -231,7 +231,7 @@ export default {
             });
 
             let row = new ActionRowBuilder().addComponents(
-                new MessageSelectMenu()
+                new BaseSelectMenuBuilder()
                     .setOptions(versions)
                     .setCustomId("pokedex-version")
                     .setPlaceholder("Choisissez une version")
@@ -363,7 +363,7 @@ export default {
                     versionCollector.stop();
 
                     let row = new ActionRowBuilder().addComponents(
-                        new MessageSelectMenu()
+                        new BaseSelectMenuBuilder()
                             .setOptions(pokedexs)
                             .setCustomId("pokedex-type")
                             .setPlaceholder("Choisissez un Pokédex")
@@ -418,7 +418,7 @@ export default {
                             pokedexCollector.stop();
 
                             let row = new ActionRowBuilder().addComponents(
-                                new MessageSelectMenu()
+                                new BaseSelectMenuBuilder()
                                     .setOptions([
                                         {
                                             label: "Oui",
@@ -836,7 +836,7 @@ export default {
                         );
 
                         let row = new ActionRowBuilder().addComponents(
-                            new MessageSelectMenu()
+                            new BaseSelectMenuBuilder()
                                 .setOptions([
                                     { label: "Oui", value: "yes", emoji: "✔️" },
                                     { label: "Non", value: "no", emoji: "❌" },

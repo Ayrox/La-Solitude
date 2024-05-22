@@ -1,10 +1,10 @@
 import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
-import db from "../../Models/channels";
-import ticketDB from "../../Models/tickets";
+import * as Embed from "../../util/Embeds.js";
+import db from "../../Models/channels.js";
+import ticketDB from "../../Models/tickets.js";
  
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("ticket-disable")
         .setDescription("Désactive le système de tickets."),

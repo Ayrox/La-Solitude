@@ -1,8 +1,8 @@
  
-import { MessageEmbed, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("hot")
         .setDescription("Hot Combien ... tu suce ton père ?")
@@ -53,7 +53,7 @@ export default {
             .find((member) => member.id === executor.id)
             .send("coucou");
 
-        let ChallengeEmbed = new MessageEmbed()
+        let ChallengeEmbed = new EmbedBuilder()
             .setTitle("🔥 **Hot Combien** 🔥")
             .setColor("BLURPLE")
             .addFields(
@@ -73,7 +73,7 @@ export default {
             );
         };
 
-        let dmEmbed = new MessageEmbed()
+        let dmEmbed = new EmbedBuilder()
             .setColor("BLURPLE")
             .setTitle("🔥 **Hot Combien** 🔥")
             .setDescription(

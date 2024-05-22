@@ -1,4 +1,3 @@
- 
 import {
     CommandInteraction,
     EmbedBuilder,
@@ -6,10 +5,10 @@ import {
     ButtonBuilder,
     SlashCommandBuilder
 } from "discord.js";
-import db from "../../Models/suggest";
-import * as Embed from "../../util/Embeds";
+import db from "../../Models/suggest.js";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("suggest")
         .setDescription("Suggérer une commande")

@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Retourne le ping du bot"),

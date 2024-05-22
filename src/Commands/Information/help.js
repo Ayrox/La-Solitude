@@ -4,13 +4,13 @@ import {
     EmbedBuilder,
     Client,
     ActionRowBuilder,
-    MessageSelectMenu,
+    BaseSelectMenuBuilder,
     SlashCommandBuilder
 } from "discord.js";
 import { log } from "util";
-import * as Embed from "../../util/Embeds";
+import * as Embed from "../../util/Embeds.js";
 
-export default {
+export const command = {
     data: new SlashCommandBuilder()
         .setName("help")
         .setDescription("Affiche la liste des commandes"),
@@ -84,7 +84,7 @@ export default {
 
         const components = (state) => {
             return new ActionRowBuilder().addComponents(
-                new MessageSelectMenu()
+                new BaseSelectMenuBuilder()
                     .setCustomId("help-menu")
                     .setPlaceholder("Rien n'est sélectionné")
                     .setDisabled(state)
