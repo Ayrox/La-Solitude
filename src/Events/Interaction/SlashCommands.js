@@ -30,7 +30,7 @@ export const event = {
 
             console.error(error);
 
-            await interaction.reply({
+            await interaction.followUp({
                 content: "There was an error while executing this command!",
                 ephemeral: true,
             });

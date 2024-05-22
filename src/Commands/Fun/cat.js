@@ -26,9 +26,9 @@ export const command = {
                 );
                 return await response.json();
             };
-
+            
             const data = await fetchAPI();
-
+            console.log(data)
             const embed = new EmbedBuilder()
                 .setTitle("Image de Chat")
                 .setColor("#00D7FF")

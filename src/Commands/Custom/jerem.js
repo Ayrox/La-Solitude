@@ -1,14 +1,18 @@
-import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder } from "discord.js";
+import { EmbedBuilder, AttachmentBuilder, SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 import Scrapper from "images-scraper";
- 
+
 
 export const command = {
     data: new SlashCommandBuilder()
         .setName("jerem")
         .setDescription("Fait spawn un jérémie sauvage"),
-
-    async execute(message) {
-        await message.deferReply();
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} interaction 
+     */
+    async execute(interaction) {
+        
+        await interaction.deferReply();
 
         let rnd = Math.floor(Math.random() * 200),
             listNB = [34, 35, 143];
@@ -19,7 +23,7 @@ export const command = {
 
         console.log(rnd);
 
-        await message
+        await interaction
             .editReply({
                 embeds: [
                     {
@@ -29,25 +33,24 @@ export const command = {
                 ],
             })
             .then(async (resultMessage) => {
-                let img_result;
+                var img_result;
+
+                const google = new Scrapper({
+                    puppeteer: {
+                        headless: false,
+                    },
+                });
 
                 try {
-                    const google = new Scrapper({
-                        puppeteer: {
-                            headless: true,
-                            executablePath: "/usr/bin/chromium-browser",
-                        },
-                    });
 
                     img_result = await google.scrape("bearded bald guy", 200);
+                    console.log('results', img_result);
+                    
+                    
                 } catch (e) {
-                    const google = new Scrapper({
-                        puppeteer: {
-                            headless: true,
-                        },
-                    });
-
+                    console.log(e)
                     img_result = await google.scrape("chauve barbue", 200);
+                    console.log(img_result)
                 }
 
                 let baldEmbed = new EmbedBuilder()
