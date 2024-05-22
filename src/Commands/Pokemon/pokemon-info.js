@@ -1,5 +1,5 @@
  
-import Discord from "discord.js";
+import Discord, { ChatInputCommandInteraction, Client } from "discord.js";
 // import https from "https";
 // import axios from "axios";
 import pokemon from "../../util/pokemonNames.json" assert {type: "json"};
@@ -21,8 +21,15 @@ export const command = {
                 .setDescription(`Nom ou numéro du Pokémon`)
                 .setRequired(true)
         ),
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} message 
+     * @returns 
+     */
+    async execute(message,client) {
 
-    async execute(message) {
+        await message.deferReply();
+        //if(!message.guild.emojis.cache.find('pokeball')) message.guild.emojis.create({name:'pokeball', attachment: 'https://cdn.discordapp.com/emojis/898941316451422248.webp'}) ;
         let pokemonArgs = message.options.getString("pokemon");
 
         let pokemonEN =
@@ -39,7 +46,7 @@ export const command = {
             } else if (pokemonArgs.toLowerCase() === "trepuec") {
                 //trepuec
 
-                return message.reply({
+                return message.editReply({
                     embeds: [
                         Embed.pokemonEasterEggEmbed()
                             .setTitle(
@@ -55,7 +62,7 @@ export const command = {
                 });
             } else if (pokemonArgs.toLowerCase() === "ewen") {
                 //ewen
-                return message.reply({
+                return message.editReply({
                     embeds: [
                         Embed.pokemonEasterEggEmbed()
                             .setTitle(
@@ -68,7 +75,7 @@ export const command = {
                 });
             } else {
                 //does not exist
-                return message.reply({
+                return message.editReply({
                     embeds: [
                         Embed.errorEmbed().setDescription("Ce Pokémon n'existe pas."),
                     ],
@@ -90,7 +97,7 @@ export const command = {
             }
         }
 
-        message.reply({
+        message.editReply({
             embeds: [
                 Embed.pokemonEmbed()
                     .setDescription("⏳ Loading data ...")
@@ -98,7 +105,18 @@ export const command = {
             ],
         });
 
-        const pokemonData = await fetchPokemonData(pokemonEN);
+        let pokemonData
+        try{ 
+            pokemonData = await fetchPokemonData(pokemonEN); 
+        } catch(e) {
+            return message.editReply({
+                embeds: [
+                    Embed.errorEmbed().setDescription(`Une erreur est survenue : ${e}`),
+                ],
+                ephemeral: true,
+            });
+            
+        }
 
         let evolv = () => {
             if (!(pokemonData.evolution.length > 0))
@@ -106,7 +124,7 @@ export const command = {
 
             let str = "";
 
-            for (chain of pokemonData.evolution) {
+            for (const chain of pokemonData.evolution) {
                 for (evolv in chain) {
                     if (chain[evolv] === pokemonData.nom) {
                         str += " __**`" + `${chain[evolv]}` + "`**__ ";

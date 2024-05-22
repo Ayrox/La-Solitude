@@ -55,7 +55,7 @@ export async function fetchPokemonData(pokemon) {
             let first = await P.getPokemonSpeciesByName(evolv.chain.species.name).then((pok) => { return pok.names.find(x => x.language.name === "fr").name })
             
             
-            for(element of evolv.chain.evolves_to) {
+            for(const element of evolv.chain.evolves_to) {
                 
                 let arrayIN = [first]
 
@@ -97,7 +97,7 @@ export async function fetchPokemonData(pokemon) {
             let type = []
             let typeFR
 
-            for (element of pok.types) {
+            for (const element of pok.types) {
                 
                 typeFR = await P.getTypeByName(element.type.name).then((type) => { return type.names.find(x => x.language.name === "fr").name })
                 type.push(typeFR)
