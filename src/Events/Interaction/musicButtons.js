@@ -13,7 +13,7 @@ export const event = {
 
         const { guildId, customId, message } = interaction;
 
-        buttonsID = ["pause", "skip", "shuffle", "previous", "repeat"];
+        let buttonsID = ["pause", "skip", "shuffle", "previous", "repeat"];
         if (!buttonsID.includes(customId)) return;
 
         const queue = client.distube.getQueue(interaction);

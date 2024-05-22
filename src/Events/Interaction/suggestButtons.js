@@ -14,7 +14,7 @@ export const event = {
                 
         const { guildId, customId, message } = interaction;
         
-        buttonsID = ["suggest-delete", "suggest-accept", "suggest-decline"];
+        let buttonsID = ["suggest-delete", "suggest-accept", "suggest-decline"];
         
         if (!buttonsID.includes(customId)) return;
         

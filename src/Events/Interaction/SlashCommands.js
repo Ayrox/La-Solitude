@@ -17,7 +17,7 @@ export const event = {
         
         const command = client.commands.get(interaction.commandName);
         //console.info(client.commands);
-        console.log(command)
+        //console.log(command)
         if (!command) return console.log("Commande non trouvée");
 
         //if(command.dev && interaction.user.id !== "206905331366756353");
