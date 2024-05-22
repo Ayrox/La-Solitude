@@ -3,7 +3,7 @@ import * as Embed from "../../util/Embeds.js";
 import db from "../../Models/suggest.js";
 
 
-export default {
+export const event = {
 
     name: "interactionCreate",
     

@@ -2,8 +2,7 @@ import { EmbedBuilder, AttachmentBuilder } from 'discord.js'
 import config from "../../config.js"
 
 
-export default {
-    
+export const event = {
     name: 'messageDelete',
     once: false,
 

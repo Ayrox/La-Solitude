@@ -1,14 +1,14 @@
 import mongoose from "mongoose"
 import db from "../../Models/infraction.js"
 const database = process.env.DATABASE
+import { loadCommands } from "../../Handlers/Commands.js";
 
-export default {
-    
+export const event = {
     name: 'ready',
     once: true,
 
     execute(client) {
-
+        loadCommands(client);
         var memberCount = client.users.cache.size;
         var guildCount = client.guilds.cache.size;
         

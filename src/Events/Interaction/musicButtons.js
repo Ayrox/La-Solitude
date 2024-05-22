@@ -4,7 +4,7 @@ import * as ButtonRow from "../../util/buttonLayout.js";
 import { generateProgressBar } from "../../util/functions.js";
 import db from "../../Models/playlist.js";
 
-export default {
+export const event = {
     name: "interactionCreate",
 
     async execute(interaction, client) {

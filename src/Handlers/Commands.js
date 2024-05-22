@@ -4,7 +4,8 @@ import fs from "fs";
 import { REST } from '@discordjs/rest';
 import { Routes } from "discord-api-types/v10";
 import path from "path";
-
+import * as fileLoader from "../Util/fileLoader.js";
+const { loadFiles } = fileLoader
 
 /**
  * 
@@ -12,11 +13,22 @@ import path from "path";
  * @returns 
  */
 export async function loadCommands(client){
-    const table = new ascii().setHeading("Events", "Status");
+    const table = new ascii().setHeading("Commands", "Status");
+    await client.commands.clear();
 
     let commandsArray = [];
-    let developerArray= [];
+    const Files = await loadFiles("Commands");
 
+    for( const file of Files ){
+        const { command } = await import(`file://${file}`)
+
+        client.commands.set(command.data.name, command);
+
+        commandsArray.push(command.data.toJSON());
+        table.addRow(command.data.name, "🟩");
+    };
+    client.application.commands.set(commandsArray);
+/*
     const commandsFolders = fs.readdirSync(path.resolve(`${process.cwd()}/src/Commands`))
 
     for (const folder of commandsFolders) {
@@ -27,8 +39,6 @@ export async function loadCommands(client){
         for (const file of commandFiles) {
             const { command } = await import(`file://${process.cwd()}/src/Commands/${folder}/${file}`);
             const commandFile = command;
-            console.log(file)
-            console.log(commandFile)
             client.commands.set(commandFile.data.name, commandFile);
 
             if(commandFile.developer) 
@@ -41,7 +51,7 @@ export async function loadCommands(client){
 
         }
     }
-
+    console.log(client.user.id)
     const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
     (async () => {
         try {
@@ -64,5 +74,5 @@ export async function loadCommands(client){
 
     developerGuild.commands.set(developerArray);*/
 
-    return console.log(table.toString(), "\nLoaded Commands")
+    return console.log(table.toString(), "\nCommands Loaded !")
 }

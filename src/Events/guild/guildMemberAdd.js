@@ -21,8 +21,7 @@ const applyText = (canvas, text) => {
 };
 
 
-export default {
-    
+export const event = {
     name: 'guildMemberAdd',
     once: false,
 

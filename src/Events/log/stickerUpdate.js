@@ -2,8 +2,7 @@ import { EmbedBuilder } from 'discord.js'
 import config from "../../config.js"
 
 
-export default {
-    
+export const event = {
     name: 'stickerUpdate',
     once: false,
 

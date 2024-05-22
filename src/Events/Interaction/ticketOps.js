@@ -5,8 +5,7 @@ import db from "../../Models/tickets.js";
 import conf from "../../config.js";
 import channels from "../../Models/channels.js";
 
-export default {
-    
+export const event = {
     name: "interactionCreate",
 
 

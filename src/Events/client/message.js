@@ -1,8 +1,7 @@
 import { Message, Client } from "discord.js"
 
 
-export default {
-    
+export const event = {
     name: 'messageCreate',
     once: false,
 

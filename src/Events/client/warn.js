@@ -1,5 +1,4 @@
-export default {
-    
+export const event = {
     name: 'warn',
     once: false,
 

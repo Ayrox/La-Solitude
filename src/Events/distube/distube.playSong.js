@@ -4,7 +4,7 @@ import * as ButtonRow from "../../util/buttonLayout.js";
 import config from "../../config.js";
 import { generateProgressBar } from "../../util/functions.js";
 
-export default {
+export const event = {
     name: "playSong",
     once: false,
 

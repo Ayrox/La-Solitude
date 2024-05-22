@@ -1,8 +1,7 @@
 import { DisTube } from "distube";
 import * as Embed from "../../util/Embeds.js";
 
-export default {
-    
+export const event = {
     name: 'error',
     once: false,
 

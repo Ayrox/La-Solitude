@@ -4,7 +4,7 @@ import conf from "../../config.js";
 import db from "../../Models/tickets.js";
 
 
-export default {
+export const event = {
 
     name: "interactionCreate",
 

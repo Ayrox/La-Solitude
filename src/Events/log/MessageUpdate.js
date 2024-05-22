@@ -3,8 +3,7 @@ import config from "../../config.js"
 
 
 
-export default {
-    
+export const event = {
     name: 'messageUpdate',
     once: false,
 

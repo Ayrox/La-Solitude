@@ -19,13 +19,14 @@ const client = new Client({
 });
 
 client.commands = new Collection()
+client.events = new Collection()
 
 loadEvents(client);
 
 client
     .login(process.env.DISCORD_TOKEN)
     .then(()=> {
-        loadCommands(client);
+       // loadCommands(client);
     })
     .catch((err) => { console.log(err); });
         

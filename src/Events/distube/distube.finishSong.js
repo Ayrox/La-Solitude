@@ -1,8 +1,7 @@
 import { DisTube } from "distube";
 
 
-export default {
-    
+export const event = {
     name: 'finishSong',
     once: false,
 
