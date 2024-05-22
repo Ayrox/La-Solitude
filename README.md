@@ -33,22 +33,23 @@
  
  | name | Description | 
  | :------ | :------ | 
- | `cat` | `Envoie une image de chat` |
+ | `8ball` | `Je répond à vos questions` |
+| `cat` | `Envoie une image de chat` |
 | `chuck` | `Chuck Norris facts` |
-| `8ball` | `Je répond à vos questions` |
+| `coinflip` | `Joue à pile ou face` |
 | `dog` | `Envoie une image de chien` |
 | `faketweet` | `Créer un faux tweet` |
 | `fakecomment` | `Créer un faux commentaire Youtube` |
-| `onepiece-char` | `Créer un personnage de One Piece avec des caractéristiques aléatoires` |
 | `meme` | `Renvoie un meme` |
+| `onepiece-char` | `Créer un personnage de One Piece avec des caractéristiques aléatoires` |
 | `overlay` | `Ajoute un overlay sur ton avatar` |
+| `roll` | `Lancer un dé` |
 
 ### Games
  
  | name | Description | 
  | :------ | :------ | 
- | `coinflip` | `Joue à pile ou face` |
-| `blackjack` | `Lance une partie de Blackjack` |
+ | `blackjack` | `Lance une partie de Blackjack` |
 | `hot` | `Hot Combien ... tu suce ton père ?` |
 | `shifumi` | `Lance une partie de Pierre-Feuille-Ciseaux` |
 
@@ -56,21 +57,21 @@
  
  | name | Description | 
  | :------ | :------ | 
- | `roll` | `Lancer un dé` |
+ | `avatar` | `undefined` |
 | `help` | `Affiche la liste des commandes` |
 | `logo` | `Affiche le logo du serveur` |
 | `ping` | `Retourne le ping du bot` |
 | `serverinfo` | `Affiche les informations du serveur` |
 | `status` | `Affiche le statut du Bot et de la base de données` |
-| `avatar` | `undefined` |
 | `userinfo` | `undefined` |
+| `weather` | `Affiche la météo` |
 
 ### Miscellaneous
  
  | name | Description | 
  | :------ | :------ | 
- | `suggest` | `Suggérer une commande` |
-| `emoji-steal` | `Vole un emoji venant d'un autre serveur` |
+ | `emoji-steal` | `Vole un emoji venant d'un autre serveur` |
+| `suggest` | `Suggérer une commande` |
 
 ### Moderation
  
@@ -78,7 +79,7 @@
  | :------ | :------ | 
  | `ban` | `Bannir un membre du serveur` |
 | `kick` | `Kick un membre du serveur` |
-| `weather` | `Affiche la météo` |
+| `mute` | `Mute un membre du serveur` |
 | `report` | `Signaler un membre du serveur` |
 | `warming` | `Affiche les avertissements d'un membre` |
 
@@ -89,36 +90,35 @@
  | `autoplay` | `Si activé, le Bot jouera une musique recommandée par Youtube quand la file d'attente sera vide` |
 | `fastforward` | `Avance la musique d'un certain nombre de secondes` |
 | `filters` | `Applique des filtres à la musique` |
-| `mute` | `Mute un membre du serveur` |
 | `join` | `Rejoins le salon vocal` |
+| `leave` | `Quitte le salon vocal` |
 | `lyrics` | `Affiche les paroles de la musique en cours` |
 | `nowplaying` | `Affiche les informations de la musique en cours` |
-| `leave` | `Quitte le salon vocal` |
 | `pause` | `Met en pause ou Reprends la lecture d'une musique en cours` |
-| `previous` | `Rejoue la musique précédente` |
 | `play` | `Joue une musique ou une playlist depuis Youtube ou une URL` |
+| `playlist` | `Affiche vos playlist` |
+| `previous` | `Rejoue la musique précédente` |
 | `queue` | `Affiche la file d'attente` |
 | `remove` | `Supprime une musique de la file d'attente` |
-| `playlist` | `Affiche vos playlist` |
 | `repeat` | `Répète la musique en cours` |
 | `resume` | `Met en pause ou Reprends la lecture d'une musique en cours` |
-| `volume` | `Change le volume de la musique` |
 | `shuffle` | `Mélange les musiques de la file d'attente` |
 | `skip` | `Passe la musique en cours` |
+| `volume` | `Change le volume de la musique` |
 
 ### Pokemon
  
  | name | Description | 
  | :------ | :------ | 
- | `pokemon-list` | `Affiche 1 à 10 Pokémon random` |
+ | `mypokedex` | `Créer votre propre Pokédex` |
 | `pokemon-info` | `Affiche les informations d'un Pokémon` |
 
 ### Setup
  
  | name | Description | 
  | :------ | :------ | 
- | `set-nick` | `Change le pseudo de quelqu'un` |
+ | `pokemon-list` | `Affiche 1 à 10 Pokémon random` |
 | `set-channel` | `Défini les salons utilisés par le bot` |
+| `set-nick` | `Change le pseudo de quelqu'un` |
 | `ticket-disable` | `Désactive le système de tickets.` |
 | `ticket-enable` | `Active le système de tickets.` |
-| `mypokedex` | `Créer votre propre Pokédex` |

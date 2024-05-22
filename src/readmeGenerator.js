@@ -24,7 +24,7 @@ fs.appendFile(
     }
 );
 
-for (folder of commandsFolder) {
+for (const folder of commandsFolder) {
     const commandFiles = fs
         .readdirSync(`./src/Commands/${folder}`)
         .filter((file) => file.endsWith(".js"));
@@ -39,8 +39,8 @@ for (folder of commandsFolder) {
             }
         }
     );
-    for (file of commandFiles) {
-        const command = import(`./Commands/${folder}/${file}`);
+    for (const file of commandFiles) {
+        const {command} = await import(`./Commands/${folder}/${file}`);
         //console.info(command);
         fs.appendFile(
             "./README.md",
