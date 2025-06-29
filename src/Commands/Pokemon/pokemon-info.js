@@ -145,7 +145,7 @@ export const command = {
                 embeds: [
                     Embed.pokemonEmbed()
                         .setTitle(
-                            `<:pokeball:898941316451422248> \\_\\_\\_\\_\\___| #${pokemonData.indexPokedex} ${pokemonData.nom} |__\\_\\_\\_\\_\\_ <:pokeball:898941316451422248>`
+                            `-------| #${pokemonData.indexPokedex} ${pokemonData.nom} |-------`
                         )
                         .setDescription(
                             `**_${pokemonData.categorie}_**\n_\`\`\`${pokemonData.description}\`\`\`_\n`
