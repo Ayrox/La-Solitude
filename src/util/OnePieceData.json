@@ -1610,7 +1610,7 @@
     "side": ["Pirate","Marine", "Révolutionnaire"],
 
     "level": {
-        "pirate": [
+        "Pirate": [
             {
                 "name": "Roi des pirates",
                 "point": 3500
@@ -1649,7 +1649,7 @@
             }
         ],
 
-        "marine": [
+        "Marine": [
             {
                 "name": "Amiral Commandant en chef",
                 "point": 1000

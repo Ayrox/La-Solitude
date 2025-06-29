@@ -5,7 +5,7 @@ import { EmbedBuilder, SlashCommandBuilder, CommandInteraction } from "discord.j
 import * as Embed from "../../util/Embeds.js";
 import { toCapitalize } from "../../util/functions.js";
 
-const OP = require('../../util/OnePieceData.json')
+const OP = await require('../../util/OnePieceData.json');
 
 export const command = {
     data: new SlashCommandBuilder()
@@ -17,10 +17,10 @@ export const command = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
-        
-        const TIMER = 1000;
+        try {
+            const TIMER = 1000;
 
-        await interaction.reply({embeds:[Embed.OnePieceEmbed(interaction.member.user.username)]});
+            await interaction.reply({embeds:[Embed.OnePieceEmbed(interaction.member.user.username)]});
 
         const side = OP.side[Math.floor(Math.random() * OP.side.length)];
         const grade = OP.level[side][Math.floor(Math.random() * OP.level[side].length)];
@@ -54,11 +54,13 @@ export const command = {
             if(Math.random()*10>8){ //Smile ?
                 if(Math.random()*10>5){  // Worked?
                     fruit= {
-                        nameFR: OP.smileNames[Math.floor(Math.random() * OP.smileNames.length)],
+                        nameFR: (OP.smileNames && OP.smileNames.length > 0) ? 
+                            OP.smileNames[Math.floor(Math.random() * OP.smileNames.length)] : 
+                            "SMILE Mystérieux",
                         nameJP: "",
                         type: "SMILE",
-                        imgURL: OP.smileImgURL,
-                        wikiURL: OP.smileWikiURL
+                        imgURL: OP.smileImgURL || "https://static.wikia.nocookie.net/onepiece/images/f/f7/Smile_Infobox.png",
+                        wikiURL: OP.smileWikiURL || "https://onepiece.fandom.com/fr/wiki/SMILE"
                         
                     }
                     prime += 50
@@ -67,14 +69,22 @@ export const command = {
                         nameFR: "SMILE Défectueux",
                         nameJP: "",
                         type: "SMILE",
-                        imgURL: OP.noSmileURL,
-                        wikiURL: OP.smileWikiURL
+                        imgURL: OP.noSmileURL || "https://static.wikia.nocookie.net/onepiece/images/f/f7/Smile_Infobox.png",
+                        wikiURL: OP.smileWikiURL || "https://onepiece.fandom.com/fr/wiki/SMILE"
                     }
                     prime = prime / 2
                 }
             } else { // a un fruit 
                 
-                fruit = OP["demon-fruit"][Math.floor(Math.random() * OP["demon-fruit"].length)]
+                fruit = (OP["demon-fruit"] && OP["demon-fruit"].length > 0) ? 
+                    OP["demon-fruit"][Math.floor(Math.random() * OP["demon-fruit"].length)] : 
+                    {
+                        nameFR: "Fruit du Démon Mystérieux",
+                        nameJP: "Nazo Nazo no Mi",
+                        type: "Paramecia",
+                        imgURL: "https://static.wikia.nocookie.net/onepiece/images/4/4c/Devil_Fruit_Infobox.png",
+                        wikiURL: "https://onepiece.fandom.com/fr/wiki/Fruit_du_D%C3%A9mon"
+                    };
                 prime += 100
                 
                 if(Math.random()*10>7) // éveillé ?
@@ -89,44 +99,68 @@ export const command = {
 
         if(Math.random()*4>3){ // Haki Armement?
             let rnd = Math.floor(Math.random()*5)
-            haki.push(`${OP.masteryLevel[rnd]} - Haki de l'Armement`)
+            const masteryName = (OP.masteryLevel && OP.masteryLevel[rnd]) ? 
+                OP.masteryLevel[rnd] : 
+                ["Débutant", "Novice", "Intermédiaire", "Avancé", "Maître"][rnd] || "Inconnu";
+            haki.push(`${masteryName} - Haki de l'Armement`)
             prime += 10 * (rnd + 1)
         }
         if(Math.random()*4>3){ // Haki Observation?
             let rnd = Math.floor(Math.random()*5)
-            haki.push(`${OP.masteryLevel[rnd]} - Haki de l'Observation`)
+            const masteryName = (OP.masteryLevel && OP.masteryLevel[rnd]) ? 
+                OP.masteryLevel[rnd] : 
+                ["Débutant", "Novice", "Intermédiaire", "Avancé", "Maître"][rnd] || "Inconnu";
+            haki.push(`${masteryName} - Haki de l'Observation`)
             prime += 25 * (rnd + 1)
         }
         if(Math.random()*4>3){ // Haki Roi ?
             let rnd = Math.floor(Math.random()*5)
-            haki.push(`${OP.masteryLevel[rnd]} - Haki des Rois`)
+            const masteryName = (OP.masteryLevel && OP.masteryLevel[rnd]) ? 
+                OP.masteryLevel[rnd] : 
+                ["Débutant", "Novice", "Intermédiaire", "Avancé", "Maître"][rnd] || "Inconnu";
+            haki.push(`${masteryName} - Haki des Rois`)
             prime += 50 * (rnd + 1)
         }
         
         await delay(TIMER)                                               //? GRADE
-        OPEmbed.data.fields[0].value = `${grade.name}`
-        OPEmbed.data.fields[1].value = `${toCapitalize(side)}`      //? SIDE
+        if (OPEmbed.data.fields && OPEmbed.data.fields[0]) {
+            OPEmbed.data.fields[0].value = `${grade.name || "Inconnu"}`
+        }
+        
+        if (OPEmbed.data.fields && OPEmbed.data.fields[1]) {
+            OPEmbed.data.fields[1].value = `${toCapitalize(side)}`      //? SIDE
+        }
         OPEmbed.data.color = color
         await interaction.editReply({embeds: [OPEmbed]})
     
         await delay(TIMER)                                               //? RACE
-        OPEmbed.data.fields[2].value = `[${race.name}](${race.url})`
+        if (OPEmbed.data.fields && OPEmbed.data.fields[2]) {
+            OPEmbed.data.fields[2].value = `[${race.name || "Inconnu"}](${race.url || "https://onepiece.fandom.com/fr/wiki/Race"})`
+        }
         await interaction.editReply({embeds: [OPEmbed]})
 
         await delay(TIMER)                                               //? REGION
-        OPEmbed.data.fields[3].value = Region
+        if (OPEmbed.data.fields && OPEmbed.data.fields[3]) {
+            OPEmbed.data.fields[3].value = Region
+        }
         await interaction.editReply({embeds: [OPEmbed]})
 
         await delay(TIMER)                                               //? FORCE
-        OPEmbed.data.fields[4].value = Force.name
+        if (OPEmbed.data.fields && OPEmbed.data.fields[4]) {
+            OPEmbed.data.fields[4].value = Force.name || "Inconnu"
+        }
         await interaction.editReply({embeds: [OPEmbed]})
         
         await delay(TIMER)                                               //? INTELLIGENCE
-        OPEmbed.data.fields[5].value = Intelligence.name
+        if (OPEmbed.data.fields && OPEmbed.data.fields[5]) {
+            OPEmbed.data.fields[5].value = Intelligence.name || "Inconnu"
+        }
         await interaction.editReply({embeds: [OPEmbed]})
         
         await delay(TIMER)                                               //? VITESSE
-        OPEmbed.data.fields[6].value = Vitesse.name
+        if (OPEmbed.data.fields && OPEmbed.data.fields[6]) {
+            OPEmbed.data.fields[6].value = Vitesse.name || "Inconnu"
+        }
         await interaction.editReply({embeds: [OPEmbed]})
         
         await delay(TIMER)                                               //? HAKI
@@ -139,37 +173,59 @@ export const command = {
                 s += h + "\n"
             })
         }
-        OPEmbed.data.fields[7].value = s
+        if (OPEmbed.data.fields && OPEmbed.data.fields[7]) {
+            OPEmbed.data.fields[7].value = s
+        }
         await interaction.editReply({embeds: [OPEmbed]})
 
         await delay(TIMER)                                               //? FRUIT
-        if (!fruit){
-            OPEmbed.data.fields[8].value = `❌`
-        } else {
-            OPEmbed.data.fields[8].value = `[${fruit.nameFR}](${fruit.wikiURL}) - ${fruit.type} ${(eveille) ? "- Éveillé" : ""} \n_${fruit.nameJP}_`
-            OPEmbed.data.thumbnail.url = fruit.imgURL
+        if (OPEmbed.data.fields && OPEmbed.data.fields[8]) {
+            if (!fruit){
+                OPEmbed.data.fields[8].value = `❌`
+            } else {
+                OPEmbed.data.fields[8].value = `[${fruit.nameFR || "Fruit Mystérieux"}](${fruit.wikiURL || "https://onepiece.fandom.com/fr/wiki/Fruit_du_D%C3%A9mon"}) - ${fruit.type || "Inconnu"} ${(eveille) ? "- Éveillé" : ""} \n_${fruit.nameJP || ""}_`
+                if (OPEmbed.data.thumbnail && fruit.imgURL) {
+                    OPEmbed.data.thumbnail.url = fruit.imgURL
+                }
+            }
         }
         await interaction.editReply({embeds: [OPEmbed]})
 
 
         await delay(TIMER)                                               //? PRIME
         let primeStr = "";
-        OPEmbed.data.fields[9].name = `__Prime${primeName}__`
+        if (OPEmbed.data.fields && OPEmbed.data.fields[9]) {
+            OPEmbed.data.fields[9].name = `__Prime${primeName}__`
 
-        if (side == "marine"){
-            let marinePrime = ((prime/100)%5);
-            for (let i = 0; i < marinePrime; i++) {
-                primeStr += "⭐"
+            if (side == "marine"){
+                let marinePrime = ((prime/100)%5);
+                for (let i = 0; i < marinePrime; i++) {
+                    primeStr += "⭐"
+                }
+                OPEmbed.data.fields[9].value = `${primeStr}`;
             }
-            OPEmbed.data.fields[9].value = `${primeStr}`;
-        }
-        else {
-            primeStr = Number(prime).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-            OPEmbed.data.fields[9].value = `${primeStr} Millions de ¥`;
+            else {
+                primeStr = Number(prime).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                OPEmbed.data.fields[9].value = `${primeStr} Millions de ¥`;
+            }
         }
 
         
         await interaction.editReply({embeds: [OPEmbed]});
+
+        } catch (error) {
+            console.error('Error in onepiece-char command:', error);
+            const errorEmbed = new EmbedBuilder()
+                .setTitle("❌ Erreur")
+                .setDescription("Une erreur s'est produite lors de la génération du personnage One Piece.")
+                .setColor(0xFF0000);
+            
+            if (interaction.replied || interaction.deferred) {
+                await interaction.editReply({embeds: [errorEmbed]});
+            } else {
+                await interaction.reply({embeds: [errorEmbed], ephemeral: true});
+            }
+        }
 
     }
 }
