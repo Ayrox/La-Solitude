@@ -25,5 +25,7 @@ export const event = {
         } catch (e) {
             console.log(e);
         }
+
+        console.log(`[${new Date().toISOString()}] [EVENT] [EMOJI_UPDATE] [INFO] Emoji updated:`, oldEmoji.name, '->', newEmoji.name);
     }
 }

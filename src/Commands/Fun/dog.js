@@ -15,7 +15,7 @@ export const command = {
      */
     async execute(message) {
         try {
-            await message.deferReply().catch(() => {});
+            await message.deferReply();
 
             const fetchAPI = async () => {
                 const response = await fetch(
@@ -30,25 +30,26 @@ export const command = {
             const data = await fetchAPI();
 
             const embed = new EmbedBuilder()
-                .setTitle("Dog Picture")
+                .setTitle("Image de Chien")
                 .setColor("#00D7FF")
                 .setDescription(data.fact)
                 .setImage(data.image)
                 .setFooter({
-
-                    text: `Requested by ${message.member.user.tag}`,
-                    iconURL: message.member.displayAvatarURL()
+                    text: `Demandé par ${message.member.user.tag}`,
+                    iconURL: message.member.displayAvatarURL(),
                 })
                 .setTimestamp();
 
             await message.editReply({ embeds: [embed] });
-        } catch (err) {
-            console.log(err);
-            return message.reply({
+        } catch (error) {
+            console.error(`[${new Date().toISOString()}] [COMMAND] [DOG] [ERROR] Une erreur s'est produite dans la commande 'dog' :`, error);
+            await message.editReply({
                 embeds: [
-                    Embed.errorEmbed().setDescription(`Une erreur est survenue`),
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
                 ],
-                ephemeral: true,
             });
         }
     },

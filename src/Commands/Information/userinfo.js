@@ -1,4 +1,3 @@
- 
 import { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } from "discord.js";
 
 export const command = {
@@ -10,6 +9,8 @@ export const command = {
         const target = await interaction.guild.members.fetch(
             interaction.targetId
         );
+
+        console.log(`[${new Date().toISOString()}] [COMMAND] [USERINFO] [INFO] Informations demandées pour l'utilisateur : ${target.user.tag}`);
 
         const userMessage = new EmbedBuilder()
             .setColor("Aqua")

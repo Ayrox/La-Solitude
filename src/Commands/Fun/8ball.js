@@ -45,20 +45,32 @@ export const command = {
                 .setRequired(true)
         ),
 
-    execute(message, client) {
-        const question = message.options.getString("question");
+    async execute(message) {
+        try {
+            const question = message.options.getString("question");
 
-        const embed = new EmbedBuilder()
-            .setTitle("🎱  The Magic 8-Ball  🎱")
-            //.setDescription("**-----------------------------**")
-            .addFields({name: "Question", value: `\`${question}\``},
-            {
-                name: "Réponse",
-                value: `\`${answers[Math.floor(Math.random() * answers.length)]}\``
-            })
-            .setTimestamp()
-            .setColor("#6f00ff");
+            const embed = new EmbedBuilder()
+                .setTitle("🎱  The Magic 8-Ball  🎱")
+                //.setDescription("**-----------------------------**")
+                .addFields({name: "Question", value: `\`${question}\``},
+                {
+                    name: "Réponse",
+                    value: `\`${answers[Math.floor(Math.random() * answers.length)]}\``
+                })
+                .setTimestamp()
+                .setColor("#6f00ff");
 
-        message.reply({ embeds: [embed] });
+            await message.reply({ embeds: [embed] });
+        } catch (error) {
+            console.error("❌ Une erreur s'est produite dans la commande '8ball' :", error);
+            await message.reply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
+            });
+        }
     },
 };

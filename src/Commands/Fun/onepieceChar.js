@@ -1,9 +1,11 @@
 import delay from "delay";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 import { EmbedBuilder, SlashCommandBuilder, CommandInteraction } from "discord.js";
 import * as Embed from "../../util/Embeds.js";
 import { toCapitalize } from "../../util/functions.js";
 
-import OP from '../../util/OnePieceData.json' assert { type: "json" }
+const OP = require('../../util/OnePieceData.json')
 
 export const command = {
     data: new SlashCommandBuilder()

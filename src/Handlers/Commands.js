@@ -13,66 +13,45 @@ const { loadFiles } = fileLoader
  * @returns 
  */
 export async function loadCommands(client){
-    const table = new ascii().setHeading("Commands", "Status");
-    await client.commands.clear();
+    console.log("[DEBUG] Appel de loadCommands()");
+    try {
+        const table = new ascii().setHeading("Commands", "Status");
+        await client.commands.clear();
 
-    let commandsArray = [];
-    const Files = await loadFiles("Commands");
+        let commandsArray = [];
+        const FilesRaw = await loadFiles("commands");
+        const Files = FilesRaw; // Charger tous les fichiers de commandes, y compris jerem.js
 
-    for( const file of Files ){
-        const { command } = await import(`file://${file}`)
-
-        client.commands.set(command.data.name, command);
-
-        commandsArray.push(command.data.toJSON());
-        table.addRow(command.data.name, "🟩");
-    };
-    client.application.commands.set(commandsArray);
-/*
-    const commandsFolders = fs.readdirSync(path.resolve(`${process.cwd()}/src/Commands`))
-
-    for (const folder of commandsFolders) {
-        const commandFiles = fs
-            .readdirSync(path.resolve(`${process.cwd()}/src/Commands/${folder}`))
-            .filter((file) => file.endsWith(".js"))
-
-        for (const file of commandFiles) {
-            const { command } = await import(`file://${process.cwd()}/src/Commands/${folder}/${file}`);
-            const commandFile = command;
-            client.commands.set(commandFile.data.name, commandFile);
-
-            if(commandFile.developer) 
-                developerArray.push(commandFile.data.toJSON())
-            else
-                commandsArray.push(commandFile.data.toJSON())
-            
-            table.addRow(file, "🟩");
-            continue;
-
+        for (const file of Files) {
+            try {
+                const { command } = await import(`file://${file}`);
+                client.commands.set(command.data.name, command);
+                commandsArray.push(command.data.toJSON());
+                table.addRow(command.data.name, "🟩");
+            } catch (error) {
+                console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors de l'importation de la commande depuis le fichier ${file} :`, error);
+                table.addRow(file, "❌");
+            }
         }
-    }
-    console.log(client.user.id)
-    const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
-    (async () => {
+
         try {
-            console.log("Started refreshing application (/) commands    .");
+            await client.application.commands.set(commandsArray);
 
-            await rest.put(
-                Routes.applicationCommands(client.user.id),
-                {
-                    body: commandsArray,
-                }
-            );
-
-            console.log("Successfully reloaded application (/) commands .");
+            // Enregistrement immédiat des slash commands par serveur
+            const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+            for (const guild of client.guilds.cache.values()) {
+                await rest.put(
+                    Routes.applicationGuildCommands(client.application.id, guild.id),
+                    { body: commandsArray }
+                );
+            }
+            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Les commandes slash ont été enregistrées avec succès dans chaque serveur.`);
         } catch (error) {
-            console.error(error);
+            console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors de l'enregistrement des commandes slash :`, error);
         }
-    })();
 
-    /*const developerGuild = client.guilds.cache.get(process.env.DEV_GUILD);
-
-    developerGuild.commands.set(developerArray);*/
-
-    return console.log(table.toString(), "\nCommands Loaded !")
+        console.log(table.toString(), "\nCommands Loaded !");
+    } catch (error) {
+        console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors du chargement des commandes :`, error);
+    }
 }

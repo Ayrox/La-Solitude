@@ -37,7 +37,7 @@ export const event = {
             )
             .setTimestamp()
 
-        
+        console.log(`[${new Date().toISOString()}] [EVENT] [EMOJI_DELETE] [INFO] An emoji was deleted:`, emoji.name);
 
         try {       
             emoji.guild.channels.cache.get((await config(emoji.guild.id)).channel.logID).send({ embeds : [emojiEmbed] });

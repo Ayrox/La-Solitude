@@ -15,6 +15,7 @@ export const event = {
     async execute(queue, song) {
         if (!queue)
             return console.log("La file d'attente est actuellement vide !");
+        console.log(`[${new Date().toISOString()}] [EVENT] [DISTUBE_PLAY_SONG] [INFO] Now playing:`, song.name);
         console.log(
             `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
         );

@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import * as Embed from "../../util/Embeds.js";
 import db from "../../Models/commands.js";
-import glob from "glob";
+import { glob } from "glob";
 import { SortObjectArray } from "../../util/functions.js";
  
 
@@ -36,137 +36,151 @@ export const command = {
      */
 
     async execute(message) {
-        const { options, guild } = message;
+        try {
+            const { options, guild } = message;
 
-        const Sub = options.getSubcommand(["enable", "disable", "reload"]);
+            const Sub = options.getSubcommand(["enable", "disable", "reload"]);
 
-        await message.deferReply();
+            await message.deferReply();
 
-        if (!message.member.permissions.has("ADMINISTRATOR"))
-            return await message.editReply({
-                embeds: [
-                    Embed.errorEmbed().setDescription(
-                        "Vous devez être Administrateur pour utiliser cette commande"
-                    ),
-                ],
+            if (!message.member.permissions.has("ADMINISTRATOR")) {
+                return await message.editReply({
+                    embeds: [
+                        {
+                            description: "❌ Vous devez être Administrateur pour utiliser cette commande.",
+                            color: 0xff0000,
+                        },
+                    ],
+                    ephemeral: true,
+                });
+            }
+
+            let Commandfiles = [];
+
+            glob(`${__dirname}/../**/*.js`, (err, files) => {
+                if (err)
+                    return message.editReply({
+                        embed: [Embed.errorEmbed().setDescription(err)],
+                        ephemeral: true,
+                    });
+
+                files.forEach((file) => {
+                    let cmd = require(file);
+                    Commandfiles.push({
+                        label: cmd.name,
+                        description: cmd.description,
+                        value: file,
+                    });
+                });
+            });
+
+            SortObjectArray(Commandfiles, "label");
+
+            await message.editReply({
+                embeds: [Embed.musicEmbed().setDescription("⏳ Chargement ...")],
                 ephemeral: true,
             });
 
-        let Commandfiles = [];
+            switch (Sub) {
+                case "enable":
+                    break;
+                case "disable":
+                    const rows = [];
 
-        glob(`${__dirname}/../**/*.js`, (err, files) => {
-            if (err)
-                return message.editReply({
-                    embed: [Embed.errorEmbed().setDescription(err)],
-                    ephemeral: true,
-                });
-
-            files.forEach((file) => {
-                let cmd = require(file);
-                Commandfiles.push({
-                    label: cmd.name,
-                    description: cmd.description,
-                    value: file,
-                });
-            });
-        });
-
-        SortObjectArray(Commandfiles, "label");
-
-        await message.editReply({
-            embeds: [Embed.musicEmbed().setDescription("⏳ Chargement ...")],
-            ephemeral: true,
-        });
-
-        switch (Sub) {
-            case "enable":
-                break;
-            case "disable":
-                const rows = [];
-
-                let i = 0,
-                    j = 1;
-                do {
-                    let row = new ActionRowBuilder().addComponents(
-                        new BaseSelectMenuBuilder()
-                            .setCustomId(`disable-${j}`)
-                            .setPlaceholder("Rien n'est sélectionné")
-                            .addOptions(
-                                Commandfiles.slice(
-                                    i,
-                                    Commandfiles.length < i
-                                        ? Commandfiles.length - 1
-                                        : i + 24
+                    let i = 0,
+                        j = 1;
+                    do {
+                        let row = new ActionRowBuilder().addComponents(
+                            new BaseSelectMenuBuilder()
+                                .setCustomId(`disable-${j}`)
+                                .setPlaceholder("Rien n'est sélectionné")
+                                .addOptions(
+                                    Commandfiles.slice(
+                                        i,
+                                        Commandfiles.length < i
+                                            ? Commandfiles.length - 1
+                                            : i + 24
+                                    )
                                 )
-                            )
-                    );
-                    rows.push(row);
-                    i += 25;
-                    j++;
-                } while (Commandfiles.length > i);
+                        );
+                        rows.push(row);
+                        i += 25;
+                        j++;
+                    } while (Commandfiles.length > i);
 
-                await message.editReply({
-                    embeds: [
-                        Embed.musicEmbed().setDescription(
-                            `Sélectionner une ou plusieurs commandes à désactiver ⤵️`
-                        ),
-                    ],
-                    components: rows,
-                    ephemeral: true,
-                });
+                    await message.editReply({
+                        embeds: [
+                            Embed.musicEmbed().setDescription(
+                                `Sélectionner une ou plusieurs commandes à désactiver ⤵️`
+                            ),
+                        ],
+                        components: rows,
+                        ephemeral: true,
+                    });
 
-                /*db.findOne({ GuildID: guild.id }, (err, data) => {
-                    if(err) return interaction.editReply(Embed.errorEmbed().setDescription("An error occured."))
-                    if (data) {
-                        if (data.CommandData.includes()) {
-                            
+                    /*db.findOne({ GuildID: guild.id }, (err, data) => {
+                        if(err) return interaction.editReply(Embed.errorEmbed().setDescription("An error occured."))
+                        if (data) {
+                            if (data.CommandData.includes()) {
+                                
+                            }
+
+
+                        } else {
+                            return interaction.editReply({embeds : [Embed.errorEmbed().setDescription("This guild doesn't have any commands.")]})
                         }
+                       
 
+                        data.save().catch(err => {
+                            return interaction.editReply({embeds :[Embed.errorEmbed().setDescription("An error occured.")])
+                        })
+                    })*/
 
-                    } else {
-                        return interaction.editReply({embeds : [Embed.errorEmbed().setDescription("This guild doesn't have any commands.")]})
-                    }
-                   
+                    break;
 
-                    data.save().catch(err => {
-                        return interaction.editReply({embeds :[Embed.errorEmbed().setDescription("An error occured.")]})
-                    })
-                })*/
+                case "reload":
+                    if (message.member.id !== "206905331366756353")
+                        return await message.editReply({
+                            embed: [
+                                Embed.errorEmbed().setDescription(
+                                    "Vous n'avez pas la permission d'utiliser cette commande : **`BOT OWNER ONLY`**"
+                                ),
+                            ],
+                            ephemeral: true,
+                        });
 
-                break;
+                    Commandfiles.forEach((file) => {
+                        delete require.cache[require.resolve(file.value)];
 
-            case "reload":
-                if (message.member.id !== "206905331366756353")
-                    return await message.editReply({
-                        embed: [
-                            Embed.errorEmbed().setDescription(
-                                "Vous n'avez pas la permission d'utiliser cette commande : **`BOT OWNER ONLY`**"
+                        let command = require(file.value);
+                        console.log(`Reloaded /${file.label}`);
+
+                        if (command.name) {
+                            message.client.commands.set(command.name, command);
+                        }
+                    });
+
+                    message.editReply({
+                        embeds: [
+                            Embed.successEmbed().setDescription(
+                                "Toutes les commandes ont été rechargées"
                             ),
                         ],
                         ephemeral: true,
                     });
 
-                Commandfiles.forEach((file) => {
-                    delete require.cache[require.resolve(file.value)];
-
-                    let command = require(file.value);
-                    console.log(`Reloaded /${file.label}`);
-
-                    if (command.name) {
-                        message.client.commands.set(command.name, command);
-                    }
-                });
-
-                message.editReply({
-                    embeds: [
-                        Embed.successEmbed().setDescription(
-                            "Toutes les commandes ont été rechargées"
-                        ),
-                    ],
-                    ephemeral: true,
-                });
-
-                break;
+                    break;
+            }
+        } catch (error) {
+            console.error(`[${new Date().toISOString()}] [COMMAND] [COMMAND] [ERROR] Une erreur s'est produite dans la commande 'command' :`, error);
+            await message.editReply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
+            });
         }
-    }
+    },
 }

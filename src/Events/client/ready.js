@@ -7,8 +7,8 @@ export const event = {
     name: 'ready',
     once: true,
 
-    execute(client) {
-        loadCommands(client);
+    async execute(client) { // rendre la fonction async et attendre le chargement des commandes
+        await loadCommands(client);
         var memberCount = client.users.cache.size;
         var guildCount = client.guilds.cache.size;
         
@@ -24,39 +24,28 @@ export const event = {
 
         if (!database) return console.log("MongoDB's link is not set");
 
-        mongoose.connect(database, {
-
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-
-        }).then(() => {
+        try {
+            await mongoose.connect(database, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            });
             console.log("\nThe client is now connected to the database !\n");
-            
-            db.find(
-                {
-                    MuteData: {
-                        $exists: true
-                    }
-                },
-                (err, data) => { 
-                    if (err) return console.log(err);
-                    if (data.length === 0) return console.log("No data found");
-                    data.forEach(async (infraction) => {
-                        
-                        let Duration = infraction.MuteData.Duration;
-                        let MuteDate = infraction.MuteData.Date;
-                        let Now = new Date();
 
-                        
-
-                    });
+            const data = await db.find({ MuteData: { $exists: true } }).exec();
+            if (data.length === 0) {
+                console.log("No data found");
+            } else {
+                for (const infraction of data) {
+                    // Traiter chaque infraction si nécessaire
+                    const { Duration, Date: MuteDate } = infraction.MuteData;
+                    const Now = new Date();
+                    // ... logique ici ...
                 }
-            )
-
-
-        }).catch((err) => {
-            console.log(err);
-        });
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return;
         
     }
 }

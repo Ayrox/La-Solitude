@@ -1,4 +1,3 @@
- 
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import weather from "weather-js";
 import * as Embed from "../../util/Embeds.js";
@@ -15,6 +14,7 @@ export const command = {
         ),
 
     execute(message, client) {
+        console.log(`[${new Date().toISOString()}] [COMMAND] [WEATHER] [INFO] Météo demandée pour la ville : ${message.options.getString("ville")}`);
         weather.find(
             { search: message.options.getString("ville"), degreeType: "C" },
             (error, result) => {

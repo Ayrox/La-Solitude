@@ -64,6 +64,8 @@ export const command = {
                 });
             queue.setFilter(filterList[filterNumber]);
 
+            console.log(`[${new Date().toISOString()}] [COMMAND] [FILTER] [INFO] Filtre appliqué : ${filterList[filterNumber] || "Désactiver"}`);
+
             message.reply({
                 embeds: [
                     Embed.musicEmbed().setDescription(

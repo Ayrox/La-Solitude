@@ -7,6 +7,7 @@ export const event = {
 
     async execute(oldChannel, newChannel) {
 
+        console.log(`[${new Date().toISOString()}] [EVENT] [CHANNEL_UPDATE] [INFO] Channel updated:`, oldChannel.name, '->', newChannel.name);
        
         const channelEmbed = new EmbedBuilder()
             .setTitle("**Un channel a été modifié !**")

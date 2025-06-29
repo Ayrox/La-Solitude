@@ -16,23 +16,23 @@ export const event = {
             .setDescription('**Date** : '+`${channelDate.getDate()}/${channelDate.getMonth()+1}/${channelDate.getFullYear()} à ${channelDate.getHours()}:${String(channelDate.getMinutes()).padStart(2, '0')}` )
             .addFields(
                 {
-                    name:'Nom',
+                    name: 'Nom',
                     value: `${channel.name}`,
                     inline: true
                 },
                 {
                     name: 'Type',
-                    value: channel.type, 
+                    value: `${channel.type}`,
                     inline: true
                 },
                 {
                     name: 'ID',
-                    value: channel.id
+                    value: `${channel.id}`
                 }
             )
             .setTimestamp()
 
-        
+        console.log(`[${new Date().toISOString()}] [EVENT] [CHANNEL_CREATE] [INFO] A new channel was created:`, channel.name);
 
         try {       
             channel.guild.channels.cache.get((await config(channel.guild.id)).channel.logID).send({ embeds : [channelEmbed] });

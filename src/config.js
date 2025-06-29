@@ -1,47 +1,30 @@
 import db from './Models/channels.js'
 
-
-
-
 export default async (guildID) => {
-  
-    //fetch channel from database and store in global variable
-    let bienvenue, auRevoir, log, report, music, ticket
-    
-    
-    await db.findOne({ GuildID: guildID }, async (err, data) => {
-    
-        if (err) console.log(err)
-
+    // Fetch channel settings from database
+    let bienvenue = null, auRevoir = null, log = null, report = null, music = null, ticket = null;
+    try {
+        const data = await db.findOne({ GuildID: guildID }).exec();
         if (data) {
-
-        bienvenue = (data.WelcomeChannelID) ? data.WelcomeChannelID : null
-        auRevoir = (data.ByeChannelID) ? data.ByeChannelID : null
-        log = (data.LogChannelID) ? data.LogChannelID : null
-        report = (data.ReportChannelID) ? data.ReportChannelID : null
-        music = (data.MusicChannelID) ? data.MusicChannelID : null
-        ticket = (data.TicketSystem) ? data.TicketSystem : null
-
+            bienvenue = data.WelcomeChannelID || null;
+            auRevoir = data.ByeChannelID || null;
+            log = data.LogChannelID || null;
+            report = data.ReportChannelID || null;
+            music = data.MusicChannelID || null;
+            ticket = data.TicketSystem || null;
         }
-        
-    }).clone()
+    } catch (err) {
+        console.error(err);
+    }
 
-    
-  
-
-
-    //console.log(bienvenue, auRevoir, log, report, music);
-    
     return {
         channel: {
             bienvenueID: bienvenue,
-            au_revoirID:  auRevoir,
+            au_revoirID: auRevoir,
             logID: log,
             reportID: report,
             MusicChannelID: music,
             TicketSystem: ticket
-        
-        },
-
-    }
-}
+        }
+    };
+};

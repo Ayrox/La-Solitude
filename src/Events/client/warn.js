@@ -2,9 +2,9 @@ export const event = {
     name: 'warn',
     once: false,
 
-    execute(info) {
+    execute(warning) {
 
-        console.log(info);
+        console.warn(`[${new Date().toISOString()}] [EVENT] [CLIENT_WARN] [WARN]`, warning);
         
     }
 }

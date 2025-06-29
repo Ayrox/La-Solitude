@@ -44,6 +44,8 @@ export const command = {
         const connection = getVoiceConnection(message.guild.id, "default");
         connection.destroy();
 
+        console.log(`[${new Date().toISOString()}] [COMMAND] [LEAVE] [INFO] Commande 'leave' exécutée. Salon vocal quitté.`);
+
         message.reply({
             embeds: [
                 {

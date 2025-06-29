@@ -13,7 +13,8 @@ export const event = {
     async execute(interaction, client) {
         if (!interaction.isChatInputCommand()) return;
         
-        console.log(`${interaction.guild} => #${interaction.channel.name} => ${interaction.user.username} => use command : /${interaction.commandName}`);
+        // Updated console.log for better formatting
+        console.log(`[${new Date().toISOString()}] [INTERACTION] [SLASH_COMMAND] [INFO] ${interaction.guild} => #${interaction.channel.name} => ${interaction.user.username} => use command : /${interaction.commandName}`);
         
         const command = client.commands.get(interaction.commandName);
         //console.info(client.commands);

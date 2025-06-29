@@ -59,7 +59,8 @@ export const event = {
         try {       
             newMessage.guild.channels.cache.get(channel.logID).send({ embeds : [EmbedBuilder] });
         } catch (e) {
-            console.log(e);
+            // Updated console.log for better formatting
+            console.log(`[${new Date().toISOString()}] [EVENT] [MESSAGE_UPDATE] [INFO] Update details:`, e);
         }
        
     }

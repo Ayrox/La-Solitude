@@ -30,7 +30,7 @@ export const event = {
             )
             .setTimestamp()
         
-        
+        console.log(`[${new Date().toISOString()}] [EVENT] [EMOJI_CREATE] [INFO] A new emoji was created:`, emoji.name);
         
         try {       
             emoji.guild.channels.cache.get((await config(emoji.guild.id)).channel.logID).send({ embeds : [emojiEmbed] });

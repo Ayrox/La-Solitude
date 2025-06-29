@@ -1,4 +1,5 @@
- 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 import {
     CommandInteraction,
     Client,
@@ -12,7 +13,7 @@ import db from "../../Models/my-pokedex.js";
 import * as Embed from "../../util/Embeds.js";
 import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
-import pokemon from "../../util/pokemonNames.json" assert { type: "json" }
+const pokemon = require("../../util/pokemonNames.json");
 const { pokemonNames } = pokemon;
 export const command = {
     //TODO A REFAIRE

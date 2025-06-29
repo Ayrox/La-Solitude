@@ -5,7 +5,6 @@ export const event = {
     once: false,
 
     execute(oldGuild, newGuild) {
-
-       
+        console.log(`[${new Date().toISOString()}] [EVENT] [GUILD_UPDATE] [INFO] Guild updated:`, oldGuild.name, '->', newGuild.name);
     }
 }

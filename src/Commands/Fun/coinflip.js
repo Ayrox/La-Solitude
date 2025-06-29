@@ -7,32 +7,25 @@ export const command = {
 
     async execute(message) {
         try {
-            let coin = Math.floor(Math.random() * 2);
+            const outcomes = ["Pile", "Face"];
+            const result = outcomes[Math.floor(Math.random() * outcomes.length)];
 
-            const CoinAttach = new AttachmentBuilder(
-                `./src/util/img/${coin === 0 ? "pile" : "face"}.png`,
-            );
-
-            const coinEmbed = new EmbedBuilder()
-                .setColor("#E1A741")
-                .setAuthor({
-                    name: "Pile ou Face",
-                    iconURL: "https://www.pngall.com/wp-content/uploads/4/Dollar-Gold-Coin-PNG.png"
-                })
-                .setDescription(
-                    `${message.user} a lancé une pièce et a obtenu un ${
-                        coin === 0 ? "Pile" : "Face"
-                    }`
-                )
-                .setImage(`attachment://${coin === 0 ? "pile" : "face"}.png`)
+            const embed = new EmbedBuilder()
+                .setTitle("Pile ou Face")
+                .setDescription(`Le résultat est : **${result}**`)
+                .setColor(0x00ff00)
                 .setTimestamp();
 
-            message.reply({ embeds: [coinEmbed], files: [CoinAttach] });
+            await message.reply({ embeds: [embed] });
         } catch (error) {
-            console.log(error);
-            message.reply({
-                embeds: [Embed.errorEmbed().setDescription(`${error}`)],
-                ephemeral: true,
+            console.error(`[${new Date().toISOString()}] [COMMAND] [COINFLIP] [ERROR] Une erreur s'est produite dans la commande 'coinflip' :`, error);
+            await message.reply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
             });
         }
     },

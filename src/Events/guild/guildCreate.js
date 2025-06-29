@@ -5,7 +5,7 @@ export const event = {
     execute(guild) {
 
         console.log('--------------------------------------------------------')
-        console.log('!!!! LE BOT A REJOINT UN NOUVEAU SERVEUR !!!!\n')
+        console.log(`[${new Date().toISOString()}] [EVENT] [GUILD_CREATE] [INFO] A new guild was created:`, guild.name);
         console.log(`NOM : ${guild.name}`)
         console.log(`NOMBRE DE MEMBRES : ${guild.membersCount}`)
         console.log('--------------------------------------------------------')

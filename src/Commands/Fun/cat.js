@@ -15,7 +15,7 @@ export const command = {
      */
     async execute(message) {
         try {
-            await message.deferReply().catch(() => {});
+            await message.deferReply();
 
             const fetchAPI = async () => {
                 const response = await fetch(
@@ -26,28 +26,30 @@ export const command = {
                 );
                 return await response.json();
             };
-            
+
             const data = await fetchAPI();
-            console.log(data)
+
             const embed = new EmbedBuilder()
                 .setTitle("Image de Chat")
                 .setColor("#00D7FF")
                 .setDescription(data.fact)
                 .setImage(data.image)
                 .setFooter({
-                    text: `Demander par ${message.member.user.tag}`,
-                    iconURL: message.member.displayAvatarURL()
+                    text: `Demandé par ${message.member.user.tag}`,
+                    iconURL: message.member.displayAvatarURL(),
                 })
                 .setTimestamp();
 
             await message.editReply({ embeds: [embed] });
-        } catch (err) {
-            console.log(err);
-            return message.editReply({
+        } catch (error) {
+            console.error("❌ Une erreur s'est produite dans la commande 'cat' :", error);
+            await message.editReply({
                 embeds: [
-                    Embed.errorEmbed().setDescription(`Une erreur est survenue`),
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
                 ],
-                ephemeral: true,
             });
         }
     },

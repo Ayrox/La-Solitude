@@ -28,6 +28,8 @@ export const command = {
                 });
             queue.seek(timeToSkip);
 
+            console.log(`[${new Date().toISOString()}] [COMMAND] [FASTFORWARD] [INFO] Commande 'fastforward' exécutée. Avancé de : ${timeToSkip} secondes.`);
+
             message.reply({
                 embeds: [
                     Embed.musicEmbed().setDescription(

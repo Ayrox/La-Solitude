@@ -36,7 +36,7 @@ export const event = {
             )
             .setTimestamp()
 
-        
+        console.log(`[${new Date().toISOString()}] [EVENT] [CHANNEL_DELETE] [INFO] A channel was deleted:`, channel.name);
 
         try {       
             channel.guild.channels.cache.get((await config(channel.guild.id)).channel.logID).send({ embeds : [channelEmbed] });

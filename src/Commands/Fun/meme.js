@@ -83,7 +83,7 @@ export const command = {
                     )
                 );
             } catch (e) {
-                console.log("Le serveur n'a pas les émojis !");
+                console.log(`[${new Date().toISOString()}] [COMMAND] [MEME] [WARN] Le serveur n'a pas les émojis !`);
             }
         }
     },

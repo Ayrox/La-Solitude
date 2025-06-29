@@ -30,6 +30,7 @@ export const command = {
                     ),
                 ],
             });
+            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [INFO] Commande 'autoplay' exécutée. Autoplay défini sur : ${autoplay ? 'On' : 'Off'}`);
         } catch (e) {
             message.reply({
                 embeds: [Embed.errorEmbed().setDescription(`${e}`)],

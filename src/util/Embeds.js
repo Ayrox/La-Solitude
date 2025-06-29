@@ -1,5 +1,7 @@
 import { EmbedBuilder } from "discord.js";
-import OP from './OnePieceData.json' assert { type:"json" }
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const OP = require('./OnePieceData.json');
 
 
 //!------------------------ ERROR -------------------------------    
@@ -124,5 +126,5 @@ export const OnePieceEmbed = (member) => {
             .setTimestamp()
             
 }
-//------------------------------------------------------------------   
-    
+//------------------------------------------------------------------
+

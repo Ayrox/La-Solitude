@@ -8,6 +8,7 @@ export const event = {
 
     async execute(invite) {
 
+        console.log(`[${new Date().toISOString()}] [EVENT] [INVITE_CREATE] [INFO] A new invite was created:`, invite.code);
         
         let inviteDate = invite.createdAt
         let inviteExpireDate = invite.expiresAt

@@ -2,7 +2,7 @@ import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "d
 import * as Embed from "../../util/Embeds.js";
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import https from "https";
  
 export const command = {
@@ -24,75 +24,86 @@ export const command = {
      *
      */
     async execute(message, client) {
-        let MaxNUM = message.options.getNumber("combien") || 1;
+        try {
+            let MaxNUM = message.options.getNumber("combien") || 1;
 
-        await message.deferReply();
-        const agent = new https.Agent({
-            rejectUnauthorized: false,
-          });
-
-
-        await message
-            .editReply({
-                embeds: [{ description: "⏳ Chargement... ", color: 0xff6800 }],
-            })
-            .then(async (resultMessage) => {
-                const fetchAPI = async () => {
-                    const response = await fetch(
-                        `https://chucknorrisfacts.fr/facts/random`,
-                        {
-                            method: "GET",
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            agent,
-                        }
-                    ).catch();
-
-                    return await response.text();
-                };
-
-                const data = await fetchAPI();
-
-                const $ = cheerio.load(data);
-
-                let facts = [];
-
-                for (let i = 0; i < MaxNUM; i++) {
-                    let fact = $(".card-text").toArray()[i].children[0].data;
-                    let note = $("span").toArray()[i].children[0].data;
-                    let id = $("a")
-                        .toArray()
-                        .filter(
-                            (a) =>
-                                a.attribs.href !== undefined &&
-                                a.attribs.href.includes("/voir_fact/")
-                        )[i].children[0].data;
-
-                    facts.push({
-                        id: id,
-                        fact: fact,
-                        note: note,
-                    });
-                }
-
-                const chuckEmbed = new EmbedBuilder()
-                    .setTitle("Chuck Norris Facts")
-                    .setColor(0xff6800)
-                    .setThumbnail(
-                        "https://chucknorrisfacts.fr/static/img/cn_pa.png"
-                    )
-                    .setFooter({
-                        text :"Chuck Norris Facts"
-                    })
-                    .setTimestamp();
-
-                facts.forEach((f) => {
-                    chuckEmbed.addFields({
-                        name: `\`Fact ${f.id}\``,
-                        value :`${f.fact}\n_Note: ${f.note}_`
-                    });
-                });
-
-                resultMessage.edit({ embeds: [chuckEmbed] });
+            await message.deferReply();
+            const agent = new https.Agent({
+                rejectUnauthorized: false,
             });
+
+            await message
+                .editReply({
+                    embeds: [{ description: "⏳ Chargement... ", color: 0xff6800 }],
+                })
+                .then(async (resultMessage) => {
+                    const fetchAPI = async () => {
+                        const response = await fetch(
+                            `https://chucknorrisfacts.fr/facts/random`,
+                            {
+                                method: "GET",
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                agent,
+                            }
+                        ).catch();
+
+                        return await response.text();
+                    };
+
+                    const data = await fetchAPI();
+
+                    const $ = cheerio.load(data);
+
+                    let facts = [];
+
+                    for (let i = 0; i < MaxNUM; i++) {
+                        let fact = $(".card-text").toArray()[i].children[0].data;
+                        let note = $("span").toArray()[i].children[0].data;
+                        let id = $("a")
+                            .toArray()
+                            .filter(
+                                (a) =>
+                                    a.attribs.href !== undefined &&
+                                    a.attribs.href.includes("/voir_fact/")
+                            )[i].children[0].data;
+
+                        facts.push({
+                            id: id,
+                            fact: fact,
+                            note: note,
+                        });
+                    }
+
+                    const chuckEmbed = new EmbedBuilder()
+                        .setTitle("Chuck Norris Facts")
+                        .setColor(0xff6800)
+                        .setThumbnail(
+                            "https://chucknorrisfacts.fr/static/img/cn_pa.png"
+                        )
+                        .setFooter({
+                            text :"Chuck Norris Facts"
+                        })
+                        .setTimestamp();
+
+                    facts.forEach((f) => {
+                        chuckEmbed.addFields({
+                            name: `\`Fact ${f.id}\``,
+                            value :`${f.fact}\n_Note: ${f.note}_`
+                        });
+                    });
+
+                    resultMessage.edit({ embeds: [chuckEmbed] });
+                });
+        } catch (error) {
+            console.error(`[${new Date().toISOString()}] [COMMAND] [CHUCK] [ERROR] Une erreur s'est produite dans la commande 'chuck' :`, error);
+            await message.editReply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
+            });
+        }
     },
 };

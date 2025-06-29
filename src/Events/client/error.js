@@ -4,7 +4,7 @@ export const event = {
 
     execute(error) {
 
-        console.log(error);
+        console.error(`[${new Date().toISOString()}] [EVENT] [CLIENT_ERROR] [ERROR]`, error);
         
     }
 }

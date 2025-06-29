@@ -30,6 +30,7 @@ export const event = {
             )
             .setTimestamp()
                     
+        console.log(`[${new Date().toISOString()}] [EVENT] [INVITE_DELETE] [INFO] An invite was deleted:`, invite.code);
 
         try {       
             invite.guild.channels.cache.get((await config(invite.guild.id)).channel.logID).send({ embeds : [inviteEmbed] });

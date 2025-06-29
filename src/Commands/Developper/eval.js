@@ -24,26 +24,39 @@ export const command = {
      */
 
     async execute(message) {
-        if (message.member.id !== "206905331366756353")
-            return message.reply({
-                embed: [
-                    Embed.errorEmbed().setDescription(
-                        "Vous devez être le propriétaire du Bot pour utiliser cette commande !"
-                    ),
-                ],
-            });
-
-        let code = message.options.getString("code");
-
         try {
+            if (message.member.id !== "206905331366756353") {
+                return message.reply({
+                    embeds: [
+                        {
+                            description: "❌ Vous devez être le propriétaire du Bot pour utiliser cette commande !",
+                            color: 0xff0000,
+                        },
+                    ],
+                });
+            }
+
+            const code = message.options.getString("code");
             let evaled = eval(code);
 
-            if (typeof evaled !== "string")
+            if (typeof evaled !== "string") {
                 evaled = require("util").inspect(evaled);
+            }
 
-            message.channel.send(clean(evaled), { code: "xl" });
-        } catch (err) {
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+            await message.reply({
+                content: `\`\`\`js\n${evaled}\n\`\`\``,
+                ephemeral: true,
+            });
+        } catch (error) {
+            console.error(`[${new Date().toISOString()}] [COMMAND] [EVAL] [ERROR] Une erreur s'est produite dans la commande 'eval' :`, error);
+            await message.reply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
+            });
         }
     },
 };

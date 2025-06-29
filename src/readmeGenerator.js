@@ -8,7 +8,7 @@ const commandsFolder = fs.readdirSync("./src/Commands");
 try {
     fs.unlinkSync("./README.md")
 } catch (e) {
-    console.log("no README file found")
+    console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] no README file found`);
 }
 
 fs.appendFile(
@@ -17,9 +17,9 @@ fs.appendFile(
     
     function (err) {
         if (err) {
-            console.log(`${folder} failed to be added to the README.md`);
+            console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] ${folder} failed to be added to the README.md`);
         } else {
-            console.log(`ajout des credits`);
+            console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] ajout des credits`);
         }
     }
 );
@@ -33,9 +33,9 @@ for (const folder of commandsFolder) {
         `\n### ${folder}\n \n | name | Description | \n | :------ | :------ | \n `,
         function (err) {
             if (err) {
-                console.log(`${folder} failed to be added to the README.md`);
+                console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] ${folder} failed to be added to the README.md`);
             } else {
-                console.log(`ajout du titre ${folder}`);
+                console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] ajout du titre ${folder}`);
             }
         }
     );
@@ -49,7 +49,7 @@ for (const folder of commandsFolder) {
                 if (err) {
                     // append failed
                 } else {
-                    console.log(`ajout de la commande ${command.data.name}`);
+                    console.log(`[${new Date().toISOString()}] [SYSTEM] [README_GENERATOR] [INFO] ajout de la commande ${command.data.name}`);
                 }
             }
         );

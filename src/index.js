@@ -21,18 +21,27 @@ const client = new Client({
 client.commands = new Collection()
 client.events = new Collection()
 
-loadEvents(client);
+try {
+    await loadEvents(client);
+    console.log(`[${new Date().toISOString()}] [SYSTEM] [INIT] [INFO] ✅ Les événements ont été chargés avec succès.`);
+} catch (error) {
+    console.error(`[${new Date().toISOString()}] [SYSTEM] [INIT] [ERROR] Erreur lors du chargement des événements :`, error);
+}
 
 client
     .login(process.env.DISCORD_TOKEN)
-    .then(()=> {
-       // loadCommands(client);
+    .then(async () => {
+        console.log("✅ Connexion réussie au client Discord.");
     })
-    .catch((err) => { console.log(err); });
-        
-    
-    
-client.distube = new Distube.default(client, {
-    searchSongs: 0,
-    emitNewSongOnly: true,
-});
+    .catch((err) => {
+        console.error("❌ Erreur lors de la connexion au client Discord :", err);
+    });
+
+try {
+    client.distube = new Distube(client, {
+        emitNewSongOnly: true,
+    });
+    console.log("✅ Distube a été initialisé avec succès.");
+} catch (error) {
+    console.error("❌ Erreur lors de l'initialisation de Distube :", error);
+}

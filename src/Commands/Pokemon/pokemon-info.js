@@ -1,9 +1,9 @@
- 
 import Discord, { ChatInputCommandInteraction, Client } from "discord.js";
 // import https from "https";
 // import axios from "axios";
-import pokemon from "../../util/pokemonNames.json" assert {type: "json"};
-const { pokemonNames } = pokemon;
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pokemonNames = require("../../util/pokemonNames.json");
 import * as Embed from "../../util/Embeds.js";
 import fs from "fs";
 import { fetchPokemonData } from "../../util/functions.js";

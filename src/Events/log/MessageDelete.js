@@ -1,4 +1,4 @@
-import { EmbedBuilder, AttachmentBuilder } from 'discord.js'
+import { EmbedBuilder, AttachmentBuilder, AuditLogEvent } from 'discord.js'
 import config from "../../config.js"
 
 
@@ -19,18 +19,19 @@ export const event = {
 
 
         let logs = await message.guild.fetchAuditLogs({
-            limit : 1,
-            type: "MESSAGE_DELETE"
+            limit: 1,
+            type: AuditLogEvent.MessageDelete
         });
         let entry = logs.entries.first(a =>    
             Date.now() - a.createdTimestamp < 20000
         );
         
 
-        console.log(entry)
+        // Updated console.log for better formatting
+        console.log(`[${new Date().toISOString()}] [EVENT] [MESSAGE_DELETE] [INFO] Entry details:`, entry);
         //if (entry.length === 0) return console.log(`A message by ${message.author.tag || "someone"} was deleted, but no relevant audit logs were found.`);
         
-        const EmbedBuilder = new EmbedBuilder()
+        const embed = new EmbedBuilder()
             .setTitle("**Un message a été supprimé !**")
             .setColor("#E73C3C")
             .addFields(
@@ -55,10 +56,17 @@ export const event = {
             .setImage((message.attachments.size == 0) ? null : `${message.attachments.first().url}`)
             .setTimestamp()
         
-        try{
-            message.guild.channels.cache.get(channel.logID).send({ embeds: [EmbedBuilder] });
-        } catch (e) {
-            console.log(e);
+        // Send to log channel if configured
+        {
+            const logID = channel.logID;
+            if (!logID) return;
+            const logChannel = message.guild.channels.cache.get(logID);
+            if (!logChannel) return;
+            try {
+                await logChannel.send({ embeds: [embed] });
+            } catch (e) {
+                console.log(e);
+            }
         }
         
         // console.log(entry)

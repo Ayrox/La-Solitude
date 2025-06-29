@@ -92,6 +92,8 @@ export const command = {
             reportschannel.send({ embeds: [reportEmbed] });
         }
 
+        console.log(`[${new Date().toISOString()}] [COMMAND] [REPORT] [INFO] Report envoyé pour le membre : ${message.options.getUser("membre").tag}`);
+
         message.reply({
             content: "Votre report a bien été reçu !",
             ephemeral: true,

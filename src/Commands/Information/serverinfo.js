@@ -1,4 +1,3 @@
- 
 import * as Discord from "discord.js";
 
 export const command = {
@@ -7,23 +6,36 @@ export const command = {
         .setDescription("Affiche les informations du serveur"),
 
     async execute(message) {
-        let CreatedDate = message.guild.createdAt;
-        let Joindate = message.member.joinedAt;
+        try {
+            let CreatedDate = message.guild.createdAt;
+            let Joindate = message.member.joinedAt;
 
-        let icon = message.guild.iconURL();
+            let icon = message.guild.iconURL();
 
-        let servemb = new Discord.EmbedBuilder()
-            .setTitle(":clipboard: INFORMATION SUR LE SERVEUR :clipboard:")
-            .setColor("#FF6800")
-            .setThumbnail(icon)
-            .addFields(
-                {name : "Nom du Serveur : ",value: `${message.guild.name}`},
-                {name: "Crée le : ", value: `<t:${parseInt(message.guild.createdAt / 1000)}:R>`},
-                {name: "Propriétaire : ",value: `${await message.guild.fetchOwner()}`},
-                {name: "Tu as rejoins le : ", value: `<t:${parseInt(message.member.joinedAt / 1000)}:R>`},
-                {name: "Total des membres :",value: `${message.guild.memberCount} `}
-            );
+            let servemb = new Discord.EmbedBuilder()
+                .setTitle(":clipboard: INFORMATION SUR LE SERVEUR :clipboard:")
+                .setColor("#FF6800")
+                .setThumbnail(icon)
+                .addFields(
+                    {name : "Nom du Serveur : ",value: `${message.guild.name}`},
+                    {name: "Crée le : ", value: `<t:${parseInt(message.guild.createdAt / 1000)}:R>`},
+                    {name: "Propriétaire : ",value: `${await message.guild.fetchOwner()}`},
+                    {name: "Tu as rejoins le : ", value: `<t:${parseInt(message.member.joinedAt / 1000)}:R>`},
+                    {name: "Total des membres :",value: `${message.guild.memberCount} `}
+                );
 
-        return message.reply({ embeds: [servemb] });
+            return message.reply({ embeds: [servemb] });
+        } catch (error) {
+            // Updated console.error for better formatting
+            console.error(`[${new Date().toISOString()}] [COMMAND] [SERVERINFO] [ERROR] Une erreur s'est produite dans la commande 'serverinfo' :`, error);
+            await message.reply({
+                embeds: [
+                    {
+                        description: "❌ Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+                        color: 0xff0000,
+                    },
+                ],
+            });
+        }
     },
 };

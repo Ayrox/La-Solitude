@@ -22,6 +22,7 @@ export const command = {
                 });
             if (queue.paused) {
                 queue.resume();
+                console.log(`[${new Date().toISOString()}] [COMMAND] [PAUSE] [INFO] Commande 'pause' exécutée. État : Reprise`);
                 return message.reply({
                     embeds: [
                         Embed.musicEmbed().setDescription(
@@ -31,6 +32,7 @@ export const command = {
                 });
             }
             queue.pause();
+            console.log(`[${new Date().toISOString()}] [COMMAND] [PAUSE] [INFO] Commande 'pause' exécutée. État : Pause`);
 
             message.reply({
                 embeds: [

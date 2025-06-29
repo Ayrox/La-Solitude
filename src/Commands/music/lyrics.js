@@ -14,6 +14,7 @@ export const command = {
         .setDescription("Affiche les paroles de la musique en cours"),
 
     async execute(message, client) {
+        console.log(`[${new Date().toISOString()}] [COMMAND] [LYRICS] [INFO] Commande 'lyrics' exécutée.`);
         try {
             return message.reply({
                 embeds: [

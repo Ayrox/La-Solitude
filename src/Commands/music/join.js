@@ -33,6 +33,7 @@ export const command = {
             });
 
             if (joinVoiceChannel) {
+                console.log(`[${new Date().toISOString()}] [COMMAND] [JOIN] [INFO] Commande 'join' exécutée. Salon vocal : ${channel.name}`);
                 message.reply({
                     embeds: [
                         Embed.successEmbed().setDescription(

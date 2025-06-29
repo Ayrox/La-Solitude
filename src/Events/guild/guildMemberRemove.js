@@ -15,7 +15,7 @@ export const event = {
 	        .setDescription(`${member} est parti(e). `)
 	        .setTimestamp();
 
-        
+        console.log(`[${new Date().toISOString()}] [EVENT] [GUILD_MEMBER_REMOVE] [INFO] A member left:`, member.user.tag);
         
         (!config(member.guild.id).channel.au_revoirID) ? console.log("/!\\ Le salon 'au_revoir' n'est pas initialisé /!\\") : member.guild.channels.cache.get(config(member.guild.id).channel.au_revoirID).send({embeds : [exampleEmbed]})
             

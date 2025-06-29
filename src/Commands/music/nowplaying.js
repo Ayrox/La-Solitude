@@ -42,6 +42,7 @@ export const command = {
                     message.delete();
                 }
                 let playingSong = queue.songs[0];
+                console.log(`[${new Date().toISOString()}] [COMMAND] [NOWPLAYING] [INFO] Commande 'nowplaying' exécutée. Musique en cours : ${queue.songs[0].name}`);
                 //console.log(`${queue.formattedCurrentTime} **${generateProgressBar(queue.currentTime, playingSong.duration )}** ${playingSong.formattedDuration}`)
                 message.editReply({
                     embeds: [
