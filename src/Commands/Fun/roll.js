@@ -6,33 +6,48 @@ export const command = {
         .setDescription("Lancer un dé")
         .addIntegerOption((option) =>
             option
-                .setName("dice")
-                .setDescription(`Le nombre du dé que tu veux lancer`)
+                .setName("sides")
+                .setDescription(`Le nombre de faces du dé (par défaut: 6)`)
                 .setRequired(false)
+                .setMinValue(2)
+                .setMaxValue(100)
         ),
 
-    async execute(message) {
+    async execute(interaction) {
         try {
-            let dice = message.options.getString("dice");
-            if (dice == null) dice = "6";
-            const roll = Math.floor(Math.random() * dice) + 1;
+            await interaction.deferReply();
+            
+            let sides = interaction.options.getInteger("sides");
+            if (sides == null) sides = 6;
+            const roll = Math.floor(Math.random() * sides) + 1;
             const embed = new EmbedBuilder()
                 .setColor("#FF0000")
                 .setAuthor({
-                    name: "Lance un dé",
+                    name: "🎲 Lance un dé",
                     iconURL: "https://upload.wikimedia.org/wikipedia/commons/5/53/Six_sided_dice.png"
                 })
                 .setDescription(
-                    `${message.user} lance un dé : ${roll} (1-${dice})`
-                );
+                    `${interaction.user} lance un dé à **${sides} faces**.`
+                )
+                .setFields(
+                    { name: "--- Résultat ---", value: `**${roll}**`, inline: true }
+                )
+                .setTimestamp();
 
-            message.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            console.log(error);
-            message.reply({
-                embeds: [Embed.errorEmbed().setDescription(`${error}`)],
-                ephemeral: true,
-            });
+            console.error('Error in roll command:', error);
+            
+            const errorEmbed = new EmbedBuilder()
+                .setTitle("❌ Erreur")
+                .setDescription("Une erreur s'est produite lors du lancement du dé.")
+                .setColor(0xFF0000);
+            
+            if (interaction.replied || interaction.deferred) {
+                await interaction.editReply({embeds: [errorEmbed]});
+            } else {
+                await interaction.reply({embeds: [errorEmbed], ephemeral: true});
+            }
         }
     },
 };
