@@ -1,4 +1,4 @@
-import { Message, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Client, Message, SlashCommandBuilder } from "discord.js";
 import { joinVoiceChannel } from "@discordjs/voice";
 import * as Embed from "../../util/Embeds.js";
 import * as ButtonRow from "../../util/buttonLayout.js";
@@ -16,9 +16,17 @@ export const command = {
                 .setDescription("url ou nom de la musique a jouer")
                 .setRequired(true)
         ),
-
+    
+    /**
+     * 
+     * @param {ChatInputCommandInteraction} message 
+     * @param {Client} client 
+     * @returns 
+     */
     async execute(message, client) {
-        channel = message.member.voice.channel;
+        const { channel } = message.member.voice;
+        let addedSong
+
         if (!channel)
             return message.reply({
                 embeds: [
@@ -34,19 +42,19 @@ export const command = {
 
         message.deferReply({ ephemeral: false });
 
-        await joinVoiceChannel({
+        /*await joinVoiceChannel({
             channelId: channel.id,
             guildId: message.guild.id,
             adapterCreator: message.guild.voiceAdapterCreator,
-        });
+        });*/
 
         if (music.startsWith("http")) {
             try {
-                await client.distube.playVoiceChannel(channel, music, {
+                await client.distube.play(channel, music, {
                     options: message.user,
                 });
                 const queue = client.distube.getQueue(message);
-                numberSongs = queue.songs.length - 1;
+                let numberSongs = queue.songs.length - 1;
                 addedSong = queue.songs[numberSongs];
             } catch (e) {
                 console.log(e);
@@ -56,10 +64,10 @@ export const command = {
                 });
             }
         } else {
-            try {
-                YTBsearch = await client.distube.search(music);
+            try { 
+                let YTBsearch = await client.distube.search(music);
                 addedSong = YTBsearch[0];
-                await client.distube.playVoiceChannel(
+                await client.distube.play(
                     channel,
                     YTBsearch[0].url,
                     { options: message.user }
