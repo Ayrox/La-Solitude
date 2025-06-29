@@ -12,7 +12,6 @@ const searchTerms = [
     "chauve souriant barbu",
     "bald guy beard",
     "homme sans cheveux barbu",
-    "calvitie masculine barbu",
     "crâne chauve barbu",
     "tête chauve barbu",
     "bald head beard"
