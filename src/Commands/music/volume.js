@@ -1,4 +1,5 @@
 import * as Embed from "../../Util/Embeds.js";
+import * as ButtonRow from "../../Util/buttonLayout.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {
@@ -8,8 +9,10 @@ export const command = {
         .addIntegerOption((option) =>
             option
                 .setName("pourcentage")
-                .setDescription("Par défaut, le volume est à 50%")
-                .setRequired(true)
+                .setDescription("Volume entre 0 et 100% (par défaut 50%)")
+                .setRequired(false)
+                .setMinValue(0)
+                .setMaxValue(100)
         ),
 
     name: "volume",
@@ -17,50 +20,131 @@ export const command = {
     permission: "ADMINISTRATOR",
     active: true,
 
-    options: [
-        {
-            name: "value",
-            description: `Par défaut, le volume est à 50%`,
-            type: 4,
-            required: true,
-        },
-    ],
-
     async execute(message, client) {
-        const queue = client.distube.getQueue(message);
-        if (!queue)
-            return message.reply({
-                embeds: [
-                    Embed.errorEmbed().setDescription(
-                        `La file d'attente est actuellement vide !`
-                    ),
-                ],
-                ephemeral: true,
-            });
         try {
-            const volume = message.options.getInteger("value");
-            if (isNaN(volume))
+            // Vérifier si l'utilisateur est dans un canal vocal
+            if (!message.member.voice.channel) {
                 return message.reply({
                     embeds: [
                         Embed.errorEmbed().setDescription(
-                            `Vous devez rentrer un nombre valide`
+                            `Vous devez être dans un canal vocal pour utiliser cette commande !`
                         ),
                     ],
                     ephemeral: true,
                 });
-            queue.setVolume(volume);
+            }
 
+            // Récupérer la queue
+            const queue = client.distube.getQueue(message);
+            if (!queue) {
+                return message.reply({
+                    embeds: [
+                        Embed.errorEmbed().setDescription(
+                            `Aucune musique n'est actuellement en cours de lecture !`
+                        ),
+                    ],
+                    ephemeral: true,
+                });
+            }
+
+            // Récupérer le volume demandé ou afficher le volume actuel
+            const volumeInput = message.options.getInteger("pourcentage");
+            
+            if (volumeInput === null) {
+                // Afficher le volume actuel si aucun paramètre
+                const currentSong = queue.songs[0];
+                const embed = Embed.musicEmbed()
+                    .setTitle(`🔊 | Volume actuel`)
+                    .setDescription(`[${currentSong.name}](${currentSong.url})`)
+                    .setThumbnail(currentSong.thumbnail)
+                    .addFields(
+                        {
+                            name: `Demandé par :`,
+                            value: `${message.user}`,
+                            inline: true
+                        },
+                        {
+                            name: `Volume actuel :`,
+                            value: `🔊 ${queue.volume}%`,
+                            inline: true
+                        },
+                        {
+                            name: `Statut :`,
+                            value: `${queue.playing ? '▶️ En cours' : '⏸️ En pause'}`,
+                            inline: true
+                        }
+                    );
+
+                return message.reply({
+                    embeds: [embed],
+                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                });
+            }
+
+            // Valider le volume
+            if (volumeInput < 0 || volumeInput > 100) {
+                return message.reply({
+                    embeds: [
+                        Embed.errorEmbed().setDescription(
+                            `Le volume doit être compris entre 0% et 100% !`
+                        ),
+                    ],
+                    ephemeral: true,
+                });
+            }
+
+            // Appliquer le nouveau volume
+            const oldVolume = queue.volume;
+            queue.setVolume(volumeInput);
+
+            // Déterminer l'icône selon le niveau de volume
+            let volumeIcon;
+            if (volumeInput === 0) {
+                volumeIcon = "🔇";
+            } else if (volumeInput < 30) {
+                volumeIcon = "🔈";
+            } else if (volumeInput < 70) {
+                volumeIcon = "🔉";
+            } else {
+                volumeIcon = "🔊";
+            }
+
+            const currentSong = queue.songs[0];
+            const embed = Embed.musicEmbed()
+                .setTitle(`${volumeIcon} | Volume modifié`)
+                .setDescription(`[${currentSong.name}](${currentSong.url})`)
+                .setThumbnail(currentSong.thumbnail)
+                .addFields(
+                    {
+                        name: `Modifié par :`,
+                        value: `${message.user}`,
+                        inline: true
+                    },
+                    {
+                        name: `Volume :`,
+                        value: `${oldVolume}% ➜ ${volumeIcon} ${volumeInput}%`,
+                        inline: true
+                    },
+                    {
+                        name: `Statut :`,
+                        value: `${queue.playing ? '▶️ En cours' : '⏸️ En pause'}`,
+                        inline: true
+                    }
+                );
+
+            await message.reply({
+                embeds: [embed],
+                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+            });
+
+        } catch (e) {
+            console.error('Erreur dans la commande volume:', e);
             message.reply({
                 embeds: [
-                    Embed.musicEmbed().setDescription(
-                        `${message.user} a défini le volume à \`${volume}%\``
-                    ),
+                    Embed.errorEmbed().setDescription(
+                        `Une erreur est survenue lors de la modification du volume : ${e.message}`
+                    )
                 ],
-            });
-        } catch (e) {
-            console.log(e);
-            message.reply({
-                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }
