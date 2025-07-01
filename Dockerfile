@@ -18,9 +18,8 @@ RUN apt-get update && apt-get install -y \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Création d'un utilisateur non-root
-RUN groupadd --gid 1000 node && \
-    useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+# L'utilisateur node existe déjà dans l'image node:20-slim
+# Pas besoin de le créer
 
 WORKDIR /app
 
