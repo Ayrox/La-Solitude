@@ -35,17 +35,31 @@ export async function loadCommands(client){
         }
 
         try {
-            await client.application.commands.set(commandsArray);
-
-            // Enregistrement immédiat des slash commands par serveur
+            // Enregistrement des commandes par serveur avec suppression des doublons
             const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-            for (const guild of client.guilds.cache.values()) {
-                await rest.put(
-                    Routes.applicationGuildCommands(client.application.id, guild.id),
-                    { body: commandsArray }
-                );
+            
+            // Supprimer les commandes globales
+            try {
+                await rest.put(Routes.applicationCommands(client.application.id), { body: [] });
+                console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Commandes globales supprimées.`);
+            } catch (globalError) {
+                console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [WARN] Impossible de supprimer les commandes globales:`, globalError.message);
             }
-            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Les commandes slash ont été enregistrées avec succès dans chaque serveur.`);
+            
+            // Enregistrer uniquement par serveur
+            for (const guild of client.guilds.cache.values()) {
+                try {
+                    await rest.put(
+                        Routes.applicationGuildCommands(client.application.id, guild.id),
+                        { body: commandsArray }
+                    );
+                    console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Commandes enregistrées pour ${guild.name}`);
+                } catch (guildError) {
+                    console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur pour ${guild.name}:`, guildError.message);
+                }
+            }
+            
+            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Processus d'enregistrement terminé.`);
         } catch (error) {
             console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors de l'enregistrement des commandes slash :`, error);
         }
