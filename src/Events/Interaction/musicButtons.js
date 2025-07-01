@@ -306,33 +306,80 @@ export const event = {
             case "repeat":
                 {
                     try {
-                        if (!queue)
+                        if (!queue) {
                             return interaction.reply({
                                 embeds: [
                                     Embed.errorEmbed().setDescription(
-                                        `There is nothing to play :( !`
+                                        `Aucune musique n'est actuellement en cours de lecture !`
                                     ),
                                 ],
                                 ephemeral: true,
                             });
-                        mode = queue.setRepeatMode();
-                        mode = mode
-                            ? mode === 2
-                                ? "Répétition de la file d'attente"
-                                : "Répétition de la musique"
-                            : "Désactiver";
+                        }
 
-                        interaction.message.edit({
-                            embeds: [
-                                Embed.musicEmbed().setDescription(
-                                    `🔁 | ${interaction.user} a défini le mode de répétition sur ${mode}`
-                                ),
-                            ],
+                        // Cycle automatique : 0 -> 1 -> 2 -> 0
+                        const currentMode = queue.repeatMode;
+                        const newMode = (currentMode + 1) % 3;
+                        const setMode = queue.setRepeatMode(newMode);
+
+                        // Déterminer le texte et l'icône du mode
+                        let modeText;
+                        let modeIcon;
+                        switch (setMode) {
+                            case 0:
+                                modeText = "Désactivé";
+                                modeIcon = "🔁";
+                                break;
+                            case 1:
+                                modeText = "Répétition de la musique";
+                                modeIcon = "🔂";
+                                break;
+                            case 2:
+                                modeText = "Répétition de la file d'attente";
+                                modeIcon = "🔁";
+                                break;
+                            default:
+                                modeText = "Désactivé";
+                                modeIcon = "🔁";
+                        }
+
+                        const currentSong = queue.songs[0];
+                        const embed = Embed.musicEmbed()
+                            .setTitle(`${modeIcon} | Mode de répétition modifié`)
+                            .setDescription(`[${currentSong.name}](${currentSong.url})`)
+                            .setThumbnail(currentSong.thumbnail)
+                            .addFields(
+                                {
+                                    name: `Modifié par :`,
+                                    value: `${interaction.user}`,
+                                    inline: true
+                                },
+                                {
+                                    name: `Mode de répétition :`,
+                                    value: `${modeIcon} ${modeText}`,
+                                    inline: true
+                                },
+                                {
+                                    name: `Statut :`,
+                                    value: `${queue.playing ? '▶️ En cours' : '⏸️ En pause'}`,
+                                    inline: true
+                                }
+                            );
+
+                        await interaction.message.edit({
+                            embeds: [embed],
+                            components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
+                        
                         interaction.deferUpdate();
                     } catch (e) {
+                        console.error('Erreur dans le bouton repeat:', e);
                         interaction.reply({
-                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
+                            embeds: [
+                                Embed.errorEmbed().setDescription(
+                                    `Une erreur est survenue lors de la modification du mode de répétition : ${e.message}`
+                                )
+                            ],
                             ephemeral: true,
                         });
                     }

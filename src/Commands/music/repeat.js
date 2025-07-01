@@ -1,4 +1,5 @@
 import * as Embed from "../../Util/Embeds.js";
+import * as ButtonRow from "../../Util/buttonLayout.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {
@@ -11,7 +12,7 @@ export const command = {
                 .setDescription(
                     "Choisissez un mode de répétition (Désactiver, Répéter la musique, Répéter la file d'attente)."
                 )
-                .setRequired(true)
+                .setRequired(false)
                 .addChoices(
                     { name: "Désactiver", value: "0" },
                     { name: "Répéter la musique", value: "1" },
@@ -19,36 +20,110 @@ export const command = {
                 )
         ),
 
+    name: "repeat",
+    description: "Répète la musique en cours",
+    permission: "ADMINISTRATOR",
+    active: true,
+
     async execute(message, client) {
         try {
-            let mode = message.options.getInteger("mode");
-            const queue = client.distube.getQueue(message);
-            if (!queue)
+            // Vérifier si l'utilisateur est dans un canal vocal
+            if (!message.member.voice.channel) {
                 return message.reply({
                     embeds: [
                         Embed.errorEmbed().setDescription(
-                            `Aucune musique n'est joué actuellement 😕 !`
+                            `Vous devez être dans un canal vocal pour utiliser cette commande !`
                         ),
                     ],
                     ephemeral: true,
                 });
-            mode = queue.setRepeatMode(mode);
-            mode = mode
-                ? mode === 2
-                    ? "Répétition de la file d'attente"
-                    : "Répétition de la musique"
-                : "Désactiver";
+            }
 
+            // Récupérer la queue
+            const queue = client.distube.getQueue(message);
+            if (!queue) {
+                return message.reply({
+                    embeds: [
+                        Embed.errorEmbed().setDescription(
+                            `Aucune musique n'est actuellement en cours de lecture !`
+                        ),
+                    ],
+                    ephemeral: true,
+                });
+            }
+
+            // Si aucun mode spécifié, faire un cycle automatique
+            let modeInput = message.options.getString("mode");
+            let newMode;
+
+            if (modeInput === null) {
+                // Cycle automatique : 0 -> 1 -> 2 -> 0
+                const currentMode = queue.repeatMode;
+                newMode = (currentMode + 1) % 3;
+            } else {
+                newMode = parseInt(modeInput);
+            }
+
+            // Appliquer le nouveau mode
+            const setMode = queue.setRepeatMode(newMode);
+            
+            // Déterminer le texte du mode
+            let modeText;
+            let modeIcon;
+            switch (setMode) {
+                case 0:
+                    modeText = "Désactivé";
+                    modeIcon = "🔁";
+                    break;
+                case 1:
+                    modeText = "Répétition de la musique";
+                    modeIcon = "🔂";
+                    break;
+                case 2:
+                    modeText = "Répétition de la file d'attente";
+                    modeIcon = "🔁";
+                    break;
+                default:
+                    modeText = "Désactivé";
+                    modeIcon = "🔁";
+            }
+
+            const currentSong = queue.songs[0];
+            const embed = Embed.musicEmbed()
+                .setTitle(`${modeIcon} | Mode de répétition modifié`)
+                .setDescription(`[${currentSong.name}](${currentSong.url})`)
+                .setThumbnail(currentSong.thumbnail)
+                .addFields(
+                    {
+                        name: `Modifié par :`,
+                        value: `${message.user}`,
+                        inline: true
+                    },
+                    {
+                        name: `Mode de répétition :`,
+                        value: `${modeIcon} ${modeText}`,
+                        inline: true
+                    },
+                    {
+                        name: `Statut :`,
+                        value: `${queue.playing ? '▶️ En cours' : '⏸️ En pause'}`,
+                        inline: true
+                    }
+                );
+
+            await message.reply({
+                embeds: [embed],
+                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+            });
+
+        } catch (e) {
+            console.error('Erreur dans la commande repeat:', e);
             message.reply({
                 embeds: [
-                    Embed.musicEmbed().setDescription(
-                        `🔁 | ${message.user} a défini le mode de répétition sur \`${mode}\``
-                    ),
+                    Embed.errorEmbed().setDescription(
+                        `Une erreur est survenue lors de la modification du mode de répétition : ${e.message}`
+                    )
                 ],
-            });
-        } catch (e) {
-            message.reply({
-                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
                 ephemeral: true,
             });
         }
