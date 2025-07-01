@@ -15,7 +15,7 @@ export const command = {
 
     async execute(message, client) {
         try {
-            timeToSkip = message.options.getInteger("time");
+            const timeToSkip = message.options.getInteger("secondes");
             const queue = client.distube.getQueue(message);
             if (!queue)
                 return message.reply({
