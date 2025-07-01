@@ -4,7 +4,7 @@ import Discord from "discord.js";
 // import axios from "axios");
 import Pokedex from "pokedex-promise-v2";
 var P = new Pokedex();
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 
 export const command = {
     data: new Discord.SlashCommandBuilder()

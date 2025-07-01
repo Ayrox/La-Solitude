@@ -1,5 +1,5 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import db from "../../Models/channels.js";
  
 

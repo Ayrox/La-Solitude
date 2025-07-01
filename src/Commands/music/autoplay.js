@@ -1,4 +1,4 @@
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {

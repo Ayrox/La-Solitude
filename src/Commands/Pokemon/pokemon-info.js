@@ -4,7 +4,7 @@ import Discord, { ChatInputCommandInteraction, Client } from "discord.js";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const pokemonNames = require("../../util/pokemonNames.json");
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import fs from "fs";
 import { fetchPokemonData } from "../../util/functions.js";
 import Pokedex from "pokedex-promise-v2";

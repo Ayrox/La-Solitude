@@ -1,5 +1,5 @@
 import { joinVoiceChannel } from "@discordjs/voice";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
  
 import { CommandInteraction, SlashCommandBuilder } from "discord.js"
 

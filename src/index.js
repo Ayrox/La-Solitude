@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config()
 
 import Distube from "distube";
+import { YouTubePlugin } from "@distube/youtube";
 import fs from "fs";
 import path from "node:path";
 
@@ -39,6 +40,7 @@ client
 
 try {
     client.distube = new Distube(client, {
+        plugins: [new YouTubePlugin()],
         emitNewSongOnly: true,
     });
     console.log("✅ Distube a été initialisé avec succès.");

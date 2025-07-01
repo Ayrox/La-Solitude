@@ -35,28 +35,17 @@ export async function loadCommands(client){
         }
 
         try {
-            // Nettoyer d'abord toutes les commandes existantes
-            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] Nettoyage des commandes existantes...`);
-            
+            await client.application.commands.set(commandsArray);
+
+            // Enregistrement immédiat des slash commands par serveur
             const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-            
-            // Nettoyer les commandes globales
-            await rest.put(Routes.applicationCommands(client.application.id), { body: [] });
-            
-            // Nettoyer les commandes de chaque serveur
             for (const guild of client.guilds.cache.values()) {
                 await rest.put(
                     Routes.applicationGuildCommands(client.application.id, guild.id),
-                    { body: [] }
+                    { body: commandsArray }
                 );
             }
-            
-            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] Commandes nettoyées. Enregistrement des nouvelles commandes...`);
-            
-            // Enregistrer les nouvelles commandes uniquement au niveau global
-            await rest.put(Routes.applicationCommands(client.application.id), { body: commandsArray });
-            
-            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ ${commandsArray.length} commandes slash ont été enregistrées avec succès globalement.`);
+            console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [INFO] ✅ Les commandes slash ont été enregistrées avec succès dans chaque serveur.`);
         } catch (error) {
             console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors de l'enregistrement des commandes slash :`, error);
         }

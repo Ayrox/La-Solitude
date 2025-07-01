@@ -1,4 +1,4 @@
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {
@@ -21,7 +21,7 @@ export const command = {
 
     async execute(message, client) {
         try {
-            mode = message.options.getInteger("mode");
+            let mode = message.options.getInteger("mode");
             const queue = client.distube.getQueue(message);
             if (!queue)
                 return message.reply({

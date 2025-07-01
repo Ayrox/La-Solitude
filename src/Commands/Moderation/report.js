@@ -1,6 +1,6 @@
 import { EmbedBuilder, CommandInteraction, SlashCommandBuilder } from "discord.js";
 import conf from "../../config.js";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
  
 
 export const command = {

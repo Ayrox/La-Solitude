@@ -1,5 +1,5 @@
 import { EmbedBuilder, CommandInteraction, Client, ChatInputCommandInteraction } from "discord.js";
-import * as Embed from "../../util/Embeds.js"; 
+import * as Embed from "../../Util/Embeds.js"; 
 
 export const event = {
     name: "interactionCreate",
@@ -24,17 +24,26 @@ export const event = {
         //if(command.dev && interaction.user.id !== "206905331366756353");
 
         try {
-
             await command.execute(interaction, client);
-
         } catch (error) {
-
             console.error(error);
-
-            await interaction.followUp({
-                content: "There was an error while executing this command!",
-                ephemeral: true,
-            });
+            
+            try {
+                if (interaction.deferred || interaction.replied) {
+                    await interaction.editReply({
+                        content: "There was an error while executing this command!",
+                        embeds: [],
+                        components: []
+                    });
+                } else {
+                    await interaction.reply({
+                        content: "There was an error while executing this command!",
+                        ephemeral: true,
+                    });
+                }
+            } catch (followUpError) {
+                console.error("Failed to send error message:", followUpError);
+            }
         }
 
 
@@ -61,7 +70,6 @@ export const event = {
                 console.error(e);
                 interaction.editReply({
                     embeds: [Embed.errorEmbed().setDescription(`ALED : \n${e}`)],
-                    ephemeral: true,
                 });
             }
         }

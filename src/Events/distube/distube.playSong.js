@@ -1,5 +1,5 @@
 import { DisTube } from "distube";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import * as ButtonRow from "../../util/buttonLayout.js";
 import config from "../../config.js";
 import { generateProgressBar } from "../../util/functions.js";

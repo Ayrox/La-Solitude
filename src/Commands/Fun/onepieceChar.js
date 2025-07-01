@@ -2,7 +2,7 @@ import delay from "delay";
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import { EmbedBuilder, SlashCommandBuilder, CommandInteraction } from "discord.js";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import { toCapitalize } from "../../util/functions.js";
 
 const OP = await require('../../util/OnePieceData.json');

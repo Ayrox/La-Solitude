@@ -10,7 +10,7 @@ import {
     SlashCommandBuilder
 } from "discord.js";
 import db from "../../Models/my-pokedex.js";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 import Pokedex from "pokedex-promise-v2";
 const P = new Pokedex();
 const pokemon = require("../../util/pokemonNames.json");

@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../util/Embeds.js";
+import * as Embed from "../../Util/Embeds.js";
 
 export const command = {
     data: new SlashCommandBuilder()
