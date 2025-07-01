@@ -144,19 +144,154 @@ export const event = {
                             ephemeral: true,
                         });
                     try {
-                        queue.previous();
+                        // Créer l'embed initial avec la même interface que /skip
+                        const embed = Embed.musicEmbed()
+                            .setTitle(`⏮️ | Retour à la musique précédente`)
+                            .setDescription(`[${previousSong.name}](${previousSong.url})`)
+                            .setThumbnail(previousSong.thumbnail)
+                            .addFields(
+                                {
+                                    name: `Demandé par :`,
+                                    value: `${interaction.user}`,
+                                    inline: true
+                                },
+                                {
+                                    name: `Auteur :`,
+                                    value: `[${previousSong.uploader.name}](${previousSong.uploader.url})`,
+                                    inline: true
+                                },
+                                {
+                                    name: `Durée :`,
+                                    value: `${previousSong.formattedDuration}`,
+                                    inline: true
+                                }
+                            );
 
-                        interaction.message.edit({
-                            embeds: [
-                                Embed.musicEmbed()
-                                    .setThumbnail(`${previousSong.thumbnail}`)
-                                    .setDescription(
-                                        `Le son a été passé par ${interaction.user}! Musique actuelle :\n [${previousSong.name}](${previousSong.url})`
-                                    ),
-                            ],
-
+                        await interaction.message.edit({
+                            embeds: [embed],
                             components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
+
+                        // Exécuter le retour en arrière
+                        queue.previous();
+                        
+                        // Mise à jour après le changement de musique
+                        setTimeout(async () => {
+                            try {
+                                const newQueue = client.distube.getQueue(interaction);
+                                if (!newQueue || !newQueue.songs[0]) {
+                                    return;
+                                }
+
+                                const currentSong = newQueue.songs[0];
+                                const updatedEmbed = Embed.musicEmbed()
+                                    .setTitle(`⏮️ | Retour effectué - Maintenant en lecture :`)
+                                    .setDescription(`[${currentSong.name}](${currentSong.url})`)
+                                    .setThumbnail(currentSong.thumbnail)
+                                    .addFields(
+                                        {
+                                            name: `Demandé par :`,
+                                            value: `${interaction.user}`,
+                                            inline: true
+                                        },
+                                        {
+                                            name: `Auteur :`,
+                                            value: `[${currentSong.uploader.name}](${currentSong.uploader.url})`,
+                                            inline: true
+                                        },
+                                        {
+                                            name: `Durée :`,
+                                            value: `${currentSong.formattedDuration}`,
+                                            inline: true
+                                        }
+                                    );
+
+                                // Ajouter la barre de progression
+                                if (newQueue.playing) {
+                                    updatedEmbed.addFields({
+                                        name: `🎵 Actuellement en lecture :`,
+                                        value: `[${currentSong.name}](${currentSong.url})\n**${newQueue.formattedCurrentTime} ${generateProgressBar(
+                                            newQueue.currentTime,
+                                            currentSong.duration,
+                                            newQueue.paused
+                                        )} ${currentSong.formattedDuration}**`,
+                                        inline: false
+                                    });
+                                }
+
+                                await interaction.message.edit({
+                                    embeds: [updatedEmbed],
+                                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                                });
+
+                                // Démarrer la mise à jour automatique de la barre de progression
+                                if (newQueue && newQueue.playing) {
+                                    const updateInterval = setInterval(async () => {
+                                        const currentQueue = client.distube.getQueue(interaction);
+                                        
+                                        if (!currentQueue || !currentQueue.songs[0]) {
+                                            clearInterval(updateInterval);
+                                            return;
+                                        }
+
+                                        const nowPlayingSong = currentQueue.songs[0];
+                                        
+                                        if (nowPlayingSong.name !== currentSong.name) {
+                                            clearInterval(updateInterval);
+                                            return;
+                                        }
+                                        
+                                        if (currentQueue.currentTime >= nowPlayingSong.duration) {
+                                            clearInterval(updateInterval);
+                                            return;
+                                        }
+                                        
+                                        try {
+                                            const progressEmbed = Embed.musicEmbed()
+                                                .setTitle(`⏮️ | Retour effectué - Maintenant en lecture :`)
+                                                .setDescription(`[${nowPlayingSong.name}](${nowPlayingSong.url})`)
+                                                .setThumbnail(nowPlayingSong.thumbnail)
+                                                .addFields(
+                                                    {
+                                                        name: `Demandé par :`,
+                                                        value: `${interaction.user}`,
+                                                        inline: true
+                                                    },
+                                                    {
+                                                        name: `Auteur :`,
+                                                        value: `[${nowPlayingSong.uploader.name}](${nowPlayingSong.uploader.url})`,
+                                                        inline: true
+                                                    },
+                                                    {
+                                                        name: `Durée :`,
+                                                        value: `${nowPlayingSong.formattedDuration}`,
+                                                        inline: true
+                                                    },
+                                                    {
+                                                        name: `🎵 Actuellement en lecture :`,
+                                                        value: `[${nowPlayingSong.name}](${nowPlayingSong.url})\n**${currentQueue.formattedCurrentTime} ${generateProgressBar(
+                                                            currentQueue.currentTime,
+                                                            nowPlayingSong.duration,
+                                                            currentQueue.paused
+                                                        )} ${nowPlayingSong.formattedDuration}**`,
+                                                        inline: false
+                                                    }
+                                                );
+
+                                            await interaction.message.edit({
+                                                embeds: [progressEmbed],
+                                                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                                            });
+                                        } catch (progressUpdateError) {
+                                            clearInterval(updateInterval);
+                                        }
+                                    }, 5000);
+                                }
+                            } catch (updateError) {
+                                console.error('Erreur lors de la mise à jour du bouton previous:', updateError);
+                            }
+                        }, 1000);
+
                         interaction.deferUpdate();
                     } catch (e) {
                         interaction.reply({
@@ -262,33 +397,216 @@ export const event = {
             case "skip":
                 {
                     try {
+                        const currentSong = queue.songs[0];
                         const nextSong = queue.songs[1];
 
-                        if (nextSong === undefined && queue.autoplay === false)
+                        // Vérifier s'il y a une prochaine musique ou si autoplay est activé
+                        if (!nextSong && !queue.autoplay) {
                             return interaction.reply({
                                 embeds: [
                                     Embed.errorEmbed().setDescription(
-                                        `La file d'attente est actuellement vide !`
+                                        `La file d'attente est actuellement vide et l'autoplay est désactivé !`
                                     ),
                                 ],
                                 ephemeral: true,
                             });
+                        }
 
-                        interaction.message.edit({
-                            embeds: [
-                                Embed.musicEmbed()
-                                    .setThumbnail(`${nextSong.thumbnail}`)
-                                    .setDescription(
-                                        ` La musique a été passée par ${interaction.user}! Musique actuelle :\n [${nextSong.name}](${nextSong.url})`
-                                    ),
-                            ],
+                        // Créer l'embed initial avec la même interface que /skip
+                        const embed = Embed.musicEmbed()
+                            .setTitle(`⏭️ | Musique passée`)
+                            .setThumbnail(currentSong.thumbnail);
+
+                        if (nextSong) {
+                            embed.setDescription(`[${nextSong.name}](${nextSong.url})`)
+                                .addFields(
+                                    {
+                                        name: `Passé par :`,
+                                        value: `${interaction.user}`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: `Auteur :`,
+                                        value: `[${nextSong.uploader.name}](${nextSong.uploader.url})`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: `Durée :`,
+                                        value: `${nextSong.formattedDuration}`,
+                                        inline: true
+                                    }
+                                );
+                        } else if (queue.autoplay) {
+                            embed.setDescription(`**Mode autoplay activé** - Une musique sera automatiquement trouvée.`)
+                                .addFields(
+                                    {
+                                        name: `Passé par :`,
+                                        value: `${interaction.user}`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: `Mode :`,
+                                        value: `🔄 Autoplay`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: `Statut :`,
+                                        value: `Recherche en cours...`,
+                                        inline: true
+                                    }
+                                );
+                        }
+
+                        await interaction.message.edit({
+                            embeds: [embed],
                             components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                         });
-                        interaction.deferUpdate();
+                        
+                        // Skip d'abord
                         queue.skip();
+                        
+                        // Attendre un peu pour que la nouvelle musique soit chargée
+                        setTimeout(async () => {
+                            try {
+                                const newQueue = client.distube.getQueue(interaction);
+                                if (!newQueue || !newQueue.songs[0]) {
+                                    // Si plus rien ne joue, mettre à jour avec un message approprié
+                                    const finalEmbed = Embed.musicEmbed()
+                                        .setTitle(`⏭️ | Musique passée`)
+                                        .setDescription(`**File d'attente terminée** - Plus aucune musique en cours.`)
+                                        .addFields(
+                                            {
+                                                name: `Passé par :`,
+                                                value: `${interaction.user}`,
+                                                inline: true
+                                            },
+                                            {
+                                                name: `Statut :`,
+                                                value: `🛑 Arrêtée`,
+                                                inline: true
+                                            }
+                                        );
+                                    
+                                    await interaction.message.edit({
+                                        embeds: [finalEmbed],
+                                        components: [],
+                                    });
+                                } else {
+                                    const newCurrentSong = newQueue.songs[0];
+                                    const updatedEmbed = Embed.musicEmbed()
+                                        .setTitle(`⏭️ | Musique passée - Maintenant en lecture :`)
+                                        .setDescription(`[${newCurrentSong.name}](${newCurrentSong.url})`)
+                                        .setThumbnail(newCurrentSong.thumbnail)
+                                        .addFields(
+                                            {
+                                                name: `Passé par :`,
+                                                value: `${interaction.user}`,
+                                                inline: true
+                                            },
+                                            {
+                                                name: `Auteur :`,
+                                                value: `[${newCurrentSong.uploader.name}](${newCurrentSong.uploader.url})`,
+                                                inline: true
+                                            },
+                                            {
+                                                name: `Durée :`,
+                                                value: `${newCurrentSong.formattedDuration}`,
+                                                inline: true
+                                            }
+                                        );
+
+                                    // Ajouter la barre de progression
+                                    if (newQueue.playing) {
+                                        updatedEmbed.addFields({
+                                            name: `🎵 Actuellement en lecture :`,
+                                            value: `[${newCurrentSong.name}](${newCurrentSong.url})\n**${newQueue.formattedCurrentTime} ${generateProgressBar(
+                                                newQueue.currentTime,
+                                                newCurrentSong.duration,
+                                                newQueue.paused
+                                            )} ${newCurrentSong.formattedDuration}**`,
+                                            inline: false
+                                        });
+                                    }
+
+                                    await interaction.message.edit({
+                                        embeds: [updatedEmbed],
+                                        components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                                    });
+
+                                    // Démarrer la mise à jour automatique de la barre de progression
+                                    if (newQueue && newQueue.playing) {
+                                        const updateInterval = setInterval(async () => {
+                                            const currentQueue = client.distube.getQueue(interaction);
+                                            
+                                            if (!currentQueue || !currentQueue.songs[0]) {
+                                                clearInterval(updateInterval);
+                                                return;
+                                            }
+
+                                            const nowPlayingSong = currentQueue.songs[0];
+                                            
+                                            if (nowPlayingSong.name !== newCurrentSong.name) {
+                                                clearInterval(updateInterval);
+                                                return;
+                                            }
+                                            
+                                            if (currentQueue.currentTime >= nowPlayingSong.duration) {
+                                                clearInterval(updateInterval);
+                                                return;
+                                            }
+                                            
+                                            try {
+                                                const progressEmbed = Embed.musicEmbed()
+                                                    .setTitle(`⏭️ | Musique passée - Maintenant en lecture :`)
+                                                    .setDescription(`[${nowPlayingSong.name}](${nowPlayingSong.url})`)
+                                                    .setThumbnail(nowPlayingSong.thumbnail)
+                                                    .addFields(
+                                                        {
+                                                            name: `Passé par :`,
+                                                            value: `${interaction.user}`,
+                                                            inline: true
+                                                        },
+                                                        {
+                                                            name: `Auteur :`,
+                                                            value: `[${nowPlayingSong.uploader.name}](${nowPlayingSong.uploader.url})`,
+                                                            inline: true
+                                                        },
+                                                        {
+                                                            name: `Durée :`,
+                                                            value: `${nowPlayingSong.formattedDuration}`,
+                                                            inline: true
+                                                        },
+                                                        {
+                                                            name: `🎵 Actuellement en lecture :`,
+                                                            value: `[${nowPlayingSong.name}](${nowPlayingSong.url})\n**${currentQueue.formattedCurrentTime} ${generateProgressBar(
+                                                                currentQueue.currentTime,
+                                                                nowPlayingSong.duration,
+                                                                currentQueue.paused
+                                                            )} ${nowPlayingSong.formattedDuration}**`,
+                                                            inline: false
+                                                        }
+                                                    );
+
+                                                await interaction.message.edit({
+                                                    embeds: [progressEmbed],
+                                                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                                                });
+                                            } catch (progressUpdateError) {
+                                                clearInterval(updateInterval);
+                                            }
+                                        }, 5000);
+                                    }
+                                }
+                            } catch (updateError) {
+                                console.error('Erreur lors de la mise à jour du message après skip:', updateError);
+                            }
+                        }, 1000);
+
+                        interaction.deferUpdate();
                     } catch (e) {
+                        console.error('Erreur dans le bouton skip:', e);
                         interaction.reply({
-                            embeds: [Embed.errorEmbed().setDescription(`${e}`)],
+                            embeds: [Embed.errorEmbed().setDescription(`Une erreur est survenue : ${e.message}`)],
                             ephemeral: true,
                         });
                     }
