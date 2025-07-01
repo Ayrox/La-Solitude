@@ -30,10 +30,13 @@ COPY --chown=node:node package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 # Copie du code source avec les bonnes permissions
-COPY --chown=node:node . .
+COPY --chown=node:node src/ ./src/
+COPY --chown=node:node package*.json ./
 
-# Vérification que les fichiers sont bien copiés (pour debug)
-RUN ls -la /app/src/Util/
+# Vérification de ce qui est copié (pour debug)
+RUN ls -la /app/
+RUN ls -la /app/src/
+RUN ls -la /app/src/Util/ || echo "Dossier Util non trouvé"
 
 # Passage à l'utilisateur non-root
 USER node
