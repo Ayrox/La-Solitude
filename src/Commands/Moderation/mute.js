@@ -1,7 +1,7 @@
 import ms from "ms";
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import db from "../../Models/infraction.js";
-import * as Embed from "../../Util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
  
 
 export const command = {

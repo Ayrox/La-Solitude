@@ -1,7 +1,7 @@
 import { Client } from "discord.js"
 import ascii from 'ascii-table';
 import fs from "fs";
-import * as fileLoader from "../Util/fileLoader.js";
+import * as fileLoader from "../util/fileLoader.js";
 const { loadFiles } = fileLoader
 /**
  * 

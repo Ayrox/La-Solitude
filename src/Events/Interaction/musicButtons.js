@@ -1,7 +1,7 @@
 import { ButtonInteraction, Client } from "discord.js";
-import * as Embed from "../../Util/Embeds.js";
-import * as ButtonRow from "../../Util/buttonLayout.js";
-import { generateProgressBar } from "../../Util/functions.js";
+import * as Embed from "../../util/Embeds.js";
+import * as ButtonRow from "../../util/buttonLayout.js";
+import { generateProgressBar } from "../../util/functions.js";
 import db from "../../Models/playlist.js";
 
 export const event = {

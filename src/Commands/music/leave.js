@@ -1,5 +1,5 @@
 import { getVoiceConnection } from "@discordjs/voice";
-import * as Embed from "../../Util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 import { SlashCommandBuilder, MessageFlags } from "discord.js";
 
 export const command = {

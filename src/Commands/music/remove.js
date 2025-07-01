@@ -1,7 +1,7 @@
 import { ActionRowBuilder, BaseSelectMenuBuilder, SlashCommandBuilder } from "discord.js";
 import snekfetch from "snekfetch";
 const { option } = snekfetch
-import * as Embed from "../../Util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
  
 
 export const command = {

@@ -1,5 +1,5 @@
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonInteraction } from 'discord.js';
-import * as Embed from "../../Util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 import conf from "../../config.js";
 import db from "../../Models/tickets.js";
 

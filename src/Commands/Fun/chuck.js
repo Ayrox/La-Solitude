@@ -1,5 +1,5 @@
 import { CommandInteraction, EmbedBuilder, Client, SlashCommandBuilder } from "discord.js";
-import * as Embed from "../../Util/Embeds.js";
+import * as Embed from "../../util/Embeds.js";
 const fetch = (...args) =>
     import("node-fetch").then(({ default: fetch }) => fetch(...args)); // eslint-disable-line
 import * as cheerio from "cheerio";

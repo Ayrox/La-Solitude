@@ -4,7 +4,7 @@ import fs from "fs";
 import { REST } from '@discordjs/rest';
 import { Routes } from "discord-api-types/v10";
 import path from "path";
-import * as fileLoader from "../Util/fileLoader.js";
+import * as fileLoader from "../util/fileLoader.js";
 const { loadFiles } = fileLoader
 
 /**
