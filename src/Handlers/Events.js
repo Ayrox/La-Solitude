@@ -23,9 +23,17 @@ export async function loadEvents(client){
                 const execute = (...args) => event.execute(...args, client);
                 client.events.set(event.name, execute);
 
+                // Vérifier si c'est un événement DisTube
+                const isDistubeEvent = file.includes('Events\\distube\\') || file.includes('Events/distube/');
+
                 if (event.rest) {
                     if (event.once) client.rest.once(event.name, execute);
                     else client.rest.on(event.name, execute);
+                } else if (isDistubeEvent && client.distube) {
+                    // Attacher les événements DisTube à client.distube
+                    if (event.once) client.distube.once(event.name, execute);
+                    else client.distube.on(event.name, execute);
+                    console.log(`[EVENTS] Événement DisTube attaché: ${event.name}`);
                 } else {
                     if (event.once) client.once(event.name, execute);
                     else client.on(event.name, execute);

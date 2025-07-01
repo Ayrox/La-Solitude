@@ -89,7 +89,22 @@ export const event = {
             
         } catch (err) {
             //console.log(err)
-            return console.log("Le channel musique n'est pas défini");
+            console.log("Le channel musique n'est pas défini");
+        }
+
+        // Mettre à jour le rich presence du bot avec la nouvelle musique (toujours exécuté)
+        try {
+            const client = queue.voiceChannel.guild.client;
+            console.log(`[RICH_PRESENCE] Tentative de mise à jour pour: ${song.name}`);
+            
+            if (client.updateMusicActivity) {
+                console.log(`[RICH_PRESENCE] Fonction updateMusicActivity trouvée, appel en cours...`);
+                client.updateMusicActivity(queue, song);
+            } else {
+                console.log(`[RICH_PRESENCE] ERREUR: Fonction updateMusicActivity non trouvée!`);
+            }
+        } catch (richPresenceError) {
+            console.error(`[RICH_PRESENCE] Erreur lors de la mise à jour:`, richPresenceError);
         }
 
         try {
@@ -169,6 +184,17 @@ export const event = {
                     ],
                     components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                     ephemeral: false,
+                }).then(() => {
+                    // Mettre à jour le rich presence du bot avec la progression
+                    const client = queue.voiceChannel.guild.client;
+                    console.log(`[RICH_PRESENCE] Mise à jour de progression pour: ${playingSong.name}`);
+                    
+                    if (client.updateMusicActivity) {
+                        console.log(`[RICH_PRESENCE] Appel updateMusicActivity pour progression`);
+                        client.updateMusicActivity(queue, playingSong);
+                    } else {
+                        console.log(`[RICH_PRESENCE] ERREUR: updateMusicActivity non disponible pour progression`);
+                    }
                 }).catch((error) => {
                     console.log("Erreur lors de la mise à jour du lecteur:", error.message);
                     clearInterval(queue.progressUpdateInterval);

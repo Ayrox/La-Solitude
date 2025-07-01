@@ -22,6 +22,20 @@ const client = new Client({
 client.commands = new Collection()
 client.events = new Collection()
 
+// Initialiser DisTube AVANT de charger les événements
+try {
+    client.distube = new Distube(client, {
+        plugins: [new YouTubePlugin()],
+        emitNewSongOnly: true,
+        savePreviousSongs: true, // Sauvegarder les musiques précédentes pour le bouton previous
+        nsfw: false, // Pas de contenu NSFW
+    });
+    console.log("✅ Distube a été initialisé avec succès.");
+    console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
+} catch (error) {
+    console.error("❌ Erreur lors de l'initialisation de Distube :", error);
+}
+
 try {
     await loadEvents(client);
     console.log(`[${new Date().toISOString()}] [SYSTEM] [INIT] [INFO] ✅ Les événements ont été chargés avec succès.`);
@@ -37,16 +51,3 @@ client
     .catch((err) => {
         console.error("❌ Erreur lors de la connexion au client Discord :", err);
     });
-
-try {
-    client.distube = new Distube(client, {
-        plugins: [new YouTubePlugin()],
-        emitNewSongOnly: true,
-        savePreviousSongs: true, // Sauvegarder les musiques précédentes pour le bouton previous
-        nsfw: false, // Pas de contenu NSFW
-    });
-    console.log("✅ Distube a été initialisé avec succès.");
-    console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
-} catch (error) {
-    console.error("❌ Erreur lors de l'initialisation de Distube :", error);
-}
