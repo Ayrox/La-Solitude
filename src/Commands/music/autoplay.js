@@ -15,25 +15,42 @@ export const command = {
                 return message.reply({
                     embeds: [
                         Embed.errorEmbed().setDescription(
-                            `La file d'attente est actuellement vide !`
+                            `La file d'attente est actuellement vide ! Lancez d'abord une musique avec /play`
                         ),
                     ],
                     ephemeral: true,
                 });
+            
             const autoplay = queue.toggleAutoplay();
+            
+            // Log pour debug
+            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [INFO] Autoplay défini sur : ${autoplay ? 'On' : 'Off'}`);
+            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [DEBUG] Queue autoplay status:`, queue.autoplay);
+            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [DEBUG] Songs in queue:`, queue.songs.length);
+            
             message.reply({
                 embeds: [
-                    Embed.musicEmbed().setDescription(
-                        `♻️ | ${message.user} a défini l'autoplay sur \`${
-                            autoplay ? "On" : "Off"
-                        }\``
-                    ),
+                    Embed.musicEmbed()
+                        .setDescription(
+                            `♻️ | ${message.user} a défini l'autoplay sur \`${
+                                autoplay ? "On" : "Off"
+                            }\``
+                        )
+                        .addFields({
+                            name: "ℹ️ Information",
+                            value: autoplay 
+                                ? "L'autoplay est maintenant **activé**. Des musiques recommandées seront automatiquement ajoutées quand la file d'attente sera vide."
+                                : "L'autoplay est maintenant **désactivé**. Aucune musique ne sera ajoutée automatiquement.",
+                            inline: false
+                        })
                 ],
+                ephemeral: true
             });
-            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [INFO] Commande 'autoplay' exécutée. Autoplay défini sur : ${autoplay ? 'On' : 'Off'}`);
+            
         } catch (e) {
+            console.log(`[${new Date().toISOString()}] [COMMAND] [AUTOPLAY] [ERROR] Erreur:`, e);
             message.reply({
-                embeds: [Embed.errorEmbed().setDescription(`${e}`)],
+                embeds: [Embed.errorEmbed().setDescription(`❌ Erreur lors de la configuration de l'autoplay: ${e.message}`)],
                 ephemeral: true,
             });
         }
