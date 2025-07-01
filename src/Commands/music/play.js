@@ -2,6 +2,7 @@ import { ChatInputCommandInteraction, Client, Message, SlashCommandBuilder } fro
 import { joinVoiceChannel } from "@discordjs/voice";
 import * as Embed from "../../Util/Embeds.js";
 import * as ButtonRow from "../../Util/buttonLayout.js";
+import { generateProgressBar } from "../../Util/functions.js";
  
 
 export const command = {
@@ -94,12 +95,82 @@ export const command = {
                 return;
             }
 
-            message.editReply({
-                embeds: [
-                    Embed.musicEmbed()
-                        .setTitle(
-                            `▶️ | Une musique a été ajouté à la file d'attente : `
-                        )
+            const queue = client.distube.getQueue(message);
+            
+            // Créer l'embed avec les informations de base
+            const embed = Embed.musicEmbed()
+                .setTitle(`▶️ | Une musique a été ajoutée à la file d'attente : `)
+                .setDescription(`[${addedSong.name}](${addedSong.url})`)
+                .setThumbnail(`${addedSong.thumbnail}`)
+                .addFields(
+                    {
+                        name: `Demandé par :`,
+                        value: `${message.user} `,
+                        inline: true
+                    },
+                    {
+                        name: `Auteur :`,
+                        value: `[${addedSong.uploader.name}](${addedSong.uploader.url})`,
+                        inline: true
+                    },
+                    {
+                        name: `Durée :`,
+                        value: `${addedSong.formattedDuration}`,
+                        inline: true
+                    }
+                );
+
+            // Si une musique est en cours de lecture, afficher la barre de progression
+            if (queue && queue.playing && queue.songs[0]) {
+                const currentSong = queue.songs[0];
+                embed.addFields({
+                    name: `🎵 Actuellement en lecture :`,
+                    value: `[${currentSong.name}](${currentSong.url})\n**${queue.formattedCurrentTime} ${generateProgressBar(
+                        queue.currentTime,
+                        currentSong.duration,
+                        queue.paused
+                    )} ${currentSong.formattedDuration}**`,
+                    inline: false
+                });
+            }
+
+            const response = await message.editReply({
+                embeds: [embed],
+                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+            });
+
+            // Démarrer la mise à jour de la barre de progression toutes les 5 secondes
+            if (queue && queue.playing) {
+                const currentSong = queue.songs[0];
+                const songDurationMs = currentSong.duration * 1000; // Convertir en millisecondes
+                
+                const updateInterval = setInterval(() => {
+                    const currentQueue = client.distube.getQueue(message);
+                    
+                    // Vérifier si la queue existe toujours
+                    if (!currentQueue || !currentQueue.songs[0]) {
+                        clearInterval(updateInterval);
+                        return;
+                    }
+
+                    const nowPlayingSong = currentQueue.songs[0];
+                    
+                    // Vérifier si c'est toujours la même musique
+                    if (nowPlayingSong.name !== currentSong.name) {
+                        clearInterval(updateInterval);
+                        return;
+                    }
+                    
+                    // Vérifier si la musique est terminée
+                    if (currentQueue.currentTime >= nowPlayingSong.duration) {
+                        console.log("Musique terminée dans /play, arrêt de la mise à jour");
+                        clearInterval(updateInterval);
+                        return;
+                    }
+                    
+                    // Recréer l'embed avec les informations mises à jour
+                    const updatedEmbed = Embed.musicEmbed()
+                        .setTitle(`▶️ | Une musique a été ajoutée à la file d'attente : `)
                         .setDescription(`[${addedSong.name}](${addedSong.url})`)
                         .setThumbnail(`${addedSong.thumbnail}`)
                         .addFields(
@@ -117,11 +188,33 @@ export const command = {
                                 name: `Durée :`,
                                 value: `${addedSong.formattedDuration}`,
                                 inline: true
+                            },
+                            {
+                                name: `🎵 Actuellement en lecture :`,
+                                value: `[${nowPlayingSong.name}](${nowPlayingSong.url})\n**${currentQueue.formattedCurrentTime} ${generateProgressBar(
+                                    currentQueue.currentTime,
+                                    nowPlayingSong.duration,
+                                    currentQueue.paused
+                                )} ${nowPlayingSong.formattedDuration}**`,
+                                inline: false
                             }
-                        ),
-                ],
-                components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
-            });
+                        );
+
+                    response.edit({
+                        embeds: [updatedEmbed],
+                        components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
+                    }).catch(() => {
+                        // Si l'édition échoue, arrêter la mise à jour
+                        clearInterval(updateInterval);
+                    });
+                }, 5000);
+
+                // Arrêter automatiquement l'intervalle après la durée de la musique + 10 secondes de marge
+                setTimeout(() => {
+                    console.log("Timeout atteint pour la durée de la musique dans /play, arrêt de la mise à jour");
+                    clearInterval(updateInterval);
+                }, songDurationMs + 10000);
+            }
         } catch (e) {
             console.log(e);
             message.editReply({

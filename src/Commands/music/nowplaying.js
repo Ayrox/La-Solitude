@@ -1,6 +1,6 @@
 import * as Embed from "../../Util/Embeds.js";
-import * as ButtonRow from "../../util/buttonLayout.js";
-import { generateProgressBar } from "../../util/functions.js";
+import * as ButtonRow from "../../Util/buttonLayout.js";
+import { generateProgressBar } from "../../Util/functions.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {

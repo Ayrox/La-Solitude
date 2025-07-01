@@ -1,8 +1,8 @@
 import { DisTube } from "distube";
 import * as Embed from "../../Util/Embeds.js";
-import * as ButtonRow from "../../util/buttonLayout.js";
+import * as ButtonRow from "../../Util/buttonLayout.js";
 import config from "../../config.js";
-import { generateProgressBar } from "../../util/functions.js";
+import { generateProgressBar } from "../../Util/functions.js";
 
 export const event = {
     name: "playSong",
@@ -68,6 +68,8 @@ export const event = {
 
         try {
             const ckeckPlayingSong = queue.songs[0];
+            const songDurationMs = ckeckPlayingSong.duration * 1000; // Convertir en millisecondes
+            
             var refreshMessage = setInterval(() => {
                 if (!queue)
                     return console.log(
@@ -83,6 +85,13 @@ export const event = {
                     musicChannel.delete();
                     return clearInterval(refreshMessage);
                 }
+                
+                // Vérifier si la musique est terminée (temps actuel >= durée)
+                if (queue.currentTime >= ckeckPlayingSong.duration) {
+                    console.log("Musique terminée, arrêt de la mise à jour");
+                    return clearInterval(refreshMessage);
+                }
+                
                 musicChannel.edit({
                     embeds: [
                         Embed.musicEmbed()
@@ -118,7 +127,14 @@ export const event = {
                     components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
                     ephemeral: false,
                 });
-            }, 3000);
+            }, 5000);
+            
+            // Arrêter automatiquement l'intervalle après la durée de la musique + 10 secondes de marge
+            setTimeout(() => {
+                console.log("Timeout atteint pour la durée de la musique, arrêt de la mise à jour");
+                clearInterval(refreshMessage);
+            }, songDurationMs + 10000);
+            
         } catch (err) {
             console.log(err);
         }
