@@ -77,9 +77,20 @@ export const command = {
                 let numberSongs = queue.songs.length - 1;
                 addedSong = queue.songs[numberSongs];
             } catch (e) {
-                console.log(e);
+                console.log(`[PLAY] Erreur lors de la lecture (URL):`, e.message || e);
+                
+                let errorMessage = "Une erreur s'est produite lors de la lecture.";
+                
+                if (e.errorCode === 'NO_RESULT') {
+                    errorMessage = `🔍 Aucune musique trouvée avec cette URL\n\n**Vérifiez:**\n• Que le lien est valide\n• Que la vidéo est publique\n• Que la vidéo existe encore`;
+                } else if (e.errorCode === 'FFMPEG_NOT_INSTALLED') {
+                    errorMessage = "❌ Erreur du système audio. Veuillez réessayer plus tard.";
+                } else if (e.message) {
+                    errorMessage = `❌ Erreur: ${e.message}`;
+                }
+                
                 message.editReply({
-                    embeds: [Embed.errorEmbed().setDescription(`${e}`)],
+                    embeds: [Embed.errorEmbed().setDescription(errorMessage)],
                 });
                 return;
             }
@@ -95,9 +106,20 @@ export const command = {
                 let numberSongs = queue.songs.length - 1;
                 addedSong = queue.songs[numberSongs];
             } catch (e) {
-                console.log(e);
+                console.log(`[PLAY] Erreur lors de la lecture:`, e.message || e);
+                
+                let errorMessage = "Une erreur s'est produite lors de la lecture.";
+                
+                if (e.errorCode === 'NO_RESULT') {
+                    errorMessage = `🔍 Aucune musique trouvée pour: **${music}**\n\n**Essayez:**\n• Un titre plus précis\n• Le nom de l'artiste + titre\n• Un lien YouTube direct`;
+                } else if (e.errorCode === 'FFMPEG_NOT_INSTALLED') {
+                    errorMessage = "❌ Erreur du système audio. Veuillez réessayer plus tard.";
+                } else if (e.message) {
+                    errorMessage = `❌ Erreur: ${e.message}`;
+                }
+                
                 message.editReply({
-                    embeds: [Embed.errorEmbed().setDescription(`${e}`)],
+                    embeds: [Embed.errorEmbed().setDescription(errorMessage)],
                 });
                 return;
             }
