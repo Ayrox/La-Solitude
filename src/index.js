@@ -24,6 +24,7 @@ client.events = new Collection()
 
 // Initialiser DisTube AVANT de charger les événements
 try {
+    console.log("🔄 Initialisation de DisTube...");
     client.distube = new Distube(client, {
         plugins: [new YouTubePlugin()],
         emitNewSongOnly: true,
@@ -37,6 +38,7 @@ try {
         },
     });
     console.log("✅ Distube a été initialisé avec succès.");
+    console.log(`🔧 DisTube attaché au client: ${client.distube ? 'OUI' : 'NON'}`);
     console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
     
     // Test FFmpeg
@@ -52,6 +54,7 @@ try {
     });
 } catch (error) {
     console.error("❌ Erreur lors de l'initialisation de Distube :", error);
+    console.error("❌ Stack trace:", error.stack);
 }
 
 try {
@@ -65,6 +68,13 @@ client
     .login(process.env.DISCORD_TOKEN)
     .then(async () => {
         console.log("✅ Connexion réussie au client Discord.");
+        
+        // Double vérification de DisTube après connexion
+        if (client.distube) {
+            console.log("✅ DisTube confirmé après connexion");
+        } else {
+            console.error("❌ DisTube non disponible après connexion!");
+        }
     })
     .catch((err) => {
         console.error("❌ Erreur lors de la connexion au client Discord :", err);

@@ -28,6 +28,22 @@ export const command = {
         // Déférer la réponse immédiatement pour éviter l'expiration
         await message.deferReply();
 
+        // Vérifier si DisTube est disponible
+        if (!client.distube) {
+            console.error('[PLAY] DisTube n\'est pas initialisé sur le client');
+            console.error('[PLAY] Client disponible:', !!client);
+            console.error('[PLAY] Propriétés du client:', Object.keys(client));
+            return message.editReply({
+                embeds: [
+                    Embed.errorEmbed().setDescription(
+                        `❌ Le système de musique n'est pas disponible actuellement.`
+                    ),
+                ],
+            });
+        }
+
+        console.log('[PLAY] DisTube disponible, tentative de lecture...');
+
         const { channel } = message.member.voice;
         let addedSong
 

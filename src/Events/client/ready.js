@@ -24,6 +24,14 @@ export const event = {
         }
         
         console.log(`[DEBUG] Début du chargement des commandes...`);
+        
+        // Vérifier l'état de DisTube
+        console.log(`[DEBUG] DisTube disponible: ${client.distube ? 'OUI' : 'NON'}`);
+        if (client.distube) {
+            console.log(`[DEBUG] DisTube type: ${typeof client.distube}`);
+            console.log(`[DEBUG] DisTube.play disponible: ${typeof client.distube.play}`);
+        }
+        
         await loadCommands(client);
         console.log(`[DEBUG] Chargement des commandes terminé. Nombre de commandes: ${client.commands?.size || 0}`);
         var memberCount = client.users.cache.size;
