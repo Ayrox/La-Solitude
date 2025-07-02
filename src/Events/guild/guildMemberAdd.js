@@ -12,7 +12,7 @@ const fontkit = require('fontkit');
 let customFontFamily = 'Arial'; // Fallback par défaut
 let isCustomFontLoaded = false;
 try {
-    const fontPath = join(process.cwd(), 'src', 'Util', 'font', 'fv_almelo-webfont.ttf');
+    const fontPath = join(process.cwd(), 'src', 'util', 'font', 'fv_almelo-webfont.ttf');
     console.log(`[FONT] Tentative de chargement: ${fontPath}`);
     
     // Lire les métadonnées de la police

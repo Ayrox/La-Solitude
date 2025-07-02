@@ -9,6 +9,11 @@ export const event = {
     once: true,
 
     async execute(client) {
+        // S'assurer que l'application est disponible
+        if (!client.application) {
+            await client.application?.fetch();
+        }
+        
         await loadCommands(client);
         var memberCount = client.users.cache.size;
         var guildCount = client.guilds.cache.size;
@@ -17,7 +22,7 @@ export const event = {
         console.log(`${client.user.username} est prêt !\n`);
         console.log(`[!] Nombre de serveurs: ${guildCount}`)
         console.log(`[!] Nombre total de membres: ${memberCount}`);
-        console.log(`[!] Nombre de commandes initialisées: ${client.commands.size}`);
+        console.log(`[!] Nombre de commandes initialisées: ${client.commands?.size || 0}`);
         console.log("\n--------------------------------------");
 
         // Fonction pour mettre à jour le rich presence avec la musique

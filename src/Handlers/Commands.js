@@ -35,6 +35,17 @@ export async function loadCommands(client){
         }
 
         try {
+            // Vérifier si l'application est disponible
+            if (!client.application) {
+                console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [WARN] client.application n'est pas encore disponible, attente...`);
+                await client.application?.fetch();
+            }
+            
+            if (!client.application?.id) {
+                console.log(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Impossible d'obtenir l'ID de l'application`);
+                return;
+            }
+
             // Enregistrement des commandes par serveur avec suppression des doublons
             const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
             
