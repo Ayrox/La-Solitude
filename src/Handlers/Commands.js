@@ -19,7 +19,7 @@ export async function loadCommands(client){
     
     try {
         const fs = await import('fs');
-        const commandsPath = `${process.cwd()}/src/commands`;
+        const commandsPath = `${process.cwd()}/src/Commands`;
         if (fs.existsSync(commandsPath)) {
             console.log(`[DEBUG] Dossier commands trouvé: ${commandsPath}`);
         } else {
@@ -35,7 +35,7 @@ export async function loadCommands(client){
 
         let commandsArray = [];
         console.log("[DEBUG] Appel de loadFiles('commands')...");
-        const FilesRaw = await loadFiles("commands");
+        const FilesRaw = await loadFiles("Commands");
         console.log(`[DEBUG] Fichiers bruts retournés: ${FilesRaw.length}`);
         const Files = FilesRaw; // Charger tous les fichiers de commandes, y compris jerem.js
 

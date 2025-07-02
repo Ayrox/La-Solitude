@@ -1,0 +1,31 @@
+FROM node:20-slim
+
+# Installation des dépendances système nécessaires
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev \
+    libfontconfig1-dev \
+    ca-certificates \
+    fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copier et installer les dépendances
+COPY package*.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+# Copier le code source complet
+COPY src/ ./src/
+
+# Vérification et permissions
+RUN ls -la ./src/ && ls -la ./src/commands/ && chown -R 1000:1000 /app
+
+USER 1000:1000
+
+CMD ["node", "./src/index.js"]
