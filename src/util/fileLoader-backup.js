@@ -6,7 +6,7 @@ import { join } from 'path';
 const require = createRequire(import.meta.url);
 
 // Version alternative utilisant readdir récursif
-async function loadFilesRecursive(dirName) {
+export async function loadFilesRecursive(dirName) {
     const files = [];
     const basePath = join(process.cwd(), 'src', dirName);
     
@@ -37,6 +37,7 @@ async function loadFilesRecursive(dirName) {
     return files;
 }
 
+// Version originale améliorée
 export async function loadFiles(dirName) {
     const basePath = process.cwd();
     const pattern = `${basePath}/src/${dirName}/**/*.js`.replace(/\\/g, "/");

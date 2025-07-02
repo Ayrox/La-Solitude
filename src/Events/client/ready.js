@@ -9,12 +9,23 @@ export const event = {
     once: true,
 
     async execute(client) {
+        console.log(`[DEBUG] Événement ready exécuté`);
+        console.log(`[DEBUG] Client connecté: ${client.user?.tag || 'NON DÉFINI'}`);
+        
         // S'assurer que l'application est disponible
         if (!client.application) {
-            await client.application?.fetch();
+            console.log(`[DEBUG] Application non disponible, tentative de récupération...`);
+            try {
+                await client.application?.fetch();
+                console.log(`[DEBUG] Application récupérée: ${client.application?.id || 'ÉCHEC'}`);
+            } catch (error) {
+                console.error(`[DEBUG] Erreur lors de la récupération de l'application:`, error);
+            }
         }
         
+        console.log(`[DEBUG] Début du chargement des commandes...`);
         await loadCommands(client);
+        console.log(`[DEBUG] Chargement des commandes terminé. Nombre de commandes: ${client.commands?.size || 0}`);
         var memberCount = client.users.cache.size;
         var guildCount = client.guilds.cache.size;
         

@@ -14,20 +14,44 @@ const { loadFiles } = fileLoader
  */
 export async function loadCommands(client){
     console.log("[DEBUG] Appel de loadCommands()");
+    console.log(`[DEBUG] Répertoire de travail: ${process.cwd()}`);
+    console.log(`[DEBUG] Vérification de l'existence du dossier src/commands...`);
+    
+    try {
+        const fs = await import('fs');
+        const commandsPath = `${process.cwd()}/src/commands`;
+        if (fs.existsSync(commandsPath)) {
+            console.log(`[DEBUG] Dossier commands trouvé: ${commandsPath}`);
+        } else {
+            console.error(`[DEBUG] Dossier commands non trouvé: ${commandsPath}`);
+        }
+    } catch (e) {
+        console.log(`[DEBUG] Erreur lors de la vérification du dossier:`, e.message);
+    }
+    
     try {
         const table = new ascii().setHeading("Commands", "Status");
         await client.commands.clear();
 
         let commandsArray = [];
+        console.log("[DEBUG] Appel de loadFiles('commands')...");
         const FilesRaw = await loadFiles("commands");
+        console.log(`[DEBUG] Fichiers bruts retournés: ${FilesRaw.length}`);
         const Files = FilesRaw; // Charger tous les fichiers de commandes, y compris jerem.js
 
         for (const file of Files) {
             try {
+                console.log(`[DEBUG] Tentative d'importation: ${file}`);
                 const { command } = await import(`file://${file}`);
-                client.commands.set(command.data.name, command);
-                commandsArray.push(command.data.toJSON());
-                table.addRow(command.data.name, "🟩");
+                if (command && command.data && command.data.name) {
+                    client.commands.set(command.data.name, command);
+                    commandsArray.push(command.data.toJSON());
+                    table.addRow(command.data.name, "🟩");
+                    console.log(`[DEBUG] Commande chargée avec succès: ${command.data.name}`);
+                } else {
+                    console.error(`[DEBUG] Structure de commande invalide dans ${file}`);
+                    table.addRow(file, "❌ Structure invalide");
+                }
             } catch (error) {
                 console.error(`[${new Date().toISOString()}] [HANDLER] [COMMANDS] [ERROR] Erreur lors de l'importation de la commande depuis le fichier ${file} :`, error);
                 table.addRow(file, "❌");

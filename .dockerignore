@@ -19,6 +19,7 @@ Dockerfile
 
 # Fichiers de cleanup
 package-cleanup.json
+debug-container.sh
 
 # Fichiers temporaires
 *.tmp

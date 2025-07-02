@@ -44,10 +44,7 @@ COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 # Copier le code source depuis le stage builder
-COPY --from=builder /app/src/ ./src/
-
-# Créer un utilisateur non-root si nécessaire et définir les permissions
-RUN chown -R 1000:1000 /app
+COPY --from=builder --chown=1000:1000 /app/src/ ./src/
 
 # Changer vers l'utilisateur non-root
 USER 1000:1000
