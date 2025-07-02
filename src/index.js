@@ -29,9 +29,27 @@ try {
         emitNewSongOnly: true,
         savePreviousSongs: true, // Sauvegarder les musiques précédentes pour le bouton previous
         nsfw: false, // Pas de contenu NSFW
+        ffmpeg: {
+            path: "ffmpeg", // Chemin vers FFmpeg (dans le PATH)
+        },
+        ytdlOptions: {
+            highWaterMark: 1024 * 1024 * 64, // 64MB buffer
+        },
     });
     console.log("✅ Distube a été initialisé avec succès.");
     console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
+    
+    // Test FFmpeg
+    console.log("🔍 Test de FFmpeg...");
+    const { spawn } = await import('child_process');
+    const ffmpegTest = spawn('ffmpeg', ['-version']);
+    ffmpegTest.stdout.on('data', (data) => {
+        const version = data.toString().split('\n')[0];
+        console.log(`✅ FFmpeg détecté: ${version}`);
+    });
+    ffmpegTest.on('error', (error) => {
+        console.error(`❌ Erreur FFmpeg: ${error.message}`);
+    });
 } catch (error) {
     console.error("❌ Erreur lors de l'initialisation de Distube :", error);
 }

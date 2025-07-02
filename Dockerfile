@@ -4,6 +4,7 @@ FROM node:20-slim AS builder
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -34,6 +35,7 @@ RUN apt-get update && apt-get install -y \
     librsvg2-2 \
     libfontconfig1 \
     fonts-liberation \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 

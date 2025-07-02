@@ -20,6 +20,7 @@ Dockerfile
 # Fichiers de cleanup
 package-cleanup.json
 debug-container.sh
+test-ffmpeg.sh
 
 # Fichiers temporaires
 *.tmp
