@@ -51,3 +51,11 @@ client
     .catch((err) => {
         console.error("❌ Erreur lors de la connexion au client Discord :", err);
     });
+
+// After command loading, fix the count display
+console.log('--------------------------------------');
+console.log('La Solitude est prêt !');
+console.log(`[!] Nombre de serveurs: ${client.guilds.cache.size}`);
+console.log(`[!] Nombre total de membres: ${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)}`);
+console.log(`[!] Nombre de commandes initialisées: ${client.application.commands.cache.size}`);
+console.log('--------------------------------------');

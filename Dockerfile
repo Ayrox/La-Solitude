@@ -24,14 +24,14 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 WORKDIR /app
 
 # Copie des fichiers de dépendances
-COPY --chown=node:node package*.json ./
+COPY --chown=1000:1000 package*.json ./
 
 # Installation des dépendances en mode production
 RUN npm ci --only=production && npm cache clean --force
 
 # Copie du code source avec les bonnes permissions
-COPY --chown=node:node src/ ./src/
-COPY --chown=node:node package*.json ./
+COPY --chown=1000:1000 src/ ./src/
+COPY --chown=1000:1000 package*.json ./
 
 # Passage à l'utilisateur non-root
 USER node
