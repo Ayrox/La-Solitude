@@ -34,9 +34,6 @@ try {
         ffmpeg: {
             path: "ffmpeg", // Chemin vers FFmpeg (dans le PATH)
         },
-        ytdlOptions: {
-            highWaterMark: 1024 * 1024 * 64, // 64MB buffer
-        },
     });
     console.log("✅ DisTube a été initialisé avec succès.");
     console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
