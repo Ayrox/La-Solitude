@@ -11,16 +11,19 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer toutes les dépendances (dev + production)
-RUN npm ci
+# Installer TOUTES les dépendances (production + dev) avec compilation native
+RUN npm ci --include=dev
 
 # Copier le code source
 COPY src/ ./src/
 
+# Nettoyer les dépendances de développement mais garder les binaires compilés
+RUN npm prune --omit=dev
+
 # Stage de production
 FROM node:20-slim AS production
 
-# Installation des dépendances système nécessaires pour canvas
+# Installation des dépendances système nécessaires pour canvas (runtime seulement)
 RUN apt-get update && apt-get install -y \
     libcairo2 \
     libpango-1.0-0 \
@@ -38,10 +41,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copier les fichiers de dépendances
-COPY package*.json ./
+COPY --from=builder /app/package*.json ./
 
-# Installer uniquement les dépendances de production
-RUN npm ci --only=production && npm cache clean --force
+# Copier les node_modules entièrement compilés depuis le builder
+COPY --from=builder --chown=1000:1000 /app/node_modules/ ./node_modules/
 
 # Copier le code source depuis le stage builder
 COPY --from=builder --chown=1000:1000 /app/src/ ./src/
