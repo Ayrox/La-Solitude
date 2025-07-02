@@ -16,3 +16,19 @@ coverage
 target/
 Dockerfile
 .dockerignore
+
+# Fichiers de cleanup
+package-cleanup.json
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.cache
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de sauvegarde
+*.bak
+*.backup

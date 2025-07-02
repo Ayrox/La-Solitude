@@ -1,12 +1,5 @@
 import * as Embed from "../../util/Embeds.js";
-import puppeteer from "puppeteer";
 import { SlashCommandBuilder } from "discord.js";
-
-function sleep(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-}
 
 export const command = {
     data: new SlashCommandBuilder()
@@ -16,79 +9,39 @@ export const command = {
     async execute(message, client) {
         console.log(`[${new Date().toISOString()}] [COMMAND] [LYRICS] [INFO] Commande 'lyrics' exécutée.`);
         try {
-            return message.reply({
-                embeds: [
-                    Embed.errorEmbed().setDescription(
-                        `La file d'attente est actuellement vide !`
-                    ),
-                ],
-                ephemeral: true,
-            });
-
-            //! a refaire
-
-            //open Browser
-            const browser = await puppeteer.launch({ headless: true });
-            const page = await browser.newPage();
-            await page.setViewport({ width: 1366, height: 768 });
-            await page.goto(
-                "https://www.google.com/search?q=genius+lyrics+" +
-                    queue.songs[0].name.replace(/ /g, "+")
-            );
-
-            //wait and accept cookies
-            await page.waitForSelector("#L2AGLb");
-            await page.click("#L2AGLb");
-            await sleep(500);
-
-            //get to the lyrics page
-            await page.waitForSelector("h3.LC20lb", { timeout: 10000 });
-            await page.evaluate(() => {
-                let elements = document.querySelectorAll("h3.LC20lb");
-                elements[0].click();
-            });
-
-            //wait and accept cookies
-            await sleep(1000);
-            await page.waitForSelector("#onetrust-accept-btn-handler");
-            await page.click("#onetrust-accept-btn-handler");
-            await sleep(1000);
-
-            //scrap the lyrics
-            lyrics = await page.evaluate(() => {
-                let elements = document.querySelector("#lyrics-root");
-                return elements.innerText;
-            });
-            //if lyrics is longer than 2000 characters, send lyrics in multiple embed
-            if (lyrics.length > 4000) {
-                let lyricsArray = [];
-                for (let i = 0; i < lyrics.length; i += 4000) {
-                    lyricsArray.push(lyrics.substring(i, i + 4000));
-                }
-
-                for (let i = 0; i < lyricsArray.length; i++) {
-                    message.followUp({
-                        embeds: [Embed.musicEmbed().setDescription(lyricsArray[i])],
-                    });
-                    await sleep(1000);
-                }
-            } else {
-                message.followUp({
-                    embeds: [Embed.musicEmbed().setDescription(lyrics)],
+            const queue = client.distube.getQueue(message);
+            if (!queue) {
+                return message.reply({
+                    embeds: [
+                        Embed.errorEmbed().setDescription(
+                            `La file d'attente est actuellement vide !`
+                        ),
+                    ],
+                    ephemeral: true,
                 });
             }
 
-            browser.close();
-        } catch (e) {
-            message.editReply({
+            // Fonctionnalité temporairement désactivée - nécessite une API de paroles
+            return message.reply({
                 embeds: [
                     Embed.errorEmbed().setDescription(
-                        `Aucune parole n'a été trouvée !`
+                        `🎵 Paroles pour: **${queue.songs[0].name}**\n\n⚠️ Cette fonctionnalité est temporairement indisponible.\nVeuillez rechercher les paroles manuellement.`
                     ),
                 ],
                 ephemeral: true,
             });
-            console.log(e);
+
+            //! TODO: Implémenter avec une API de paroles (Genius API, etc.)
+        } catch (error) {
+            console.error(`[${new Date().toISOString()}] [COMMAND] [LYRICS] [ERROR] Erreur lors de l'exécution de la commande lyrics :`, error);
+            await message.reply({
+                embeds: [
+                    Embed.errorEmbed().setDescription(
+                        `Une erreur s'est produite lors de la récupération des paroles.`
+                    ),
+                ],
+                ephemeral: true,
+            });
         }
     },
 };
