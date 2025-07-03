@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, Client, Message, SlashCommandBuilder } fro
 import { joinVoiceChannel } from "@discordjs/voice";
 import * as Embed from "../../util/Embeds.js";
 import * as ButtonRow from "../../util/buttonLayout.js";
-import { generateProgressBar } from "../../util/functions.js";
+import { generateProgressBar, safeThumbnail, safeInteractionReply } from "../../util/functions.js";
  
 
 export const command = {
@@ -138,9 +138,12 @@ export const command = {
             // Créer l'embed avec les informations de base
             const embed = Embed.musicEmbed()
                 .setTitle(`▶️ | Une musique a été ajoutée à la file d'attente : `)
-                .setDescription(`[${addedSong.name}](${addedSong.url})`)
-                .setThumbnail(`${addedSong.thumbnail}`)
-                .addFields(
+                .setDescription(`[${addedSong.name}](${addedSong.url})`);
+            
+            // Ajouter la miniature de manière sécurisée
+            safeThumbnail(embed, addedSong.thumbnail);
+            
+            embed.addFields(
                     {
                         name: `Demandé par :`,
                         value: `${message.user} `,
@@ -209,9 +212,12 @@ export const command = {
                     // Recréer l'embed avec les informations mises à jour
                     const updatedEmbed = Embed.musicEmbed()
                         .setTitle(`▶️ | Une musique a été ajoutée à la file d'attente : `)
-                        .setDescription(`[${addedSong.name}](${addedSong.url})`)
-                        .setThumbnail(`${addedSong.thumbnail}`)
-                        .addFields(
+                        .setDescription(`[${addedSong.name}](${addedSong.url})`);
+                        
+                    // Ajouter la miniature de manière sécurisée
+                    safeThumbnail(updatedEmbed, addedSong.thumbnail);
+                    
+                    updatedEmbed.addFields(
                             {
                                 name: `Demandé par :`,
                                 value: `${message.user} `,

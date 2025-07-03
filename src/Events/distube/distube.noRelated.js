@@ -33,15 +33,36 @@ export const event = {
         try {
             const textChannel = queue.textChannel;
             if (textChannel) {
+                // Vérifier si la dernière chanson était de Spotify
+                const lastSong = queue.previousSongs && queue.previousSongs.length > 0 
+                    ? queue.previousSongs[queue.previousSongs.length - 1] 
+                    : null;
+                
+                const isSpotifyTrack = lastSong && (
+                    lastSong.url.includes('spotify.com') || 
+                    lastSong.source === 'spotify' ||
+                    lastSong.metadata?.source === 'spotify'
+                );
+
+                let description = "DisTube n'a trouvé aucune musique similaire à recommander.\n\n";
+                
+                if (isSpotifyTrack) {
+                    description += "🎵 **Piste Spotify détectée**\n" +
+                                 "L'autoplay fonctionne moins bien avec les pistes Spotify car DisTube utilise l'algorithme de recommandation de YouTube.\n\n";
+                }
+                
+                description += "💡 **Suggestions:**\n" +
+                             "• Essayez avec des musiques plus populaires\n" +
+                             "• Ajoutez manuellement des musiques avec `/play`\n" +
+                             "• L'autoplay fonctionne mieux avec des hits YouTube connus";
+
                 await textChannel.send({
                     embeds: [{
-                        color: 0xff9900,
-                        title: "🔍 Autoplay - Aucune recommandation",
-                        description: "DisTube n'a trouvé aucune musique similaire à recommander.\n\n" +
-                                   "💡 **Suggestions:**\n" +
-                                   "• Essayez avec des musiques plus populaires\n" +
-                                   "• Ajoutez manuellement des musiques avec `/play`\n" +
-                                   "• L'autoplay fonctionne mieux avec des hits connus",
+                        color: isSpotifyTrack ? 0x1DB954 : 0xff9900, // Vert Spotify si Spotify, orange sinon
+                        title: isSpotifyTrack 
+                            ? "🎵 Autoplay Spotify - Aucune recommandation" 
+                            : "🔍 Autoplay - Aucune recommandation",
+                        description: description,
                         footer: { text: "L'autoplay reste activé pour les prochaines musiques" }
                     }]
                 });

@@ -1,6 +1,6 @@
 import * as Embed from "../../util/Embeds.js";
 import * as ButtonRow from "../../util/buttonLayout.js";
-import { generateProgressBar } from "../../util/functions.js";
+import { generateProgressBar, safeThumbnail } from "../../util/functions.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {
@@ -39,46 +39,62 @@ export const command = {
                 count++;
                 if (count > refreshTimout) {
                     clearInterval(refreshMessage);
-                    message.delete();
+                    return;
                 }
-                let playingSong = queue.songs[0];
-                console.log(`[${new Date().toISOString()}] [COMMAND] [NOWPLAYING] [INFO] Commande 'nowplaying' exécutée. Musique en cours : ${queue.songs[0].name}`);
-                //console.log(`${queue.formattedCurrentTime} **${generateProgressBar(queue.currentTime, playingSong.duration )}** ${playingSong.formattedDuration}`)
+                
+                // Vérifier si la queue existe toujours
+                const currentQueue = client.distube.getQueue(message);
+                if (!currentQueue || !currentQueue.songs || !currentQueue.songs[0]) {
+                    console.log(`[${new Date().toISOString()}] [COMMAND] [NOWPLAYING] [INFO] Queue supprimée, arrêt du refresh`);
+                    clearInterval(refreshMessage);
+                    return;
+                }
+                
+                let playingSong = currentQueue.songs[0];
+                console.log(`[${new Date().toISOString()}] [COMMAND] [NOWPLAYING] [INFO] Commande 'nowplaying' exécutée. Musique en cours : ${playingSong.name}`);
+                
+                // Créer l'embed de manière sécurisée
+                const nowPlayingEmbed = Embed.musicEmbed()
+                    .setTitle(`Musique jouée : ${playingSong.name}`)
+                    .setURL(`${playingSong.url}`)
+                    .setDescription(
+                        `**${
+                            currentQueue.formattedCurrentTime
+                        } ${generateProgressBar(
+                            currentQueue.currentTime,
+                            playingSong.duration,
+                            false
+                        )} ${playingSong.formattedDuration}**`
+                    );
+                
+                // Ajouter la miniature de manière sécurisée
+                safeThumbnail(nowPlayingEmbed, playingSong.thumbnail);
+                
+                // Ajouter les champs
+                nowPlayingEmbed.addFields(
+                    {
+                        name: `Demandé par :`,
+                        value: `${playingSong.user}`,
+                        inline: true
+                    },
+                    {
+                        name:`Auteur :`,
+                        value:`[${playingSong.uploader.name}](${playingSong.uploader.url})`,
+                        inline: true
+                    },
+                    {
+                        name: `Volume :`,
+                        value: `${currentQueue.volume}%`,
+                        inline: true
+                    }
+                );
+                
                 message.editReply({
-                    embeds: [
-                        Embed.musicEmbed()
-                            .setTitle(`Musique jouée : ${playingSong.name}`)
-                            .setURL(`${playingSong.url}`)
-                            .setThumbnail(`${playingSong.thumbnail}`)
-                            .setDescription(
-                                `**${
-                                    queue.formattedCurrentTime
-                                } ${generateProgressBar(
-                                    queue.currentTime,
-                                    playingSong.duration,
-                                    false
-                                )} ${playingSong.formattedDuration}**`
-                            )
-                            .addFields(
-                                {
-                                    name: `Demandé par :`,
-                                    value: `${playingSong.user}`,
-                                    inline: true
-                                },
-                                {
-                                    name:`Auteur :`,
-                                    value:`[${playingSong.uploader.name}](${playingSong.uploader.url})`,
-                                    inline: true
-                                },
-                                {
-                                    name: `Volume :`,
-                                    value: `${queue.volume}%`,
-                                    inline: true
-                                }
-                            ),
-                    ],
-                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
-                    ephemeral: false,
+                    embeds: [nowPlayingEmbed],
+                    components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()]
+                }).catch(error => {
+                    console.error(`[NOWPLAYING] Erreur lors de la mise à jour:`, error);
+                    clearInterval(refreshMessage);
                 });
             }, 1000);
         } catch (e) {

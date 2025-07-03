@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Ayrox/La-Solitude#readme",
   "dependencies": {
     "@discordjs/opus": "^0.10.0",
+    "@distube/spotify": "^2.0.2",
     "@distube/youtube": "^1.0.4",
     "@distube/ytdl-core": "^4.16.12",
     "ascii-table": "^0.0.9",

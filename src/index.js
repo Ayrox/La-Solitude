@@ -5,6 +5,7 @@ console.log("🔍 Importation des modules...");
 
 import { DisTube } from "distube";
 import { YouTubePlugin } from "@distube/youtube";
+import { SpotifyPlugin } from "@distube/spotify";
 import fs from "fs";
 import path from "node:path";
 
@@ -24,21 +25,35 @@ const client = new Client({
 client.commands = new Collection()
 client.events = new Collection()
 
-// Initialiser DisTube AVANT de charger les événements
-try {
-    client.distube = new DisTube(client, {
-        plugins: [new YouTubePlugin()],
-        emitNewSongOnly: true,
-        savePreviousSongs: true, // Sauvegarder les musiques précédentes pour le bouton previous
-        nsfw: false, // Pas de contenu NSFW
-        ffmpeg: {
-            path: "ffmpeg", // Chemin vers FFmpeg (dans le PATH)
-        },
-    });
-    console.log("✅ DisTube a été initialisé avec succès.");
-    console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
-} catch (error) {
-    console.error("❌ Erreur lors de l'initialisation de DisTube :", error);
+// Fonction pour initialiser DisTube
+function initializeDistube(client) {
+    try {
+        console.log("🎵 Initialisation de DisTube...");
+        
+        client.distube = new DisTube(client, {
+            plugins: [
+                new YouTubePlugin(),
+                new SpotifyPlugin()
+            ],
+            emitNewSongOnly: true,
+            savePreviousSongs: true,
+            nsfw: false,
+            ffmpeg: {
+                path: "ffmpeg",
+            },
+        });
+        
+        console.log("✅ DisTube a été initialisé avec succès.");
+        console.log("🔧 Configuration DisTube : autoplay supporté nativement, options validées");
+        console.log("🎵 Support Spotify activé");
+        console.log("📋 Propriétés du client après DisTube:", Object.keys(client).filter(key => key.includes('distube')));
+        
+        return true;
+    } catch (error) {
+        console.error("❌ Erreur lors de l'initialisation de DisTube :", error);
+        console.error("Stack trace:", error.stack);
+        return false;
+    }
 }
 
 try {
@@ -53,8 +68,10 @@ client
     .then(async () => {
         console.log("✅ Connexion réussie au client Discord.");
         
-        // Double vérification de DisTube après connexion
-        if (client.distube) {
+        // Initialiser DisTube après la connexion
+        const distubeInitialized = initializeDistube(client);
+        
+        if (distubeInitialized) {
             console.log("✅ DisTube confirmé après connexion");
         } else {
             console.error("❌ DisTube non disponible après connexion!");

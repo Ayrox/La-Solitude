@@ -1,6 +1,6 @@
 import * as Embed from "../../util/Embeds.js";
 import * as ButtonRow from "../../util/buttonLayout.js";
-import { generateProgressBar } from "../../util/functions.js";
+import { generateProgressBar, safeDistubeOperation } from "../../util/functions.js";
 import { SlashCommandBuilder } from "discord.js";
 
 export const command = {
@@ -138,11 +138,17 @@ export const command = {
                 components: [ButtonRow.musicButtonRow(), ButtonRow.musicButtonRow2()],
             });
 
-            // Skip la/les musique(s)
+            // Skip la/les musique(s) avec gestion d'erreur pour l'autoplay
             if (skipNumber === 1) {
-                queue.skip();
+                await safeDistubeOperation(
+                    () => queue.skip(),
+                    { logContext: "SKIP", errorMessage: "Failed to skip song" }
+                );
             } else {
-                queue.jump(skipNumber);
+                await safeDistubeOperation(
+                    () => queue.jump(skipNumber),
+                    { logContext: "SKIP", errorMessage: "Failed to jump to song" }
+                );
             }
 
             // Mise à jour de l'embed après le skip (comme dans /play)

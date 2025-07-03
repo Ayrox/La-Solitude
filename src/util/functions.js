@@ -186,3 +186,130 @@ export function SortObjectArray (array, key) {
     });
     return array;
 }
+
+/**
+ * Safely reply to a Discord interaction, handling expired tokens
+ * @param {CommandInteraction} interaction - The Discord interaction
+ * @param {Object} replyOptions - The reply options (embeds, content, etc.)
+ * @param {boolean} isEdit - Whether this is an edit or initial reply
+ * @returns {Promise<boolean>} - Success status
+ */
+export async function safeInteractionReply(interaction, replyOptions, isEdit = false) {
+    try {
+        if (isEdit) {
+            await interaction.editReply(replyOptions);
+        } else {
+            if (interaction.deferred) {
+                await interaction.editReply(replyOptions);
+            } else {
+                await interaction.reply(replyOptions);
+            }
+        }
+        return true;
+    } catch (error) {
+        if (error.code === 50027) { // Invalid Webhook Token
+            console.error(`[INTERACTION] Token expiré pour l'interaction ${interaction.id}`);
+            return false;
+        }
+        console.error(`[INTERACTION] Erreur lors de la réponse:`, error);
+        return false;
+    }
+}
+
+/**
+ * Safely set thumbnail on an embed, handling undefined values
+ * @param {EmbedBuilder} embed - The embed to modify
+ * @param {string|undefined} thumbnailUrl - The thumbnail URL
+ * @returns {EmbedBuilder} - The modified embed
+ */
+export function safeThumbnail(embed, thumbnailUrl) {
+    if (thumbnailUrl && thumbnailUrl !== 'undefined' && thumbnailUrl !== 'null') {
+        try {
+            embed.setThumbnail(thumbnailUrl);
+        } catch (error) {
+            console.warn(`[EMBED] Impossible de définir la miniature: ${thumbnailUrl}`, error);
+        }
+    }
+    return embed;
+}
+
+/**
+ * Handle DisTube autoplay errors gracefully
+ * @param {Function} operation - The DisTube operation to execute
+ * @param {Object} options - Options for error handling
+ * @returns {Promise<boolean>} - Success status
+ */
+export async function safeDistubeOperation(operation, options = {}) {
+    const { 
+        errorMessage = "Opération DisTube échouée",
+        logContext = "DISTUBE",
+        ignoreNoRelated = true 
+    } = options;
+    
+    try {
+        await operation();
+        return true;
+    } catch (error) {
+        if (error.errorCode === 'NO_RELATED' && ignoreNoRelated) {
+            console.log(`[${logContext}] Autoplay failed - no related songs found (normal with Spotify tracks)`);
+            return false;
+        } else {
+            console.error(`[${logContext}] ${errorMessage}:`, error);
+            throw error;
+        }
+    }
+}
+
+/**
+ * Safely manage music command intervals that update UI
+ * @param {Function} updateFunction - Function to call on each interval
+ * @param {Object} options - Configuration options
+ * @returns {Object} - Interval control object
+ */
+export function createSafeMusicInterval(updateFunction, options = {}) {
+    const {
+        intervalMs = 1000,
+        maxDuration = 300000, // 5 minutes max par défaut
+        checkQueue = true,
+        client = null,
+        message = null
+    } = options;
+    
+    let count = 0;
+    const maxCount = Math.floor(maxDuration / intervalMs);
+    
+    const intervalId = setInterval(() => {
+        count++;
+        
+        // Vérifier les limites de temps
+        if (count > maxCount) {
+            console.log(`[MUSIC_INTERVAL] Timeout atteint, arrêt de l'interval`);
+            clearInterval(intervalId);
+            return;
+        }
+        
+        // Vérifier si la queue existe toujours
+        if (checkQueue && client && message) {
+            const currentQueue = client.distube.getQueue(message);
+            if (!currentQueue || !currentQueue.songs || !currentQueue.songs[0]) {
+                console.log(`[MUSIC_INTERVAL] Queue supprimée, arrêt de l'interval`);
+                clearInterval(intervalId);
+                return;
+            }
+        }
+        
+        // Exécuter la fonction de mise à jour
+        try {
+            updateFunction();
+        } catch (error) {
+            console.error(`[MUSIC_INTERVAL] Erreur dans la fonction de mise à jour:`, error);
+            clearInterval(intervalId);
+        }
+    }, intervalMs);
+    
+    return {
+        id: intervalId,
+        stop: () => clearInterval(intervalId),
+        getCount: () => count
+    };
+}
